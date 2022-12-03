@@ -119,12 +119,6 @@ importers:
       '@emotion/react': ^11.10.5
       '@emotion/styled': ^11.10.5
       '@hookform/resolvers': ^2.9.10
-      '@nivo/bar': ^0.80.0
-      '@nivo/core': ^0.80.0
-      '@nivo/line': ^0.80.0
-      '@nivo/pie': ^0.80.0
-      '@nivo/tooltip': ^0.80.0
-      '@tanstack/react-table': ^8.7.0
       '@types/node': ^18.0.0
       '@types/react': ^18.0.14
       '@types/react-dom': ^18.0.5
@@ -156,12 +150,6 @@ importers:
       '@emotion/react': 11.10.5_xl5my4wapvq2ctl7qwehtbgorq
       '@emotion/styled': 11.10.5_3djhvnr4jirfvebjqpipo7gthy
       '@hookform/resolvers': 2.9.10_react-hook-form@7.40.0
-      '@nivo/bar': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
-      '@nivo/core': 0.80.0_g5kln477lwx3caqucf3exzf3du
-      '@nivo/line': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
-      '@nivo/pie': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
-      '@nivo/tooltip': 0.80.0_wyuiu3ihipn7hpncy62nqhyrji
-      '@tanstack/react-table': 8.7.0_biqbaboplfbrettd7655fr4n2y
       clsx: 1.2.1
       date-fns: 2.29.3
       framer-motion: 7.6.18_biqbaboplfbrettd7655fr4n2y
@@ -382,6 +370,11 @@ importers:
       '@emotion/react': ^11.10.5
       '@emotion/styled': ^11.10.5
       '@hookform/error-message': ^2.0.0
+      '@nivo/bar': ^0.80.0
+      '@nivo/core': ^0.80.0
+      '@nivo/line': ^0.80.0
+      '@nivo/pie': ^0.80.0
+      '@nivo/tooltip': ^0.80.0
       '@storybook/addon-actions': ^6.5.14
       '@storybook/addon-essentials': ^6.5.14
       '@storybook/addon-interactions': ^6.5.14
@@ -395,6 +388,7 @@ importers:
       '@storybook/react': ^6.5.14
       '@storybook/testing-library': ^0.0.13
       '@tanstack/react-query': ^4.14.5
+      '@tanstack/react-table': ^8.7.0
       '@tinymce/tinymce-react': ^4.2.0
       '@types/node': ^18.11.9
       '@types/react': ^18.0.25
@@ -409,6 +403,7 @@ importers:
       immer: ^9.0.16
       iron-session: ^6.3.1
       next: 13.0.5
+      prop-types: ^15.7.2
       react: ^18.2.0
       react-dom: 18.2.0
       react-hook-form: ^7.39.5
@@ -434,7 +429,13 @@ importers:
       '@emotion/react': 11.10.5_xl5my4wapvq2ctl7qwehtbgorq
       '@emotion/styled': 11.10.5_3djhvnr4jirfvebjqpipo7gthy
       '@hookform/error-message': 2.0.1_nrnvpvixg5xdweezd67llqjwze
+      '@nivo/bar': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
+      '@nivo/core': 0.80.0_g5kln477lwx3caqucf3exzf3du
+      '@nivo/line': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
+      '@nivo/pie': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
+      '@nivo/tooltip': 0.80.0_wyuiu3ihipn7hpncy62nqhyrji
       '@tanstack/react-query': 4.19.0_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-table': 8.7.0_biqbaboplfbrettd7655fr4n2y
       '@tinymce/tinymce-react': 4.2.0_biqbaboplfbrettd7655fr4n2y
       clsx: 1.2.1
       date-fns: 2.29.3
@@ -478,6 +479,7 @@ importers:
       '@types/react-dom': 18.0.9
       babel-loader: 8.3.0_ztqwsvkb6z73luspkai6ilstpu
       eslint: 8.29.0
+      prop-types: 15.8.1
       require-from-string: 2.0.2
       ts-node: 10.9.1_eoe7put6ewfbqpy6gs36tihw6y
       tsconfig-paths-webpack-plugin: 4.0.0
