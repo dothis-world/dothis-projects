@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 import { colors, commonStyle, mediaQueries } from '../../../lib';
-import { ModalTitle } from '../ModalTitle';
+import { ModalTitle } from '../../ui/ModalTitle';
 
 export type ModalProps = Required<
   Pick<ChakraModalProps, 'isOpen' | 'children' | 'onClose'>

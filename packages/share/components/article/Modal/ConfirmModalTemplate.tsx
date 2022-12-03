@@ -1,7 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import type { MouseEventHandler, ReactNode } from 'react';
 
-import { Button } from '../Button';
+import { Button } from '../../ui/Button';
 
 export type ConfirmTemplateProps = {
   children: ReactNode;
