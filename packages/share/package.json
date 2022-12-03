@@ -13,8 +13,8 @@
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules",
     "theme-gen": "pnpm chakra-cli tokens ./lib/styles/dothisTheme/index.ts",
-    "dev": "start-storybook -p 6006",
-    "build": "build-storybook",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
     "postinstall": "pnpm theme-gen"
   },
   "dependencies": {

@@ -10,6 +10,7 @@
     "dev:request": "dotenv -e .env -- turbo run dev --filter=request-web",
     "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "storybook:share": "turbo run storybook --scope='@dothis/share'",
+    "build-storybook:share": "turbo run build-storybook --scope='@dothis/share'",
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",

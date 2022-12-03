@@ -7,7 +7,12 @@
         "^build"
       ],
       "outputs": [
-        ".next/**" 
+        ".next/**"
+      ]
+    },
+    "build-storybook": {
+      "outputs": [
+        "storybook-static/**"
       ]
     },
     "theme-gen": {
