@@ -1,9 +1,5 @@
-import { Flex } from '@chakra-ui/react';
-import { Global } from '@emotion/react';
 import { clsx } from 'clsx';
-import {} from 'next/';
 import type { ReactNode } from 'react';
-import { globalStyle } from '~/../../packages/share';
 
 type Props = {
   children: ReactNode;
@@ -11,11 +7,12 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="ko" className={clsx()}>
+    <html lang='ko' className={clsx()}>
+      <body>
 
-      <Global styles={globalStyle} />
-      root layout
-      <Flex>{children}</Flex>
+        root layout
+        {children}
+      </body> 
     </html>
   );
 }

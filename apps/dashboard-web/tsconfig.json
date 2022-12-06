@@ -9,7 +9,12 @@
         "./*"
       ]
     },
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "references": [
     {
@@ -20,7 +25,8 @@
   "include": [
     "./src/**/*",
     "next-env.d.ts",
-    "../../types/**/*.d.ts"
+    "../../types/**/*.d.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

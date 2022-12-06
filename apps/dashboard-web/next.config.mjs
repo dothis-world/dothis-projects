@@ -6,8 +6,6 @@
 
 import nextPWA from 'next-pwa'
 
-!process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -18,14 +16,6 @@ const config = {
   },
   experimental: {
     appDir: true,
-    swcPlugins: [
-      [
-        'next-superjson-plugin',
-        {
-          excluded: [],
-        },
-      ],
-    ],
     transpilePackages: ['@dothis/share'],
   },
   pwa: {
@@ -37,4 +27,4 @@ const config = {
     emotion: true,
   }
 };
-export default nextPWA(config);
+export default config
