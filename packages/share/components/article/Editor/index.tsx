@@ -10,7 +10,7 @@ import React, {
   useState,
 } from 'react';
 
-import { colors, fonts, typo } from '../../../lib';
+import { colors, fonts, typo } from 'lib';
 
 export type EditorT = TinymceEditor;
 type Props = ComponentProps<typeof TinymceEditor> & {
@@ -22,7 +22,6 @@ export type FileLocations = Array<[fileName: string, location: string]>;
 export const Editor = forwardRef<TinymceEditor | null, Props>(
   ({ init, wrap = {}, ...props }, ref) => {
     const wrapRef = useRef<HTMLDivElement>(null);
-    const [isInit, setIsInit] = useState(false);
     const editorRef = useRef<TinymceEditor | null>(null);
     // @ts-ignore
     useImperativeHandle(ref, () => editorRef.current);
