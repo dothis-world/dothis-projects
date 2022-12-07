@@ -1,6 +1,7 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
   "compilerOptions": {
+    "jsxImportSource": "react",
     "paths": {
       "@/*": [
         "./src/*"
@@ -16,12 +17,6 @@
       }
     ]
   },
-  "references": [
-    {
-      "path": "../../packages/share",
-      "declarationMap": true
-    }
-  ],
   "include": [
     "./src/**/*",
     "next-env.d.ts",
@@ -31,5 +26,5 @@
   "exclude": [
     "node_modules",
     "./public/**/*"
-  ]
+  ],
 }

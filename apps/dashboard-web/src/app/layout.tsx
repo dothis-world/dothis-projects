@@ -1,5 +1,11 @@
+import './globalStyle.css';
+
 import { clsx } from 'clsx';
 import type { ReactNode } from 'react';
+
+import Footer from '@/app/components/Footer';
+
+import GNB from './components/GNB';
 
 type Props = {
   children: ReactNode;
@@ -8,11 +14,12 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang='ko' className={clsx()}>
-      <body>
+    <body>
 
-        root layout
-        {children}
-      </body> 
+    <GNB/>
+    {children}
+    <Footer />
+    </body>
     </html>
   );
 }

@@ -14,17 +14,26 @@ const config = {
     locales: ["ko"],
     defaultLocale: "ko", 
   },
+  webpack: (config, options) => {
+    config.module.rules.push(
+      {
+        test: /\.svg$/,
+        use: [
+          options.defaultLoaders.babel,
+          {
+            loader: '@svgr/webpack',
+            options: { babel: false },
+          },
+        ],
+      },
+    );
+    return config;
+  },
   experimental: {
+    // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
+    outputFileTracingIgnores: ['**swc/core**'],
     appDir: true,
     transpilePackages: ['@dothis/share'],
-  },
-  pwa: {
-    dest: 'public',
-    disable: process.env.NODE_ENV === 'development',
-    // runtimeCaching,
-  },
-  compiler:{
-    emotion: true,
   }
 };
 export default config
