@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 
 import Footer from '@/app/components/Footer';
 
+import ClientContext from './ClientContext';
 import GNB from './components/GNB';
 
 type Props = {
@@ -13,13 +14,14 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang='ko' className={clsx()}>
-    <body>
-
-    <GNB/>
-    {children}
-    <Footer />
-    </body>
+    <html lang="ko" className={clsx()}>
+      <body>
+        <ClientContext>
+          <GNB />
+          {children}
+          <Footer />
+        </ClientContext>
+      </body>
     </html>
   );
 }

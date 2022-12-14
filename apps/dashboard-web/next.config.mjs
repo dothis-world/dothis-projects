@@ -4,15 +4,28 @@
  * This is especially useful for Docker builds.
  */
 
-import nextPWA from 'next-pwa'
-
-/** @type {import("next").NextConfig} */
+/** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
   swcMinify: true,
+  // async headers() {
+  //   return [
+  //     {
+  //       // Append the "Service-Worker-Allowed" header
+  //       // to each response, overriding the default worker's scope.
+  //       source: '/(.*)',
+  //       headers: [
+  //         {
+  //           key: 'Service-Worker-Allowed',
+  //           value: '/',
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
   i18n: {
-    locales: ["ko"],
-    defaultLocale: "ko", 
+    locales: ['ko'],
+    defaultLocale: 'ko',
   },
   webpack: (config, options) => {
     config.module.rules.push(
@@ -34,6 +47,6 @@ const config = {
     outputFileTracingIgnores: ['**swc/core**'],
     appDir: true,
     transpilePackages: ['@dothis/share'],
-  }
+  },
 };
-export default config
+export default config;
