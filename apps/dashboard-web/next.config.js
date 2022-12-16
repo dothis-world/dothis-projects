@@ -8,8 +8,6 @@ const config = {
     defaultLocale: 'ko',
   },
   webpack: (config, options) => {
-    //
-    const aliasPackages = ['@tanstack/react-query'];
     config.module.rules.push({
       test: /\.svg$/,
       use: [
@@ -21,7 +19,9 @@ const config = {
       ],
     });
 
-    // react query
+    // See https://github.com/TanStack/query/issues/3595#issuecomment-1353601727
+    const aliasPackages = ['@tanstack/react-query'];
+
     if (options.isServer) {
       config.externals = [...aliasPackages, ...config.externals];
     }

@@ -5,11 +5,6 @@ import type { z } from 'zod';
 import { mockApiPathname } from '@/constants/dev';
 import { getUser, getUsers } from '@/domain/User';
 
-// const ff = flip(getPathMatch);
-
-// const pathMatchDynamicPath = (url: string) => (dynamicPath: string) =>
-//   getPathMatch(`${mockApiPathname}${dynamicPath}`, { strict: true })(url);
-
 const urlMatchDynamicPath = (url: string) => (dynamicPath: string) =>
   getPathMatch(`${mockApiPathname}${dynamicPath}`, { strict: true })(url);
 

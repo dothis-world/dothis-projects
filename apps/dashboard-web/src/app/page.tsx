@@ -2,10 +2,8 @@ import { apiClient } from '@/utils/apiClient';
 
 import ClientTest from './ClientTest';
 
-export async function getData() {
-  let resp = await apiClient.getUsers();
-
-  return resp;
+export function getData() {
+  return apiClient.getUsers();
 }
 
 export default async function RootPage() {
