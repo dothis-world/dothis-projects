@@ -1,18 +1,24 @@
-import { apiClient } from '@/app/apiClient';
+import { apiClient } from '@/utils/apiClient';
+
+import ClientTest from './ClientTest';
 
 export async function getData() {
-  let resp = await apiClient.get('/users/:id', { params: { id: 1 } });
+  let resp = await apiClient.get('/users');
 
   console.log(resp);
   return resp;
 }
 
 export default async function RootPage() {
-  const d = await getData();
-  console.log(d);
+  const data = await getData();
   return (
     <div>
-      {d.id} {d.name}
+      {data.map((d) => (
+        <p key={d.id}>
+          users: {d.id} {d.name}
+        </p>
+      ))}
+      <ClientTest />
     </div>
   );
   // return <div>ㅇㅇㅇ</div>;

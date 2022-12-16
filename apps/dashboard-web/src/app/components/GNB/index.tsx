@@ -1,5 +1,3 @@
 export default function GNB() {
-  return <nav className="gnb">
-    gnb
-  </nav>
+  return <nav className="gnb">gnb</nav>;
 }
