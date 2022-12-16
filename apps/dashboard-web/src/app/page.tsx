@@ -3,9 +3,8 @@ import { apiClient } from '@/utils/apiClient';
 import ClientTest from './ClientTest';
 
 export async function getData() {
-  let resp = await apiClient.get('/users');
+  let resp = await apiClient.getUsers();
 
-  console.log(resp);
   return resp;
 }
 

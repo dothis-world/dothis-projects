@@ -6,7 +6,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-// Create a client
 const queryClient = new QueryClient();
 
 export default function ClientContext({ children }: Props) {
