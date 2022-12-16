@@ -44,4 +44,4 @@ sw.js.map
 sw.js
 dist
 storybook-static
-.pnpm-lock.yaml
+pnpm-lock.yaml
