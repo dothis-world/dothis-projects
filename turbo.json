@@ -45,6 +45,9 @@
     "dev-mock": {
       "cache": false
     },
+    "storybook": {
+      "cache": false
+    },
     "request-web": {
       "dependsOn": [
         "^build"
