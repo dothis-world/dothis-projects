@@ -1,11 +1,5 @@
-import type {
-  EditorT,
- ErrorMessage,  FileLocations } from '@dothis/share';
-import {
-  errorMessage,
-  isErrorMessage,
-  message,
-} from '@dothis/share';
+import type { EditorT, ErrorMessage, FileLocations } from '@dothis/share';
+import { errorMessage, isErrorMessage, message } from '@dothis/share';
 import type { RequestPost } from '@prisma/client';
 import axios from 'axios';
 import { uid } from 'uid';
@@ -72,6 +66,7 @@ export async function requestPostImageUpload(
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 
+  console.log('result', result);
   if (isErrorMessage(result.data)) return result.data;
 
   // 콘텐츠 이미지 정보 획득 + 이미지 URL 업데이트
