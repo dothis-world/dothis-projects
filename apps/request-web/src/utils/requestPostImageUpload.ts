@@ -116,7 +116,6 @@ async function getThumbnailImage({
   canvas.width = RequestPostDomain.constants.maxThumbnailWidth;
   canvas.height = RequestPostDomain.constants.maxThumbnailHeight;
 
-  // img.src = `data:${imageFileType};base64,${blobInfo.base64()}`;
   const file = await new Promise<File>((resolve) => {
     img.onload = () => {
       // canvas에 마치 objectFit: cover 한 것 처럼 넣기 위해 이미지 자르기

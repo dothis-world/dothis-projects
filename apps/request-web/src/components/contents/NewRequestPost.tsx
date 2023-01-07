@@ -253,27 +253,27 @@ export default function NewRequestPost({
           {
             onSuccess(data) {
               ToastBox.successToast('요청을 보냈습니다!');
-              // modalStore.close(PAGE_KEYS.newPostRequest);
-              // reset();
+              modalStore.close(PAGE_KEYS.newPostRequest);
+              reset();
               onSubmit?.();
 
-              // modalStore.open('view modal submit', {
-              //   title: '요청 내역 확인',
-              //   Component: () => (
-              //     <SubmitModalTemplate
-              //       submitText='보기'
-              //       onSubmit={() => {
-              //         modalStore.close('view modal submit');
-              //         ViewRequestPost.modalOpen({
-              //           requestPost: data,
-              //         });
-              //       }}
-              //       onCancel={() => modalStore.close('view modal submit')}
-              //     >
-              //       요청한 내용을 확인하시겠습니까?
-              //     </SubmitModalTemplate>
-              //   ),
-              // });
+              modalStore.open('view modal submit', {
+                title: '요청 내역 확인',
+                Component: () => (
+                  <SubmitModalTemplate
+                    submitText="보기"
+                    onSubmit={() => {
+                      modalStore.close('view modal submit');
+                      ViewRequestPost.modalOpen({
+                        requestPost: data,
+                      });
+                    }}
+                    onCancel={() => modalStore.close('view modal submit')}
+                  >
+                    요청한 내용을 확인하시겠습니까?
+                  </SubmitModalTemplate>
+                ),
+              });
             },
           },
         );
