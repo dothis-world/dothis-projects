@@ -24,5 +24,8 @@ export default t.procedure
         id,
       },
       data: input,
+      select: {
+        creator: true,
+      },
     }),
   );

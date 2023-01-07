@@ -261,14 +261,11 @@ export default function NewRequestPost({
               reset();
               onSubmit?.();
 
-              if (data.userId) {
-                const { pathname, query } = pagePath.user({
-                  userId: data.userId,
-                });
-                const isSameUrl = router.asPath.includes(
-                  `${pathname}?userId=${query.userId}`,
+              if (data.creator?.userId) {
+                const isCreatorPage = router.asPath.includes(
+                  data.creator?.userId,
                 );
-                if (isSameUrl) return;
+                if (isCreatorPage) return;
               }
 
               modalStore.open('view modal submit', {
