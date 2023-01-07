@@ -24,7 +24,7 @@ export default t.procedure
         id,
       },
       data: input,
-      select: {
+      include: {
         creator: true,
       },
     }),
