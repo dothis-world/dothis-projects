@@ -44,7 +44,8 @@
     "react-hook-form": "^7.41.0",
     "react-intersection-observer": "^9.4.1",
     "@preact/signals-react": "^1.2.2",
-    "zod": "^3.20.2"
+    "zod": "^3.20.2",
+    "zod-to-json-schema": "^3.20.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
