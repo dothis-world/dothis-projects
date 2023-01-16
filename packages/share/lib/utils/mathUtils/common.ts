@@ -2,7 +2,7 @@
 export const tau = Math.PI * 2;
 
 // 1rad ≈ 57.29577951308232deg
-export const rad = tau / 360; /*?*/
+export const rad = tau / 360;
 
 /**
  * @param degree 각도

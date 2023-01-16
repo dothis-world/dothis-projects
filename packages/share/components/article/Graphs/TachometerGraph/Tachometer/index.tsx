@@ -7,11 +7,6 @@ import { useAnimatedNumber } from 'lib/hooks';
 import { radToDeg, tau } from 'lib/utils/mathUtils/common';
 import { useState } from 'react';
 
-const width = 500;
-const height = 300;
-
-const quadrant = tau / 4;
-
 export type TachometerData = Array<{
   label: string;
   color: CSSStyleDeclaration['color'];
@@ -33,6 +28,11 @@ export type TachometerGraphProps = {
   data: TachometerData;
 };
 
+const width = 500;
+const height = 300;
+
+const quadrant = tau / 4;
+
 const gaugeRadius = {
   outerRadius: 150,
   innerRadius: 65,
@@ -44,11 +44,12 @@ const infoRadius = {
 };
 
 const startYPos = height - 80;
-const infoPieColor = '#3e3e3e';
 
-const gaugeValueBoxWidth = 72;
+const gaugeValueBoxWidth = 86;
 const gaugeValueBoxHeight = 42;
 const gaugeValueBoxRound = 12;
+
+const infoPieColor = '#3e3e3e';
 
 export const TachometerGraph = ({
   data,
@@ -119,20 +120,14 @@ export const TachometerGraph = ({
               const [centroidX, centroidY] = pie.path.centroid(arc);
 
               const textRotateRad = (arc.endAngle + arc.startAngle) / 2;
-              console.log(
-                arc.data.label,
-                'arc.endAngle, arc.startAngle',
-                arc.endAngle,
-                arc.startAngle,
-              );
 
               return (
                 <g key={`info-arc-${datum.label}`}>
                   <path d={pie.path(arc) ?? undefined} fill={infoPieColor} />
                   <Text
                     className="chart__number"
-                    x={centroidX}
-                    y={centroidY}
+                    x={centroidX - centroidX * 0.01}
+                    y={centroidY - centroidY * 0.01}
                     textAnchor="middle"
                     dominantBaseline="middle"
                     angle={radToDeg(textRotateRad)}

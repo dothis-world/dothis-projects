@@ -15,17 +15,17 @@ export default {
 } as ComponentMeta<typeof TachometerGraph>;
 
 const data: TachometerGraphProps['data'] = [
-  { color: '#2cba00', label: '매우 낮음' },
-  { color: '#a3ff00', label: '낮음' },
-  { color: '#fff400', label: '보통' },
-  { color: '#ffa700', label: '높음' },
   { color: '#ff0000', label: '매우 높음' },
+  { color: '#ff9900', label: '높음' },
+  { color: '#ffc000', label: '보통' },
+  { color: '#92d050', label: '낮음' },
+  { color: '#00b050', label: '매우 낮음' },
 ];
 
 const valueInfo: TachometerGraphProps['valueInfo'] = {
   ...defaultPercentValueInfo,
-  minLabel: '쾌적',
-  maxLabel: '치열',
+  maxLabel: '좋음',
+  minLabel: '나쁨',
 };
 
 export const Sample = () => {

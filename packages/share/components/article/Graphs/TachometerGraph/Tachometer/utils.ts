@@ -3,5 +3,5 @@ import type { TachometerGraphProps } from 'components/article/Graphs/TachometerG
 export const defaultPercentValueInfo = {
   min: 0,
   max: 100,
-  formatter: (value: TachometerGraphProps['value']) => `${value.toFixed(1)}%`,
+  formatter: (value: TachometerGraphProps['value']) => `${value.toFixed(2)}%`,
 };
