@@ -60,6 +60,7 @@
     "@visx/tooltip": "^3.0.0",
     "@visx/wordcloud": "^3.0.0",
     "zustand": "^4.2.0",
+    "d3-array": "^3.2.2",
     "zod-to-json-schema": "^3.20.2"
   },
   "devDependencies": {
@@ -85,6 +86,7 @@
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "@types/d3-array": "^3.0.4",
     "babel-loader": "^8.3.0",
     "eslint": "^8.27.0",
     "prop-types": "^15.7.2",

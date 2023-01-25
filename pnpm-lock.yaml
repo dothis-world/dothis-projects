@@ -468,6 +468,7 @@ importers:
       '@tanstack/react-table': ^8.7.4
       '@tinymce/tinymce-react': ^4.2.0
       '@ts-rest/core': ^3.12.0
+      '@types/d3-array': ^3.0.4
       '@types/node': ^18.11.9
       '@types/react': ^18.0.25
       '@types/react-dom': ^18.0.9
@@ -484,6 +485,7 @@ importers:
       '@visx/wordcloud': ^3.0.0
       babel-loader: ^8.3.0
       clsx: ^1.2.1
+      d3-array: ^3.2.2
       date-fns: ^2.29.3
       eslint: ^8.27.0
       fp-ts: ^2.13.1
@@ -535,6 +537,7 @@ importers:
       '@visx/tooltip': 3.0.0_biqbaboplfbrettd7655fr4n2y
       '@visx/wordcloud': 3.0.0_react@18.2.0
       clsx: 1.2.1
+      d3-array: 3.2.2
       date-fns: 2.29.3
       fp-ts: 2.13.1
       framer-motion: 8.4.3_biqbaboplfbrettd7655fr4n2y
@@ -573,6 +576,7 @@ importers:
       '@storybook/manager-webpack5': 6.5.15_ezwbcwsuf2bqvxzlg3s7mwruqi
       '@storybook/react': 6.5.15_4umj6u2aef6td5xkg3f7eukyp4
       '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
+      '@types/d3-array': 3.0.4
       '@types/node': 18.11.15
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.10
@@ -8380,6 +8384,10 @@ packages:
       '@types/node': 18.11.18
     dev: false
 
+  /@types/d3-array/3.0.4:
+    resolution: {integrity: sha512-nwvEkG9vYOc0Ic7G7kwgviY4AQlTfYGIZ0fqB7CQHXGyYM6nO7kJh5EguSNA3jfh4rq7Sb7eMVq8isuvg2/miQ==}
+    dev: true
+
   /@types/d3-cloud/1.2.5:
     resolution: {integrity: sha512-vEIER9DsEBUOdpRiwCh3n1qE+cV6h4e1LhxhY2sLt+m8LPNAIkOOhTlqk0JDiBwD+ZPM8ynFAOU3AuPuVYBFBA==}
     dependencies:
@@ -11600,6 +11608,13 @@ packages:
       internmap: 1.0.1
     dev: false
 
+  /d3-array/3.2.2:
+    resolution: {integrity: sha512-yEEyEAbDrF8C6Ob2myOBLjwBLck1Z89jMGFee0oPsn95GqjerpaOA4ch+vc2l0FNFFwMD5N7OCSEN5eAlsUbgQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      internmap: 1.0.1
+    dev: false
+
   /d3-cloud/1.2.5:
     resolution: {integrity: sha512-4s2hXZgvs0CoUIw31oBAGrHt9Kt/7P9Ik5HIVzISFiWkD0Ga2VLAuO/emO/z1tYIpE7KG2smB4PhMPfFMJpahw==}
     dependencies:
@@ -11634,7 +11649,7 @@ packages:
     resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
     engines: {node: '>=12'}
     dependencies:
-      d3-array: 2.12.1
+      d3-array: 3.2.2
       d3-format: 2.0.0
       d3-interpolate: 3.0.1
       d3-time: 2.1.1
