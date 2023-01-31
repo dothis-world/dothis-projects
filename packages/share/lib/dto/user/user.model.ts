@@ -43,4 +43,9 @@ export const apiUser = c.router({
     }),
     summary: '',
   },
+  verifyTokenGet: {
+    method: 'GET',
+    path: '/verify-token',
+    responses: { 200: z.string() },
+  },
 });
