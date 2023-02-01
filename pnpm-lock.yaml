@@ -158,6 +158,7 @@ importers:
       '@babel/core': ^7.20.2
       '@dothis/config': '*'
       '@dothis/share': '*'
+      '@fp-ts/core': ^0.1.1
       '@hookform/resolvers': ^2.9.10
       '@preact/signals-react': ^1.2.2
       '@svgr/webpack': ^6.5.1
@@ -185,7 +186,6 @@ importers:
       clsx: ^1.2.1
       cssnano: ^5.0.12
       date-fns: ^2.29.3
-      fp-ts: ^2.13.1
       framer-motion: ^7.10.3
       iron-session: ^6.3.1
       next: 13.1.1
@@ -203,12 +203,14 @@ importers:
       react-hook-form: ^7.41.0
       react-intersection-observer: ^9.4.1
       ts-node: ^10.9.1
+      type-fest: ^3.5.4
       typescript: ^4.9.4
       webpack: ^5.75.0
       zod: ^3.20.2
       zod-to-json-schema: ^3.20.2
     dependencies:
       '@dothis/share': link:../../packages/share
+      '@fp-ts/core': 0.1.1
       '@hookform/resolvers': 2.9.10_react-hook-form@7.41.5
       '@preact/signals-react': 1.2.2_react@18.2.0
       '@tanstack/react-query': 4.20.9_biqbaboplfbrettd7655fr4n2y
@@ -230,7 +232,6 @@ importers:
       axios: 1.2.2
       clsx: 1.2.1
       date-fns: 2.29.3
-      fp-ts: 2.13.1
       framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
       iron-session: 6.3.1_next@13.1.1
       next: 13.1.1_pjwopsidmaokadturxaafygjp4
@@ -259,6 +260,7 @@ importers:
       postcss-nested: 6.0.0_postcss@8.4.20
       postcss-preset-env: 7.8.3_postcss@8.4.20
       ts-node: 10.9.1_ewfw2lwfc3dwdvz7r6yz2ssqyi
+      type-fest: 3.5.4
       typescript: 4.9.4
       webpack: 5.75.0
 
@@ -297,7 +299,6 @@ importers:
       babel-plugin-superjson-next: ^0.4.5
       clsx: ^1.2.1
       date-fns: ^2.29.3
-      fp-ts: ^2.13.1
       framer-motion: ^7.10.3
       googleapis: ^107.0.0
       hangul-js: ^0.2.6
@@ -353,7 +354,6 @@ importers:
       axios: 1.2.2
       clsx: 1.2.1
       date-fns: 2.29.3
-      fp-ts: 2.13.1
       framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
       googleapis: 107.0.0
       hangul-js: 0.2.6
@@ -471,7 +471,7 @@ importers:
       '@tanstack/react-query': ^4.14.5
       '@tanstack/react-table': ^8.7.4
       '@tinymce/tinymce-react': ^4.2.0
-      '@ts-rest/core': ^3.15.0
+      '@ts-rest/core': ^3.12.0
       '@types/d3-array': ^3.0.4
       '@types/node': ^18.11.9
       '@types/react': ^18.0.25
@@ -4903,6 +4903,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@fp-ts/core/0.1.1:
+    resolution: {integrity: sha512-7vQnrnvJAMrXgIwt0qQNhXkPDtm4l8vwql8EvXeY47v/FwnWpDvt1HISoO9Kq3am5SZ0A8Av+4NqPab2FRdKxw==}
+    dev: false
+
   /@gar/promisify/1.1.3:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: true
@@ -8328,6 +8332,7 @@ packages:
       react: 18.2.0
       zod: 3.20.2
     dev: false
+
   /@tsconfig/node10/1.0.9:
     resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
 
@@ -11662,19 +11667,8 @@ packages:
     resolution: {integrity: sha512-fVjoElzjhCEy+Hbn8KygnmMS7Or0a9sI2UzGwoB7cCtvI1XpVN9GpoYlnb3xt2YV66oXYb1fLJ8GMvP4hdU1RA==}
     dev: false
 
-  /d3-format/1.4.5:
-    resolution: {integrity: sha512-J0piedu6Z8iB6TbIGfZgDzfXxUFN3qQRMofy2oPdXzQibYGqPB/9iMcxr/TGalU+2RsyDO+U4f33id8tbnSRMQ==}
-    dev: false
-
   /d3-format/2.0.0:
     resolution: {integrity: sha512-Ab3S6XuE/Q+flY96HXT0jOXcM4EAClYFnRGY5zsjRGNy6qCYrQsMffs7cV5Q9xejb35zxW5hf/guKw34kvIKsA==}
-    dev: false
-
-  /d3-interpolate/3.0.1:
-    resolution: {integrity: sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-color: 3.1.0
     dev: false
 
   /d3-interpolate/3.0.1:
@@ -11693,17 +11687,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       d3-array: 3.2.2
-      d3-format: 2.0.0
-      d3-interpolate: 3.0.1
-      d3-time: 2.1.1
-      d3-time-format: 3.0.0
-    dev: false
-
-  /d3-scale/4.0.2:
-    resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-array: 2.12.1
       d3-format: 2.0.0
       d3-interpolate: 3.0.1
       d3-time: 2.1.1
@@ -21602,6 +21585,11 @@ packages:
   /type-fest/0.8.1:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
+    dev: true
+
+  /type-fest/3.5.4:
+    resolution: {integrity: sha512-/Je22Er4LPoln256pcLzj73MUmPrTWg8u4WB1RlxaDl0idJOfD1r259VtKOinp4xLJqJ9zYVMuWOun6Ssp7boA==}
+    engines: {node: '>=14.16'}
     dev: true
 
   /type-is/1.6.18:

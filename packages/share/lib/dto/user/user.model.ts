@@ -1,4 +1,3 @@
-import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
 import { c } from '../contract';
@@ -27,7 +26,7 @@ export const apiUser = c.router({
   verifyAccessTokenPost: {
     method: 'POST',
     path: '/verify-access',
-    responses: { 200: c.response<string>() },
+    responses: { 200: z.string() },
     body: z.object({
       message: z.string(),
     }),
@@ -36,7 +35,7 @@ export const apiUser = c.router({
   verifyRefreshTokenPost: {
     method: 'POST',
     path: '/verify-refresh',
-    responses: { 200: c.response<string>() },
+    responses: { 200: z.string() },
     body: z.object({
       message: z.string(),
       accessToken: z.string(),

@@ -1,14 +1,12 @@
 import { apiUser } from '@dothis/share/lib/dto';
 import { c } from '@dothis/share/lib/dto/contract';
-// import { c } from '@dothis/share/lib/dto/contract';
-import { initClient, initContract } from '@ts-rest/core';
+import type { ApiResponseForRoute, AppRoute, AppRouter } from '@ts-rest/core';
+import { getRouteResponses, isAppRoute } from '@ts-rest/core';
 import type { InitClientReturn } from '@ts-rest/react-query';
 import { initQueryClient } from '@ts-rest/react-query';
-import { Zodios } from '@zodios/core';
-import { ZodiosHooks } from '@zodios/react';
+import type { Entries, Simplify } from 'type-fest';
 
 import { apiBaseUrl } from '@/constants/dev';
-import * as User from '@/domain/User';
 
 // export const apiClient = new Zodios(
 //   apiBaseUrl,
@@ -17,12 +15,22 @@ import * as User from '@/domain/User';
 // );
 // export const apiHooks = new ZodiosHooks('myAPI', apiClient);
 
-const contract = c.router({
+export const apiRouter = c.router({
   user: apiUser,
 });
 
-export const apiClient: InitClientReturn<typeof contract> = initQueryClient(
-  contract,
+type RecurApiRouterResponse<R extends AppRouter> = {
+  [K in keyof R]: R[K] extends AppRoute
+    ? ApiResponseForRoute<R[K]>
+    : R[K] extends AppRouter
+    ? RecurApiRouterResponse<R[K]>
+    : never;
+};
+
+export type ApiRouterResponse = RecurApiRouterResponse<typeof apiRouter>;
+
+export const apiClient: InitClientReturn<typeof apiRouter> = initQueryClient(
+  apiRouter,
   {
     baseUrl: apiBaseUrl,
     baseHeaders: {},

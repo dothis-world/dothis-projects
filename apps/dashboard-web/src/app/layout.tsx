@@ -14,7 +14,7 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="ko" className={clsx()}>
+    <html lang="ko">
       <body>
         <ClientContext>
           <GNB />
