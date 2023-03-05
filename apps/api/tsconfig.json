@@ -1,5 +1,5 @@
 {
-  "extends": "@dothis/config/tsconfig-nestjs.json",
+  "extends": "../../tsconfig/tsconfig-nestjs.json",
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
@@ -8,8 +8,7 @@
       ],
       "@Libs/*": [
         "./libs/*"
-      ],
-      "@dothis/dto": ["../../packages/dto/*"]
+      ]
     }
   },
   "files": [

@@ -1,9 +1,10 @@
 const withPlugins = require('next-compose-plugins');
+const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin');
 
 const runtimeCaching = require('next-pwa/cache');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// });
 
 const withPWA = require('next-pwa')({
   dest: 'public',
@@ -34,9 +35,20 @@ const nextConfig = {
     ],
     transpilePackages: ['@dothis/share'],
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
+    return config;
+  },
+
+  eslint: {
+    dirs: ['src'],
+  },
   compiler: {
     emotion: true,
   },
 };
 
-module.exports = withPlugins([withPWA, withBundleAnalyzer], nextConfig);
+// module.exports = withPlugins([withPWA ,withBundleAnalyzer], nextConfig);
+module.exports = withPlugins([withPWA], nextConfig);

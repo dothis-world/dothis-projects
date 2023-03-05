@@ -1,11 +1,13 @@
 import { Text } from '@chakra-ui/react';
-import { FormValidMessage, Input, SubmitModalTemplate } from '@dothis/share';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useModalStore } from '@/dto/Modal';
+import { SubmitModalTemplate } from '@/components/article/Modal';
+import { FormValidMessage } from '@/components/ui/FormValidMessage';
+import { Input } from '@/components/ui/Input';
+import { useModalStore } from '@/models/Modal';
 
 import { RequestPostDomain } from '../../../domain';
 import Textarea from '../../ui/Textarea';
@@ -118,7 +120,7 @@ export const 등록콘텐츠URL = (onSubmit: (solvedUrl: string) => void) => {
       });
 
       const submit = handleSubmit(({ solvedUrl }) => {
-        onSubmit(solvedUrl);
+        if (solvedUrl) onSubmit(solvedUrl);
       });
 
       return (

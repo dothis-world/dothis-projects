@@ -26,16 +26,20 @@
       "cache": false
     },
     "build-storybook": {
+      "inputs": [
+        ".storybook/**/*",
+        "src/components/**/*.stories.tsx"
+      ],
       "outputs": [
-        "storybook-static/**"
+        "build/**"
       ]
     },
     "theme-gen": {
       "inputs": [
-        "./lib/styles/**/*"
+        "./src/styles/**/*"
       ],
       "outputs": [
-        "./lib/types/theme.d.ts"
+        "./src/types/theme.d.ts"
       ],
       "cache": false
     },
@@ -64,7 +68,6 @@
     "lint": {
       "outputs": []
     },
-   
     "dev-mock": {
       "cache": false
     },
@@ -74,13 +77,6 @@
     "request-web": {
       "dependsOn": [
         "^build"
-      ],
-      "env": [
-        "DATABASE_URL",
-        "NEXTAUTH_URL",
-        "NEXTAUTH_SECRET",
-        "DOTHIS_AWS_ACCESS_KEY_ID",
-        "DOTHIS_AWS_SECRET_ACCESS_KEY"
       ]
     },
     "clean": {
@@ -98,11 +94,11 @@
     "NEXTAUTH_URL",
     "NEXTAUTH_SECRET",
     "AWS_ACCESS_KEY_ID",
-    "AWS_SECRET_ACCESS_KEY"
+    "AWS_SECRET_ACCESS_KEY",
+    "NODE_ENV"
   ],
   "globalDependencies": [
-    "$NODE_ENV",
-    ".env", 
+    ".env",
     ".env.local",
     "tsconfig.json"
   ]

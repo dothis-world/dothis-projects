@@ -15,7 +15,7 @@ import {
   TsRest,
   NestRequestShapes,
 } from '@ts-rest/nest';
-import { userApi } from '@dothis/dto/lib';
+import { userApi } from '@dothis/dto';
 
 const c = nestControllerContract(userApi);
 const { getUser } = c;
