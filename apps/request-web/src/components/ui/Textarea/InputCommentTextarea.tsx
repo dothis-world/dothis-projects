@@ -1,18 +1,19 @@
 import type { ComponentWithAs, FlexProps } from '@chakra-ui/react';
 import { Box, Flex, forwardRef } from '@chakra-ui/react';
 import type { Optional } from '@dothis/share';
-import type { RequestComment } from '@prisma/client';
 import React, { useCallback, useImperativeHandle, useRef } from 'react';
 
-import type { UserAvatarProps } from '@/components/ui/UserAvatar';
-import { UserAvatar } from '@/components/ui/UserAvatar';
+import type {
+  UserAvatarProps,
+  UserAvatarProps,
+} from '@/components/ui/UserAvatar';
+import { UserAvatar, UserAvatar } from '@/components/ui/UserAvatar';
+import type { RequestComment } from '@/db';
 import type { RequestCommentDomain } from '@/domain';
 
 import { Button } from '../Button';
 import { SvgSendPlane } from '../Icons';
 import { ToastBox } from '../ToastBox';
-import type { UserAvatarProps } from '../UserAvatar';
-import { UserAvatar } from '../UserAvatar';
 import type { TextareaProps } from './index';
 import Textarea from './index';
 

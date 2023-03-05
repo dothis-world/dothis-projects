@@ -1,7 +1,7 @@
 const withPlugins = require('next-compose-plugins');
 const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin');
 
-const runtimeCaching = require('next-pwa/cache');
+// const runtimeCaching = require('next-pwa/cache');
 // const withBundleAnalyzer = require('@next/bundle-analyzer')({
 //   enabled: process.env.ANALYZE === 'true',
 // });
@@ -22,6 +22,7 @@ const withPWA = require('next-pwa')({
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  transpilePackages: ['@dothis/share'],
   experimental: {
     // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
     outputFileTracingIgnores: ['**swc/core**'],
@@ -33,7 +34,6 @@ const nextConfig = {
         },
       ],
     ],
-    transpilePackages: ['@dothis/share'],
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
