@@ -4,6 +4,8 @@ import type { ModalProps } from '@/components/article/Modal';
 import { immer } from 'zustand/middleware/immer'; 
 import { create } from 'zustand';
 
+import type { ModalProps } from '@/components/article/Modal';
+
 enableMapSet();
 
 export interface ModalItem {

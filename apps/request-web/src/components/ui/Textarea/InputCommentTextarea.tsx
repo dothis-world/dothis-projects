@@ -4,6 +4,8 @@ import type { Optional } from '@dothis/share';
 import type { RequestComment } from '@prisma/client';
 import React, { useCallback, useImperativeHandle, useRef } from 'react';
 
+import type { UserAvatarProps } from '@/components/ui/UserAvatar';
+import { UserAvatar } from '@/components/ui/UserAvatar';
 import type { RequestCommentDomain } from '@/domain';
 
 import { Button } from '../Button';
