@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig/tsconfig-build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "allowJs": false,
+    "module": "commonjs"
+  },
+  "include": ["**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

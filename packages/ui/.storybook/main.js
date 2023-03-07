@@ -1,4 +1,6 @@
-/** @type { import('@storybook/react').StorybookConfig } */
+const theme = require('@dothis/theme/dashboard');
+
+/** @type { import('@storybook/react-webpack5').StorybookConfig } */
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
