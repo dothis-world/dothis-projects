@@ -72,7 +72,6 @@
       "cache": false
     },
     "build:theme": {
-
         "outputs": [
             "./dist/**/*"
         ],

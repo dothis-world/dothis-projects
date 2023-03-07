@@ -68,6 +68,18 @@ const theme = {
     /* other */
     danger: '#FC5555',
   },
+  lineHeight: {
+    16: px2rem(16),
+    18: px2rem(18),
+    22: px2rem(22),
+    24: px2rem(24),
+    28: px2rem(28),
+    30: px2rem(30),
+    36: px2rem(36),
+    42: px2rem(42),
+    48: px2rem(48),
+    54: px2rem(54),
+  },
 } satisfies Config['theme'];
 
 export default theme;

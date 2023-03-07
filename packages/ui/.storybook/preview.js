@@ -13,11 +13,3 @@ export const parameters = {
     },
   },
 };
-
-export const decorators = [
-  (Story) => (
-    <Layout>
-      <Story />
-    </Layout>
-  ),
-];

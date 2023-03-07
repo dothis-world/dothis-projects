@@ -6,8 +6,6 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
-    "build:watch": "tsc --project tsconfig.build.json --watch",
     "clean": "rimraf node_modules"
   },
   "devDependencies": {
