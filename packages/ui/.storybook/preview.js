@@ -1,5 +1,4 @@
 import './globalStyle.css';
-import Layout from './Layout';
 
 /** @type { import('@storybook/react').Preview } */
 export const parameters = {
