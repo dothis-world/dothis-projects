@@ -25,7 +25,7 @@
     "clean": "rimraf ./dist",
     "compile": "tsc -p tsconfig.build.json",
     "storybook": "storybook dev -p 6600",
-    "build-storybook": "storybook build -s storybook-static",
+    "build-storybook": "storybook build",
     "tailwind-viewer": "pnpx tailwind-config-viewer -o"
   },
   "dependencies": {
