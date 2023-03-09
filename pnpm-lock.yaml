@@ -178,8 +178,8 @@ importers:
       '@svgr/webpack': ^6.5.1
       '@tanstack/react-query': ^4.24.4
       '@tanstack/react-query-devtools': ^4.24.9
-      '@ts-rest/core': ^3.18.0
-      '@ts-rest/react-query': ^3.18.0
+      '@ts-rest/core': ^3.18.1
+      '@ts-rest/react-query': ^3.18.1
       '@types/node': ^18.14.2
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
@@ -211,7 +211,7 @@ importers:
       typescript: ^4.9.5
       valtio: ^1.10.3
       webpack: ^5.75.0
-      zod: ^3.20.6
+      zod: ^3.21.4
       zod-to-json-schema: ^3.20.4
     dependencies:
       '@dothis/share': link:../../packages/share
@@ -220,8 +220,8 @@ importers:
       '@next/font': 13.2.3
       '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-devtools': 4.24.10_636dldj5wfr5vkyyqzs5k363kq
-      '@ts-rest/core': 3.18.0_zod@3.20.6
-      '@ts-rest/react-query': 3.18.0_xjr66qct46dpbh77smabzr5mta
+      '@ts-rest/core': 3.18.1_zod@3.21.4
+      '@ts-rest/react-query': 3.18.1_ywcxacvshk7tk4pxburjbskoky
       axios: 1.3.4
       clsx: 1.2.1
       date-fns: 2.29.3
@@ -235,8 +235,8 @@ importers:
       react-hook-form: 7.43.3_react@18.2.0
       react-intersection-observer: 9.4.3_react@18.2.0
       valtio: 1.10.3_react@18.2.0
-      zod: 3.20.6
-      zod-to-json-schema: 3.20.4_zod@3.20.6
+      zod: 3.21.4
+      zod-to-json-schema: 3.20.4_zod@3.21.4
     devDependencies:
       '@babel/core': 7.21.0
       '@dothis/dto': link:../../packages/dto
@@ -487,10 +487,10 @@ importers:
     specifiers:
       '@ts-rest/core': ^3.18.0
       eslint-config-dothis-nestjs: workspace:*
-      zod: ^3.20.6
+      zod: ^3.21.4
     dependencies:
-      '@ts-rest/core': 3.18.0_zod@3.20.6
-      zod: 3.20.6
+      '@ts-rest/core': 3.18.0_zod@3.21.4
+      zod: 3.21.4
     devDependencies:
       eslint-config-dothis-nestjs: link:../../config/eslint-config-dothis-nestjs
 
@@ -8296,6 +8296,28 @@ packages:
       zod: 3.20.6
     dev: false
 
+  /@ts-rest/core/3.18.0_zod@3.21.4:
+    resolution: {integrity: sha512-w2WWfAvAbLMmxKtvVENCGzuNE3BXrPtphIfLt7MVUlGmdFAZH+i/M6BeGtAoilF5zFw4alj6/4oXHxteqsS/UA==}
+    peerDependencies:
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      zod: 3.21.4
+    dev: false
+
+  /@ts-rest/core/3.18.1_zod@3.21.4:
+    resolution: {integrity: sha512-hS0lze9y1TLRe0rRk0VyIgkYkj4QlBBfpSJgaHOJoEZBEkKS0fIXJ8bg8njhIDu3F6jC2nwZNnLCmMNtZ8WFIQ==}
+    peerDependencies:
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      zod: 3.21.4
+    dev: false
+
   /@ts-rest/nest/3.18.0_pk55kk37nxl3mll3hb7gfeyhju:
     resolution: {integrity: sha512-3ogjxuDNF5faoLb3NLFqlPmb0BJUgyHaI9XPmJn8JQIEhec29J1nXY7FDgBzAcr0OVZvY1ATu1SfHp9jSIoyNA==}
     peerDependencies:
@@ -8315,11 +8337,11 @@ packages:
       zod: 3.20.6
     dev: false
 
-  /@ts-rest/react-query/3.18.0_xjr66qct46dpbh77smabzr5mta:
-    resolution: {integrity: sha512-3cOjWPCiBlqNAFSJAeeA2cMFT44DVgf0+SjtapaPt8A/XUq9+vSZzl1Td5biMKbTfg9wH5d68IKD8YnxlemzeQ==}
+  /@ts-rest/react-query/3.18.1_ywcxacvshk7tk4pxburjbskoky:
+    resolution: {integrity: sha512-AtxFGr8PTUCX4ZZ1YvY9R26Qh5r+/ow4Uo4jOwfPKnTxBFMsrc+MQtylhOTMaib11kEMAg8xPsghMVdfYD/mhw==}
     peerDependencies:
       '@tanstack/react-query': ^4.0.0
-      '@ts-rest/core': 3.18.0
+      '@ts-rest/core': 3.18.1
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       zod: ^3.0.0
     peerDependenciesMeta:
@@ -8327,9 +8349,9 @@ packages:
         optional: true
     dependencies:
       '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
-      '@ts-rest/core': 3.18.0_zod@3.20.6
+      '@ts-rest/core': 3.18.1_zod@3.21.4
       react: 18.2.0
-      zod: 3.20.6
+      zod: 3.21.4
     dev: false
 
   /@tsconfig/node10/1.0.9:
@@ -21606,16 +21628,20 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  /zod-to-json-schema/3.20.4_zod@3.20.6:
+  /zod-to-json-schema/3.20.4_zod@3.21.4:
     resolution: {integrity: sha512-Un9+kInJ2Zt63n6Z7mLqBifzzPcOyX+b+Exuzf7L1+xqck9Q2EPByyTRduV3kmSPaXaRer1JCsucubpgL1fipg==}
     peerDependencies:
       zod: ^3.20.0
     dependencies:
-      zod: 3.20.6
+      zod: 3.21.4
     dev: false
 
   /zod/3.20.6:
     resolution: {integrity: sha512-oyu0m54SGCtzh6EClBVqDDlAYRz4jrVtKwQ7ZnsEmMI9HnzuZFj8QFwAY1M5uniIYACdGvv0PBWPF2kO0aNofA==}
+    dev: false
+
+  /zod/3.21.4:
+    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
   /zustand/4.3.3_immer@9.0.19+react@18.2.0:
