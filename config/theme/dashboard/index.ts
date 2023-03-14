@@ -1,7 +1,8 @@
 import { px2rem } from '../utils/unit';
 import { Config } from 'tailwindcss';
+import { PluginCreator } from 'tailwindcss/types/config';
 
-const theme = {
+export const theme = {
   extend: {},
   fontSize: {
     /* heading */
@@ -82,4 +83,12 @@ const theme = {
   },
 } satisfies Config['theme'];
 
-export default theme;
+export const utilities: PluginCreator = ({ addBase, addComponents, addUtilities, config, e}) => {
+  addUtilities({
+    'typo-h1': {
+      fontSize: theme.fontSize.h1,
+      lineHeight: theme.lineHeight['54']
+    }
+  })
+}
+
