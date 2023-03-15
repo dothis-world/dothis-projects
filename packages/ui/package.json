@@ -26,7 +26,7 @@
     "compile": "tsc -p tsconfig.build.json",
     "storybook": "storybook dev -p 6600",
     "build-storybook": "storybook build",
-    "tailwind-viewer": "pnpx tailwind-config-viewer -o"
+    "tailwind-viewer": "pnpm tailwind-config-viewer -o"
   },
   "dependencies": {
     "next": "^13.2.4",
