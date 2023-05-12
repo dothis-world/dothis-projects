@@ -20,7 +20,6 @@ const Switch = forwardRef<Ref, Props>(
 
     const onToggleSwitch = (e: ChangeEvent<HTMLInputElement>) => {
       const { checked } = e.target;
-      console.log(checked);
 
       setChecked(checked);
     };

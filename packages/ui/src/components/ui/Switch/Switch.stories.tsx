@@ -12,24 +12,11 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const SwitchButton: Story = {
   args: {
     isDisabled: false,
-    ischecked: false,
   },
   argTypes: {
     isDisabled: { type: 'boolean' },
-    ischecked: { type: 'boolean' },
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    isDisabled: true,
-    ischecked: false,
-  },
-  argTypes: {
-    isDisabled: { type: 'boolean' },
-    ischecked: { type: 'boolean' },
   },
 };
