@@ -3,7 +3,6 @@ import LoginKeyword from '@/components/Login/LoginKeyword';
 async function ChooseKeywordPage() {
   const onLoading = async (ms: number) => {
     await delay(ms);
-    console.log('로딩');
 
     return [
       '부동산',
