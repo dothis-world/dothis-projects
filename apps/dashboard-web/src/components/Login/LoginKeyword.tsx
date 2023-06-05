@@ -18,7 +18,8 @@ function LoginKeyword({ keyword }: KeywordSchema) {
     },
   });
 
-  const keywords = useWatch({ name: 'keyword' });
+  const control = methods.control;
+  const keywords = useWatch({ name: 'keyword', control });
 
   const onSubmit = async () => {
     console.log('data submit');
