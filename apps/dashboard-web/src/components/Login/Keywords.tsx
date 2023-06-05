@@ -38,7 +38,7 @@ function Keywords({ keyword }: KeywordSchema) {
           <TagItem
             key={`editor-${mock}`}
             onClick={() => onToggleKeyword(mock)}
-            chosen={keywords.includes(mock)}
+            chosen={keywords.includes(mock) || undefined}
           >
             {mock}
           </TagItem>
@@ -66,7 +66,7 @@ const TagList = styled.ul`
   margin-bottom: 4rem;
 `;
 
-const TagItem = styled.li<{ chosen: boolean }>`
+const TagItem = styled.li<{ chosen: boolean | undefined }>`
   height: 2rem;
   padding: 0 0.75rem;
   border-radius: 9999px;
