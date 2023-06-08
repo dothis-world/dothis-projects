@@ -1,3 +1,0 @@
-export enum DAILY_VIEWS_DI_TOKEN {
-  FIND = 'DAILY_VIEWS_DI_TOKEN_FIND',
-}
