@@ -1,25 +1,22 @@
 import axios from 'axios';
 
+import LocalStorage from '@/utils/localstorage/LocalStorage';
+
 const instance = axios.create({
-  baseURL: 'https://localhost:8080',
+  baseURL: process.env['NEXT_PUBLIC_BASE_URL'],
   withCredentials: true,
 });
 
-const isServer = typeof window !== 'undefined';
-
 instance.interceptors.request.use((config) => {
-  if (isServer) return config;
-  else if (config.headers) {
-    config.headers.Authorization = localStorage.getItem('Authorization') ?? '';
+  if (config.headers) {
+    config.headers.Authorization = LocalStorage.getItem('Authorization') ?? '';
   }
   return config;
 });
 
 instance.interceptors.response.use((response) => {
-  if (isServer) return response;
-  else if (response.headers['authorization']) {
-    console.log(response);
-    localStorage.setItem('Authorization', response.headers['authorization']);
+  if (response.headers['authorization']) {
+    LocalStorage.setItem('Authorization', 'item');
   }
   return response;
 });
