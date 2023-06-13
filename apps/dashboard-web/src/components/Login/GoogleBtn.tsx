@@ -6,7 +6,9 @@ import SvgComp from '../share/SvgComp';
 
 function GoogleBtn() {
   return (
-    <GoogleLink href="https://api.dothis.kr/v1/auth/google-login">
+    <GoogleLink
+      href={`${process.env['NEXT_PUBLIC_BASE_URL']}/v1/auth/google-login`}
+    >
       <Container>
         <Button>
           <SvgComp icon="GoogleSvg" size={26} />
