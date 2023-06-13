@@ -1,17 +1,12 @@
-import Landing from '@/components/Landing';
-import { apiClient } from '@/utils/apiClient';
+import { cookies } from 'next/headers';
 
-import ClientTest from './ClientTest';
+import { verifyToken } from '@/api/verify';
+import GoogleBtn from '@/components/Login/GoogleBtn';
 
-// export function getData() {
-//   return apiClient.user.verifyAccessTokenPost.mutation({
-//     body: {
-//       message: 'hi',
-//     },
-//   });
-// }
+export default async function RootPage(props: any) {
+  const cookieStore = cookies().get('Authorization')?.value;
 
-export default async function RootPage() {
-  // const data = await getData();
-  return <Landing />;
+  const data = await verifyToken({ cookie: cookieStore });
+
+  return <div>초기화면</div>;
 }
