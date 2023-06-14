@@ -13,7 +13,7 @@ function LoginLoadingComponent() {
         loop
         src={LoadingLottie}
         autoplay
-        style={{ width: '500px', height: '500px' }}
+        style={{ width: '220px', height: '220px' }}
       />
     </>
   );
