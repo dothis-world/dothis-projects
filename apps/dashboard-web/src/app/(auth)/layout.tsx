@@ -1,4 +1,4 @@
-import type { NextLayoutProps } from '@dothis/share';
+import type { NextLayoutProps } from '@dothis/ui/src/types/common';
 
 export default function AuthLayout({ children }: NextLayoutProps) {
   return (

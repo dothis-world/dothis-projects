@@ -3,6 +3,8 @@
   "include": ["./lib/types/global.d.ts", "**/*.ts", "**/*.tsx", "../../**/*.d.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "lib": ["ES2021"],
+    "target": "ES2021"
   }
 }

@@ -1,5 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Controller, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 import {
   Cookies,
   JwtAccessGuard,

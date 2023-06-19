@@ -85,7 +85,19 @@
     "NEXTAUTH_SECRET",
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY",
-    "NODE_ENV"
+    "NODE_ENV",
+    "NEXT_PUBLIC_API_MOCKING",
+    "GOOGLE_ID",
+    "GOOGLE_SECRET",
+    "FACEBOOK_ID",
+    "FACEBOOK_SECRET",
+    "TWITCH_CLIENT_ID",
+    "TWITCH_CLIENT_SECRET",
+    "INSTAGRAM_CLIENT_ID",
+    "INSTAGRAM_CLIENT_SECRET",
+    "DOTHIS_AWS_ACCESS_KEY_ID",
+    "DOTHIS_AWS_SECRET_ACCESS_KEY",
+    "NEXT_PUBLIC_TINYMCE_KEY"
   ],
   "globalDependencies": [".env", ".env.local", "tsconfig.json"]
 }

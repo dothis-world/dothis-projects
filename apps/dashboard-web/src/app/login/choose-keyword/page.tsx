@@ -34,6 +34,6 @@ async function ChooseKeywordPage() {
 export default ChooseKeywordPage;
 
 // Loading 체크를 위한 임시 delay 함수
-export const delay = (ms: number) => {
+const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
