@@ -7,8 +7,8 @@ sudo chmod -R 777 ./
 
 pnpm i
 
-pnpm build:back-end:prod
+pnpm build:back-end:api-prod
 
-cd /var/www/back-end/apps/api
+#cd /var/www/back-end/apps/api
 
-sudo pm2 reload ecosystem.config.js --env production --update-env
+#sudo pm2 reload ecosystem.config.js --env production --update-env
