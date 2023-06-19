@@ -1,21 +1,20 @@
 'use client';
 
-import { Player } from '@lottiefiles/react-lottie-player';
+import Lottie from 'lottie-react';
+import { useEffect } from 'react';
 
 import LoadingLottie from '@/assets/loading.json';
+
 function LoginLoadingComponent() {
-  if (typeof window === 'undefined') {
-    throw Error('Chat should only render on the client.');
-  }
+  useEffect(() => {
+    console.log('LoginLoadingComponent');
+  }, []);
   return (
-    <>
-      <Player
-        loop
-        src={LoadingLottie}
-        autoplay
-        style={{ width: '220px', height: '220px' }}
-      />
-    </>
+    <Lottie
+      loop
+      animationData={LoadingLottie}
+      style={{ width: '220px', height: '220px', margin: '0 auto' }}
+    />
   );
 }
 

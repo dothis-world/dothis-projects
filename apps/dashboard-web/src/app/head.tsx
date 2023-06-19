@@ -1,3 +1,5 @@
+import Script from 'next/script';
+
 export default function RootHeader() {
   return (
     <>

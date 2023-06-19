@@ -27,9 +27,11 @@ function LoginKeyword({ keyword }: KeywordSchema) {
 
   return (
     <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
       <Keywords keyword={keyword} />
 
       <Button>{keywords.length > 0 && keywords.length + '개'} 작성 </Button>
+      </form>
     </FormProvider>
   );
 }

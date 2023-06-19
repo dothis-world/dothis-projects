@@ -1,4 +1,8 @@
-import LoginLoadingComponent from '@/components/Login/LoginLoading';
+'use client';
+
+import { useEffect } from 'react';
+
+import LoginLoadingComponent from '../../components/Login/LoginLoading';
 
 function LoginLoading() {
   return (
