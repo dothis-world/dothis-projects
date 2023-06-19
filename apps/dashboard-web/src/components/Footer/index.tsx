@@ -9,9 +9,7 @@ import { pagePath } from '@/constants/pagePath';
 import styled from 'styled-components';
 
 const FooterLayout = styled.footer`
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  border: 1px solid black;
 `;
 
 export default function Footer() {

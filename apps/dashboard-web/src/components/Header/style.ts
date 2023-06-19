@@ -2,17 +2,18 @@ import styled from 'styled-components';
 
 export const HeaderLayout = styled.header`
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 48px;
+  border-bottom: 1px solid #d4d4d8;
 `;
 
 export const SearchBarContainer = styled.div`
   position: relative;
+  left: 100px;
 
   display: flex;
   justify-content: left;
@@ -33,7 +34,9 @@ export const SearchBarButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  position: abolute;
+  right: 0px;
+  top: 0px;
   border-radius: 8px;
 `;
 

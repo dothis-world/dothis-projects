@@ -5,12 +5,15 @@ export const SidebarLayout = styled.nav`
   justify-content: left;
   align-items: center;
   flex-direction: column;
+  border-right: 1px solid #d4d4d8;
 
-  height: 3000px;
+  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
   z-index: 1001;
+
+  background-color: white;
 `;
 
 export const Logo = styled.div`
