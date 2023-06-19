@@ -20,11 +20,7 @@ const onLoading = async (ms: number) => {
 async function ChooseKeywordPage() {
   const mock_keyword = await onLoading(3000);
 
-  return (
-    <>
-      <LoginKeyword keyword={mock_keyword} />
-    </>
-  );
+  return <LoginKeyword keyword={mock_keyword} />;
 }
 
 export default ChooseKeywordPage;
