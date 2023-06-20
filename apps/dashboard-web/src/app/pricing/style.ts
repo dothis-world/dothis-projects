@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const TagContainer = styled.div`
   display: flex;
-  justify-content: ;
+  justify-content: left;
+  position: relative;
   align-items: space-around;
   max-width: 1280px;
 
@@ -13,6 +14,28 @@ export const TagContainer = styled.div`
     gap: 12px;
     overflow: hidden;
   }
+`;
+
+export const Gradient = styled.span`
+  position: absolute;
+  top: 0;
+  right: 32px;
+  width: 30%;
+  height: 100%;
+  z-index: 2;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), white);
+`;
+
+export const RightButton = styled.button`
+  margin-left: 54px;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  border: 1px solid #a1a1aa;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Tag = styled.button`

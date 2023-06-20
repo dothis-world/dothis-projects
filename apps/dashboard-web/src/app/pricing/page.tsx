@@ -18,9 +18,12 @@ import {
   Td_start,
   Th_start,
   Tag_select,
+  RightButton,
+  Gradient,
 } from './style';
 import { useRouter } from 'next/navigation';
 import { pricing } from '@/constants/route';
+import Right from './right.svg';
 
 const TEXT = [
   '부동산',
@@ -45,6 +48,7 @@ export default function Price() {
 
       <Main>
         <TagContainer>
+          <Gradient />
           <div>
             {TEXT.map((value, key) => {
               return key === 1 || key === 0 ? (
@@ -56,7 +60,9 @@ export default function Price() {
               );
             })}
           </div>
-          <button> 옆 </button>
+          <RightButton>
+            <Right width={5} height={10} />
+          </RightButton>
         </TagContainer>
 
         <h2>유튜브 콘텐츠 기획 시작하기</h2>
