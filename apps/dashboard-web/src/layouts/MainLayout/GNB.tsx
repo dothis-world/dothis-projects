@@ -65,7 +65,11 @@ const SearchInput = styled.input`
 
   border: 2px solid;
   border-radius: 0.5rem;
+  border-color: ${theme.colors.grey10};
   padding: 0.75rem 3.5rem 0.75rem 1rem;
+  box-sizing: border-box;
+
+  background-color: ${theme.colors.grey00};
 
   font-size: 1rem;
 
@@ -73,14 +77,9 @@ const SearchInput = styled.input`
 
   transition: all 0.5s;
 
-  box-sizing: border-box;
-
-  ::-webkit-search-cancel-button {
+  /* &::-webkit-search-cancel-button {
     display: none;
-  }
-
-  background-color: ${theme.colors.grey00};
-  border-color: ${theme.colors.grey10};
+  } */
 
   &:focus {
     border-color: ${theme.colors.primary30};
@@ -95,6 +94,7 @@ const SearchIconWrapper = styled.div`
   position: absolute;
   right: 1rem;
   top: 50%;
+
   transform: translate(0, -50%);
 `;
 
@@ -103,10 +103,8 @@ const UnknownIconWrapper = styled.div`
   align-items: center;
 
   margin-left: 0.75rem;
-
   padding: 0.75rem;
   border: 1px solid ${theme.colors.primary20};
-
   border-radius: 0.5rem;
 
   background-color: ${theme.colors.primary20};
