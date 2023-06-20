@@ -25,7 +25,7 @@ export const SearchBar = styled.input`
   height: 24px;
   padding: 24px 12px;
   border-radius: 8px;
-  border: 1px solid #a1a1aa;
+  border: 1px solid #f0516d;
 `;
 
 export const SearchBarButton = styled.button`
@@ -46,8 +46,19 @@ export const PlusButton = styled(SearchBarButton)`
   stroke: white;
   fill: white;
 
-  position: absolute;
-  right: 42px;
+  position: relative;
+  right: 110px;
+`;
+
+export const XButton = styled(SearchBarButton)`
+  position: relative;
+  right: 120px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: #d9d9d9;
+  color: white;
+  stroke: white;
 `;
 
 export const EnterButton = styled(SearchBarButton)`
@@ -55,7 +66,7 @@ export const EnterButton = styled(SearchBarButton)`
   color: #f0516d;
   stroke: #f0516d;
   fill: #f0516d;
-  margin-left: 4px;
+  margin-left: 12px;
 `;
 
 export const ButtonsContainer = styled.div`
