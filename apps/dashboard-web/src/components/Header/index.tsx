@@ -1,22 +1,27 @@
-import './style.css';
+import {
+  HeaderLayout,
+  ButtonsContainer,
+  EnterButton,
+  PlusButton,
+  SearchBar,
+  SearchBarButton,
+  SearchBarContainer,
+} from './style';
 
 export default function Header() {
   return (
-    <div className="header">
+    <HeaderLayout>
       <div />
-      <div className="searchBarContainer">
-        <input
-          className="searchBar"
-          placeholder="분석하고 싶은 키워드를 추가해 보세요"
-        />
-        <button className="searchBarButton plus">+</button>
-        <button className="searchBarButton enter">0</button>
-      </div>
-      <div className="ButtonsContainer">
-        <button className="searchBarButton">1</button>
-        <button className="searchBarButton">2</button>
-        <button className="searchBarButton grey">3</button>
-      </div>
-    </div>
+      <SearchBarContainer>
+        <SearchBar placeholder="분석하고 싶은 키워드를 추가해 보세요" />
+        <PlusButton>+</PlusButton>
+        <EnterButton>0</EnterButton>
+      </SearchBarContainer>
+      <ButtonsContainer>
+        <SearchBarButton>1</SearchBarButton>
+        <SearchBarButton>2</SearchBarButton>
+        <SearchBarButton>3</SearchBarButton>
+      </ButtonsContainer>
+    </HeaderLayout>
   );
 }
