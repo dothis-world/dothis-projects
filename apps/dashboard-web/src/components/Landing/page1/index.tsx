@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Search from './svg/search.svg';
 import Topbar from './topbar';
 import { Background, Buttons, ImageBox, Main, Texts } from './style';
-import { content, pricing } from '@/constants/route';
+import { CONTENT, PRICING } from '@/constants/route';
 
 export default function Page1() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function Page1() {
             하세요
           </h3>
           <Buttons>
-            <button onClick={() => router.push(content)}>
+            <button onClick={() => router.push(CONTENT)}>
               <Image
                 src={'/images/landing/logo_small.png'}
                 alt={'logo_small'}
@@ -39,7 +39,7 @@ export default function Page1() {
             </button>
             <button
               onClick={() => {
-                router.push(pricing);
+                router.push(PRICING);
               }}
             >
               <Search width={30} height={30} />

@@ -10,7 +10,7 @@ import {
   Texts,
 } from './style';
 import { useRouter } from 'next/navigation';
-import { dummy } from '@/constants/route';
+import { NOT_FOUND } from '@/constants/route';
 
 export default function Page5() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function Page5() {
         </Containers>
         <MoreButton
           onClick={() => {
-            router.push(dummy);
+            router.push(NOT_FOUND);
           }}
         >
           더 알아보기

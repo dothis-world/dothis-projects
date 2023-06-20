@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import { Background, ImageBox, Main, Text } from './style';
-
+import { useRouter } from 'next/navigation';
+import { NOT_FOUND } from '@/constants/route';
 export default function Page2() {
+  const router = useRouter();
   return (
     <Background>
       <Main>
@@ -22,7 +24,13 @@ export default function Page2() {
             조회수 높이는 맞춤형 소재부터 포맷에 따른 <br />
             스토리보드 도구까지 한곳에서 간편하게!
           </p>
-          <button>더 알아보기</button>
+          <button
+            onClick={() => {
+              router.push(NOT_FOUND);
+            }}
+          >
+            더 알아보기
+          </button>
         </Text>
       </Main>
     </Background>

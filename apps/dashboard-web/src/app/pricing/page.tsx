@@ -22,8 +22,9 @@ import {
   Gradient,
 } from './style';
 import { useRouter } from 'next/navigation';
-import { pricing } from '@/constants/route';
+import { SURVEY, pricing } from '@/constants/route';
 import Right from './right.svg';
+import Image from 'next/image';
 
 const TEXT = [
   '부동산',
@@ -90,35 +91,32 @@ export default function Price() {
           <tr>
             <td></td>
             <td>
-              <button
-                onClick={() => {
-                  router.push(pricing);
-                }}
-              >
-                시작하기
-              </button>
+              <a href={SURVEY}>
+                <button>시작하기</button>
+              </a>
             </td>
             <Best_bottom>
-              <button
-                onClick={() => {
-                  router.push(pricing);
-                }}
-              >
-                14일 무료 체험
-              </button>
+              <a href={SURVEY}>
+                <button>14일 무료 체험</button>
+              </a>
             </Best_bottom>
             <td>
-              <button
-                onClick={() => {
-                  router.push(pricing);
-                }}
-              >
-                14일 무료 체험
-              </button>
+              <a href={SURVEY}>
+                <button>14일 무료 체험</button>
+              </a>
             </td>
           </tr>
         </PriceCategory>
-        <ImageBox>이미지가 들어갈 공가아안</ImageBox>
+        <ImageBox>
+          <Image
+            width={0}
+            height={0}
+            sizes={'100%'}
+            fill
+            src={'/images/pricing.png'}
+            alt={''}
+          />
+        </ImageBox>
       </Main>
       <Footer />
     </Background>

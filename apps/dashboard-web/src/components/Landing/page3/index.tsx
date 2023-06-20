@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Background, ImageBox, Main } from './style';
 import { Category, CategroiesContainer, MoreButton } from '../style';
 import { useRouter } from 'next/navigation';
-import { dummy } from '@/constants/route';
+import { NOT_FOUND } from '@/constants/route';
 
 export default function Page3() {
   const [state, setState] = useState<number>(1);
@@ -53,7 +53,7 @@ export default function Page3() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            router.push(dummy);
+            router.push(NOT_FOUND);
           }}
         >
           더 알아보기

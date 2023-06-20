@@ -128,6 +128,7 @@ export const Best_name = styled.div`
 
 export const Main = styled.main`
   width: 90%;
+  height: 3000px;
   position: relative;
   padding: 30px 50px 0px 48px;
   margin-left: 98px;
@@ -152,5 +153,5 @@ export const Background = styled.div``;
 
 export const ImageBox = styled.div`
   width: 100%;
-  height: 500px;
+  height: 1000px;
 `;
