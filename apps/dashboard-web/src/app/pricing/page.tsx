@@ -19,6 +19,8 @@ import {
   Th_start,
   Tag_select,
 } from './style';
+import { useRouter } from 'next/navigation';
+import { pricing } from '@/constants/route';
 
 const TEXT = [
   '부동산',
@@ -35,6 +37,7 @@ const TEXT = [
 ];
 
 export default function Price() {
+  const router = useRouter();
   return (
     <Background>
       <Header />
@@ -81,13 +84,31 @@ export default function Price() {
           <tr>
             <td></td>
             <td>
-              <button>시작하기</button>
+              <button
+                onClick={() => {
+                  router.push(pricing);
+                }}
+              >
+                시작하기
+              </button>
             </td>
             <Best_bottom>
-              <button>14일 무료 체험</button>
+              <button
+                onClick={() => {
+                  router.push(pricing);
+                }}
+              >
+                14일 무료 체험
+              </button>
             </Best_bottom>
             <td>
-              <button>14일 무료 체험</button>
+              <button
+                onClick={() => {
+                  router.push(pricing);
+                }}
+              >
+                14일 무료 체험
+              </button>
             </td>
           </tr>
         </PriceCategory>

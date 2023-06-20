@@ -41,7 +41,7 @@ export const PriceCategory = styled.table`
     font-size: 36px;
     border-bottom: 1px solid #e4e4e7;
     border-collapse: collapse;
-    padding: 20px 126px;
+    padding: 5vw 126px;
   }
 
   td {
@@ -50,7 +50,7 @@ export const PriceCategory = styled.table`
   }
 
   button {
-    width: 286px;
+    width: 20vw;
     height: 56px;
     border-radius: 8px;
     background-color: #f0516d;

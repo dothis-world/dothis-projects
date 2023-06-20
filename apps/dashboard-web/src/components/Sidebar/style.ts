@@ -22,7 +22,9 @@ export const Logo = styled.div`
   margin: 24px;
   margin-bottom: 60px;
 
-  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const NavButtonsContainer = styled.div`
@@ -39,5 +41,9 @@ export const NavButtonsContainer = styled.div`
     border-radius: 8px;
     background-color: inherit;
     border: 1px solid #e4e4e7;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
