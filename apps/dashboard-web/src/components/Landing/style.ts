@@ -1,12 +1,22 @@
 import styled from 'styled-components';
+export const Layout = styled.div`
+  width: 100%;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+`;
 
 export const BackgroundDefault = styled.div`
   width: 100%;
+  height: 110vh;
   word-break: keep-all;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  scroll-snap-align: start;
+  padding: 50px 0px;
   position: relative;
 `;
 

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
-  height: 900px;
   background-color: rgba(249, 249, 249, 1);
 `;
 

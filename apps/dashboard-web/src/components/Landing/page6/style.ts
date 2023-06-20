@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { BackgroundDefault, MainDefault } from '../style';
 
-export const Background = styled(BackgroundDefault)`
-  height: 700px;
-`;
+export const Background = styled(BackgroundDefault)``;
 
 export const Main = styled(MainDefault)`
   margin-top: 110px;
