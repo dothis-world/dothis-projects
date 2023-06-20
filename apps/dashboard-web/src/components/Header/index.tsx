@@ -9,7 +9,7 @@ import {
   XButton,
 } from './style';
 
-import Plus from './svg/+.svg';
+import Plus from './svg/plus.svg';
 import Edit from './svg/edit.svg';
 import Notification from './svg/notification.svg';
 import Ticket from './svg/ticket.svg';
