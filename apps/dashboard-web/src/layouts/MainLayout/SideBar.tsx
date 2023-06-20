@@ -62,6 +62,7 @@ const SideText = styled.span`
 
   color: ${theme.colors.grey30};
 
+  visibility: hidden;
   opacity: 0;
 
   white-space: nowrap;
@@ -124,13 +125,14 @@ const Container = styled.aside`
     z-index: 9999;
 
     ${SideText} {
+      visibility: visible;
       opacity: 1;
-      transition: opacity 0.3s ease-out;
+      transition: opacity 1s ease-out;
     }
 
     ${IconWrapper} {
       width: 13.625rem;
-      transition: width 0.2s ease-out;
+      transition: width 0.3s ease-out;
     }
   }
 `;
