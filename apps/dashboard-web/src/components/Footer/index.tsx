@@ -9,7 +9,8 @@ import { pagePath } from '@/constants/pagePath';
 import styled from 'styled-components';
 
 const FooterLayout = styled.footer`
-  border: 1px solid black;
+  border-top: 1px solid #d4d4d8;
+  padding: 100px 150px;
 `;
 
 export default function Footer() {

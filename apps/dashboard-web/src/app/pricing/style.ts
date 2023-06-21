@@ -128,13 +128,13 @@ export const Best_name = styled.div`
 
 export const Main = styled.main`
   width: 90%;
-  height: 3000px;
+
   position: relative;
   padding: 30px 50px 0px 48px;
   margin-left: 98px;
   overflow: hidden;
   font-weight: bolder;
-
+  display: block;
   h2 {
     font-size: 36px;
     margin-top: 100px;
@@ -153,5 +153,8 @@ export const Background = styled.div``;
 
 export const ImageBox = styled.div`
   width: 100%;
-  height: 1000px;
+  aspect-ratio: 1244/2914;
+  margin-top: 58px;
+  margin-bottom: 100px;
+  position: relative;
 `;

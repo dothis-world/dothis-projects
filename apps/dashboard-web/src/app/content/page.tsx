@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const Background = styled.div`
   width: 100%;
-  height: 3000px;
+  aspect-ratio: 1440/3058;
   position: relative;
 `;
 

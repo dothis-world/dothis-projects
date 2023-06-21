@@ -22,7 +22,7 @@ import {
   Gradient,
 } from './style';
 import { useRouter } from 'next/navigation';
-import { SURVEY, pricing } from '@/constants/route';
+import { SURVEY } from '@/constants/route';
 import Right from './right.svg';
 import Image from 'next/image';
 
@@ -107,6 +107,7 @@ export default function Price() {
             </td>
           </tr>
         </PriceCategory>
+
         <ImageBox>
           <Image
             width={0}
