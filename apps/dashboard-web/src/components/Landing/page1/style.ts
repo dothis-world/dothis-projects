@@ -79,7 +79,7 @@ export const Nav = styled.nav`
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border-radisu: 4px;
+    border-radius: 4px;
 
     font-size: 20px;
   }

@@ -17,7 +17,7 @@ export const Main = styled(MainDefault)`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-sisz: 20px;
+    font-size: 20px;
   }
 `;
 

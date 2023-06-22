@@ -40,7 +40,7 @@ export const Text = styled.div`
   button {
     width: 140px;
     height: 54px;
-    border-radisu: 4px;
+    border-radius: 4px;
     border: 1px solid white;
     font-size: 20px;
   }

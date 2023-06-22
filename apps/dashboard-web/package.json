@@ -13,10 +13,10 @@
     "lending:deploy": "cross-env NODE_ENV=production cross-env SLS_INTERACTIVE_SETUP_ENABLE=1 serverless deploy"
   },
   "dependencies": {
-    "@dothis/ui": "workspace:*",
+    "@dothis/dto": "workspace:^",
     "@dothis/share": "workspace:*",
     "@dothis/theme": "workspace:*",
-    "@dothis/dto": "workspace:^",
+    "@dothis/ui": "workspace:*",
     "@effect/data": "^0.12.2",
     "@hookform/resolvers": "^3.1.0",
     "@next/font": "^13.4.1",
@@ -31,7 +31,7 @@
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "iron-session": "^6.3.1",
-    "loadash": "^1.0.0",
+    "lodash": "^4.17.21",
     "next": "13.4.1",
     "next-auth": "^4.17.0",
     "next-pwa": "^5.6.0",
