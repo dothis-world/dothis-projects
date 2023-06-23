@@ -6,63 +6,25 @@ import { useRouter } from 'next/navigation';
 import { SURVEY } from '@/constants/route';
 
 import Footer from '../../components/Footer';
-import Right from './right.svg';
 import {
   Background,
   Best_bottom,
   Best_mid,
   Best_name,
   Best_top,
-  Gradient,
   ImageBox,
   Main,
   Pink,
   PriceCategory,
-  RightButton,
-  Tag,
-  Tag_select,
-  TagContainer,
   Td_start,
   Th_start,
 } from './style';
-
-const TEXT = [
-  '부동산',
-  '수도권 아파트 분양',
-  '아파트',
-  '전세',
-  '부동산시세',
-  '부동산시세',
-  '부동산시세',
-  '부동산시세',
-  '부동산시세',
-  '부동산시세',
-  '부동산시세',
-];
 
 export default function Price() {
   const router = useRouter();
   return (
     <Background>
       <Main>
-        <TagContainer>
-          <Gradient />
-          <div>
-            {TEXT.map((value, key) => {
-              return key === 1 || key === 0 ? (
-                <Tag_select key={`header_TagContainer _${key}`}>
-                  {value}
-                </Tag_select>
-              ) : (
-                <Tag key={`header_TagContainer _${key}`}> {value}</Tag>
-              );
-            })}
-          </div>
-          <RightButton>
-            <Right width={5} height={10} />
-          </RightButton>
-        </TagContainer>
-
         <h2>유튜브 콘텐츠 기획 시작하기</h2>
         <p>
           <Pink>하루 330원</Pink>으로 더 고도화된 분석, 강력한 AI, 더 쾌적한
