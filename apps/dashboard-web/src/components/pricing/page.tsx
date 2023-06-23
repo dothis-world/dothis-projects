@@ -32,39 +32,43 @@ export default function Price() {
         </p>
 
         <PriceCategory>
-          <tr>
-            <Th_start>시작하기</Th_start>
-            <th>Trial</th>
-            <Best_top>
-              <Best_name>BEST</Best_name>
-              Basic
-            </Best_top>
-            <th>Pro</th>
-          </tr>
-          <tr>
-            <Td_start>요금 / 기간</Td_start>
-            <td>무료 / 무제한</td>
-            <Best_mid>9,900 / 30일</Best_mid>
-            <td>49,500원 / 30일</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>
-              <a href={SURVEY}>
-                <button>시작하기</button>
-              </a>
-            </td>
-            <Best_bottom>
-              <a href={SURVEY}>
-                <button>14일 무료 체험</button>
-              </a>
-            </Best_bottom>
-            <td>
-              <a href={SURVEY}>
-                <button>14일 무료 체험</button>
-              </a>
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <Th_start>시작하기</Th_start>
+              <th>Trial</th>
+              <Best_top>
+                <Best_name>BEST</Best_name>
+                Basic
+              </Best_top>
+              <th>Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <Td_start>요금 / 기간</Td_start>
+              <td>무료 / 무제한</td>
+              <Best_mid>9,900 / 30일</Best_mid>
+              <td>49,500원 / 30일</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <a href={SURVEY}>
+                  <button>시작하기</button>
+                </a>
+              </td>
+              <Best_bottom>
+                <a href={SURVEY}>
+                  <button>14일 무료 체험</button>
+                </a>
+              </Best_bottom>
+              <td>
+                <a href={SURVEY}>
+                  <button>14일 무료 체험</button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
         </PriceCategory>
 
         <ImageBox>
