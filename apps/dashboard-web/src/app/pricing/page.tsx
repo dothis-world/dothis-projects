@@ -1,30 +1,30 @@
 'use client';
 
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
+import { SURVEY } from '@/constants/route';
+
 import Footer from '../../components/Footer';
+import Right from './right.svg';
 import {
   Background,
   Best_bottom,
   Best_mid,
   Best_name,
   Best_top,
-  TagContainer,
+  Gradient,
   ImageBox,
   Main,
   Pink,
   PriceCategory,
+  RightButton,
   Tag,
+  Tag_select,
+  TagContainer,
   Td_start,
   Th_start,
-  Tag_select,
-  RightButton,
-  Gradient,
 } from './style';
-import { useRouter } from 'next/navigation';
-import { SURVEY } from '@/constants/route';
-import Right from './right.svg';
-import Image from 'next/image';
 
 const TEXT = [
   '부동산',
@@ -44,9 +44,6 @@ export default function Price() {
   const router = useRouter();
   return (
     <Background>
-      <Header />
-      <Sidebar />
-
       <Main>
         <TagContainer>
           <Gradient />
