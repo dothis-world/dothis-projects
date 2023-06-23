@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 
 import { SURVEY } from '@/constants/route';
 
-import Footer from '../Footer';
 import {
   Background,
   Best_bottom,
@@ -82,7 +81,6 @@ export default function Price() {
           />
         </ImageBox>
       </Main>
-      <Footer />
     </Background>
   );
 }
