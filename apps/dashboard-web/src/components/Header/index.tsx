@@ -1,17 +1,16 @@
 import {
-  HeaderLayout,
   ButtonsContainer,
   EnterButton,
+  HeaderLayout,
   PlusButton,
   SearchBar,
   SearchBarButton,
   SearchBarContainer,
   XButton,
 } from './style';
-
-import Plus from './svg/plus.svg';
 import Edit from './svg/edit.svg';
 import Notification from './svg/notification.svg';
+import Plus from './svg/plus.svg';
 import Ticket from './svg/ticket.svg';
 import User from './svg/user.svg';
 import X from './svg/x.svg';
