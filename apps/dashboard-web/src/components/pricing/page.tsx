@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { SURVEY } from '@/constants/route';
 
-import Footer from '../../components/Footer';
+import Footer from '../Footer';
 import {
   Background,
   Best_bottom,
