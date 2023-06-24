@@ -1,3 +1,5 @@
+'use client';
+
 import { throttle } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -21,10 +23,10 @@ export default function Topbar() {
     setWidth(window.innerWidth);
   }, 10);
 
-  useEffect(() => {
-    window.addEventListener('resize', resizeHandler);
-    return () => window.removeEventListener('resize', resizeHandler);
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener('resize', resizeHandler);
+  //   return () => window.removeEventListener('resize', resizeHandler);
+  // }, []);
 
   return (
     <Bar>
