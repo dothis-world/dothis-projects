@@ -17,12 +17,9 @@ const onLoading = async (ms: number) => {
   ];
 };
 
-
-async function ChooseKeywordPage() {
-  const onLoading = async (ms: number) => {
-      
+export default async function ChooseKeywordPage() {
   const mock_keyword = await onLoading(3000);
-      
+
   return (
     <>
       <h2 className="font-bold text-2xl leading-9">
@@ -35,9 +32,7 @@ async function ChooseKeywordPage() {
   );
 }
 
-export default ChooseKeywordPage;
-
 // Loading 체크를 위한 임시 delay 함수
-const delay = (ms: number) => {
+function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-};
+}
