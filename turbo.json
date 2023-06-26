@@ -4,6 +4,9 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "build:api": {
+      "dependsOn": ["^build"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
@@ -40,6 +43,9 @@
       "outputs": []
     },
     "dev-mock": {
+      "cache": false
+    },
+    "lending:deploy": {
       "cache": false
     },
     "@dothis/theme#build": {
