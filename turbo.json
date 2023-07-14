@@ -4,6 +4,12 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "build:api": {
+      "dependsOn": ["^build"]
+    },
+    "build:dashboard": {
+      "dependsOn": ["^build"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
@@ -42,6 +48,9 @@
     "dev-mock": {
       "cache": false
     },
+    "lending:deploy": {
+      "cache": false
+    },
     "@dothis/theme#build": {
       "outputs": ["./dist/**/*"],
       "inputs": ["./dashboard/**/*", "./utils/**/*"],
@@ -66,6 +75,10 @@
     },
     "clean": {
       "cache": false
+    },
+    "dev:next": {
+      "cache": false,
+      "persistent": true
     },
     "start:dev-api": {
       "cache": false,

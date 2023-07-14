@@ -1,4 +1,4 @@
-import { Controller, HttpStatus, Param } from '@nestjs/common';
+import { Controller, HttpStatus, Param, Query } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FindUserCommand } from 'apps/api/src/modules/user/v1/commands/get-user/get-user.service';
 import {
@@ -41,9 +41,10 @@ export class GetUserHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
-  async getUser(@Param('id') id: RequestShapes['getUser']) {
-    const command = new FindUserCommand({ userId: id.toString() });
-    const res = await this.commandBus.execute(command);
-    return res;
+  async getUser(@Param('id') id: string) {
+    const command = new FindUserCommand({
+      userId: id.toString(),
+    });
+    return await this.commandBus.execute(command);
   }
 }

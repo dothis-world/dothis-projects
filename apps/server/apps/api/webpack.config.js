@@ -14,7 +14,8 @@ const lazyImports = [
   'class-validator',
   'class-transformer',
 ];
-const tsConfigFile = './tsconfig.build.json';
+
+const tsConfigFile = 'tsconfig.build.json';
 
 module.exports = function (options, webpack) {
   if (process.env.NODE_ENV === 'production') {
@@ -57,23 +58,23 @@ module.exports = function (options, webpack) {
         allowlist: ['webpack/hot/poll?100'],
       }),
     ],
-    // module: {
-    //   rules: [
-    //     {
-    //       test: /.ts?$/,
-    //       use: [
-    //         {
-    //           loader: 'ts-loader',
-    //           options: {
-    //             transpileOnly: true,
-    //             configFile: tsConfigFile,
-    //           },
-    //         },
-    //       ],
-    //       exclude: /node_modules/,
-    //     },
-    //   ],
-    // },
+    module: {
+      rules: [
+        {
+          test: /.ts?$/,
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+                configFile: tsConfigFile,
+              },
+            },
+          ],
+          exclude: /node_modules/,
+        },
+      ],
+    },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
       plugins: [
