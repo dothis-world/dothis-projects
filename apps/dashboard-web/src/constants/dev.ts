@@ -1,4 +1,4 @@
-export const serverApiBaseUrl = 'https://api.dothis.world/v1' as const;
+export const serverApiBaseUrl = 'https://api.dothis.kr/v1' as const;
 
 export const mockApiHost = 'http://localhost:3667' as const;
 export const mockApiPathname = '/api/mock' as const;
