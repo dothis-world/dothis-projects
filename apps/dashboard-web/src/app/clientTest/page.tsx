@@ -13,14 +13,14 @@ export default function clientTest() {
   //   },
   // );
 
-  const { data, isLoading } = apiClient.user.getUser.useQuery(['user'], {
-    query: {
-      search: 'mini',
+  const { data, isLoading } = apiClient.relwords.getRelWords.useQuery(
+    ['relword'],
+    {
+      params: {
+        keyword: '손흥민',
+      },
     },
-    params: {
-      id: '1',
-    },
-  });
+  );
   if (!isLoading) console.log('data', data);
 
   return (
