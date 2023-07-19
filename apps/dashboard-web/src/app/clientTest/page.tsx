@@ -1,32 +1,25 @@
-'use client';
+import { dehydrate } from '@tanstack/query-core';
 
-import { z } from 'zod';
+import { apiServer } from '@/utils/apiServer';
 
-import { apiClient } from '@/utils/apiClient';
+import getQueryClient from '../../query/getQuery';
+import ReactQueryHydrate from '../../query/Hydrate';
+import Keyword from './Keyword';
 
-export default function clientTest() {
-  // const { data, isLoading } = apiClient.dailyViews.getDailyViews.useQuery(
-  //   ['daily'],
-  //   {
-  //     query: { from: 'string', to: 'string' },
-  //     params: { relationKeyword: 'string' },
-  //   },
-  // );
-
-  const { data, isLoading } = apiClient.relwords.getRelWords.useQuery(
-    ['relword'],
-    {
+export default async function PostPage() {
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery(['rel'], () =>
+    apiServer.relwords.getRelWords({
       params: {
         keyword: '손흥민',
       },
-    },
+    }),
   );
-  if (!isLoading) console.log('data', data);
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <>
-      <div>{!isLoading && <p>current userData: {String(data?.body)}</p>}</div>
-      <div>clientTest</div>
-    </>
+    <ReactQueryHydrate state={dehydratedState}>
+      <Keyword />
+    </ReactQueryHydrate>
   );
 }
