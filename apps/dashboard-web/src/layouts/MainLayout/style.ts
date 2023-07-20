@@ -77,12 +77,6 @@ export const Container = styled.aside`
   }
 `;
 
-export const IconContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-`;
-
 // NavSlide.tsx
 export const KeywordTapContiner = styled.nav`
   display: flex;
