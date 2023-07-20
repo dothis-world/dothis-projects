@@ -1,8 +1,5 @@
 'use client';
 
-import { theme } from '@dothis/theme/dashboard';
-import styled from 'styled-components';
-
 import { SIDE_MENUS } from '@/constants/SideMenus';
 import SvgComp from '@/share/SvgComp';
 
@@ -15,7 +12,7 @@ const SideBar = () => {
   return (
     <Style.Container>
       <SvgComp icon="SideLogo" size={50} />
-      <div className="flex flex-col" style={{ gap: '5rem' }}>
+      <div className="flex flex-col gap-[5rem]">
         {SIDE_MENUS.map((item) => (
           <Style.IconWrapper>
             <Style.IconBox>
