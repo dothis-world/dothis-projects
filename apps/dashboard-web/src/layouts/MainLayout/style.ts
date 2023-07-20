@@ -1,4 +1,3 @@
-import { theme } from '@dothis/theme/dashboard';
 import styled, { css } from 'styled-components';
 
 // SideBar.tsx
@@ -6,13 +5,13 @@ export const IconBox = styled.div`
   padding: 0.75rem;
   border-radius: 0.5rem;
   background-color: white;
-  box-shadow: 0px 0px 0px 1px ${theme.colors.grey300};
+  box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey300};
 `;
 
 export const SideText = styled.span`
   padding-top: 0.75rem;
   padding-left: 1.25rem;
-  color: ${theme.colors.grey500};
+  color: ${({ theme }) => theme.colors.grey500};
   visibility: hidden;
   opacity: 0;
   white-space: nowrap;
@@ -26,14 +25,14 @@ export const IconWrapper = styled.div`
   &:hover {
     padding: 0.75rem;
     border-radius: 0.5rem;
-    background-color: ${theme.colors.primary50};
-    box-shadow: 0px 0px 0px 1px ${theme.colors.grey300};
+    background-color: ${({ theme }) => theme.colors.primary50};
+    box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey300};
     transition: none;
 
     ${IconBox} {
       padding: 0;
       border-radius: 0;
-      background-color: ${theme.colors.primary50};
+      background-color: ${({ theme }) => theme.colors.primary50};
       box-shadow: 0 0 0 0;
       transition: none;
     }
@@ -55,7 +54,7 @@ export const Container = styled.aside`
   width: 6rem;
   height: 100vh;
   padding: 1.5rem;
-  border-right: 1px solid ${theme.colors.grey400};
+  border-right: 1px solid ${({ theme }) => theme.colors.grey400};
   box-sizing: border-box;
   background-color: white;
   transition: all 0.3s ease-out;
@@ -93,7 +92,7 @@ export const KeywordTapContiner = styled.nav`
 
 export const ResetButton = styled.button`
   padding: 0.5rem 1.25rem;
-  border: 1px solid ${theme.colors.grey500};
+  border: 1px solid ${({ theme }) => theme.colors.grey500};
   border-radius: 0.5rem;
 `;
 
@@ -114,7 +113,7 @@ export const ArrowButton = styled.button`
   /* 오른쪽 정렬이 필요 (Keyword List가 적을 때) */
   margin: 0 0 0 auto;
   padding: 0.5rem 1.25rem;
-  border: 1px solid ${theme.colors.grey500};
+  border: 1px solid ${({ theme }) => theme.colors.grey500};
   border-radius: 0.5rem;
 
   &::before {
@@ -159,19 +158,21 @@ export const Button = styled.button<{ $active: boolean }>`
   flex-shrink: 0;
   position: relative;
   padding: 0.5rem 1.25rem;
-  border: 1px solid ${theme.colors.grey500};
+  border: 1px solid white;
   border-radius: 0.5rem;
   box-sizing: border-box;
   font-size: 1rem;
   font-weight: 500;
-  color: ${theme.colors.grey500};
-  background-color: ${theme.colors.grey00};
+  color: ${({ theme }) => theme.colors.grey500};
+  background-color: ${({ theme }) => theme.colors.grey00};
+  box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey500} inset;
 
-  ${({ $active }) =>
+  ${({ $active, theme }) =>
     $active &&
     css`
-      border: 1px solid ${theme.colors.primary500};
-      background-color: rgba(${theme.colors.primary50}, 0.1);
+      box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.primary500}
+        inset;
+      background-color: ${theme.colors.primary50};
       color: ${theme.colors.primary500};
     `}
 `;
@@ -185,7 +186,7 @@ export const GNBContainer = styled.header`
   width: 100%;
   height: 5.5rem;
   padding: 1.25rem;
-  border-bottom: 1px solid ${theme.colors.grey300};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey300};
   box-sizing: border-box;
 `;
 
@@ -199,10 +200,10 @@ export const SearchInput = styled.input`
   width: 100%;
   border: 2px solid;
   border-radius: 0.5rem;
-  border-color: ${theme.colors.grey300};
+  border-color: ${({ theme }) => theme.colors.grey300};
   padding: 0.75rem 3.5rem 0.75rem 1rem;
   box-sizing: border-box;
-  background-color: ${theme.colors.grey00};
+  background-color: ${({ theme }) => theme.colors.grey00};
   font-size: 1rem;
   outline: none;
   transition: all 0.5s;
@@ -212,7 +213,7 @@ export const SearchInput = styled.input`
   } */
 
   &:focus {
-    border-color: ${theme.colors.primary300};
+    border-color: ${({ theme }) => theme.colors.primary300};
   }
 
   &::placeholder {
@@ -232,9 +233,9 @@ export const UnknownIconWrapper = styled.div`
   align-items: center;
   margin-left: 0.75rem;
   padding: 0.75rem;
-  border: 1px solid ${theme.colors.primary100};
+  border: 1px solid ${({ theme }) => theme.colors.primary100};
   border-radius: 0.5rem;
-  background-color: ${theme.colors.primary100};
+  background-color: ${({ theme }) => theme.colors.primary100};
 `;
 
 export const UserGNBWrapper = styled.div`
@@ -253,7 +254,7 @@ export const UserGNBIconWrapper = styled.div`
   border-radius: 0.5rem;
 
   &:hover {
-    background-color: ${theme.colors.grey300};
+    background-color: ${({ theme }) => theme.colors.grey300};
   }
 `;
 
