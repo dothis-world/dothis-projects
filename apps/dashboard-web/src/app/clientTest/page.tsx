@@ -2,8 +2,8 @@ import { dehydrate } from '@tanstack/query-core';
 
 import { apiServer } from '@/utils/apiServer';
 
-import getQueryClient from '../../query/getQuery';
-import ReactQueryHydrate from '../../query/Hydrate';
+import getQueryClient from '../../query/getQueryClient';
+import ReactQueryHydrate from '../../query/ReactQueryHydrate';
 import Keyword from './Keyword';
 
 export default async function PostPage() {
