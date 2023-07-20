@@ -4,14 +4,14 @@ import type { Method } from 'axios';
 
 import { apiBaseUrl } from '@/constants/dev';
 
-import { myAxios } from './apiAxiosInstance';
+import { apiInstance } from './apiInstance';
 
 export const apiServer = initClient(apiRouter, {
   baseUrl: apiBaseUrl,
   baseHeaders: {},
   credentials: 'include',
   api: async ({ path, method, headers, body }) => {
-    const result = await myAxios.request({
+    const result = await apiInstance.request({
       headers,
       method: method as Method,
       url: path,
