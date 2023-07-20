@@ -33,7 +33,7 @@ const Keywords = ({ keyword }: KeywordSchema) => {
   };
 
   return (
-    <Style.TagList>
+    <ul className="flex gap-[0.5rem] flex-wrap mb-16">
       {0 < keyword.length &&
         keyword?.map((mock) => (
           <Style.TagItem
@@ -46,7 +46,7 @@ const Keywords = ({ keyword }: KeywordSchema) => {
           </Style.TagItem>
         ))}
       <br />
-    </Style.TagList>
+    </ul>
   );
 };
 export default Keywords;
