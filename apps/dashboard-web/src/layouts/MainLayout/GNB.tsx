@@ -1,10 +1,4 @@
-'use client';
-
-import styled from 'styled-components';
-
 import SvgComp from '@/share/SvgComp';
-
-import * as Style from './style';
 
 // Header 반응형 디자인이나 기획이 나오면 반응형 대응 예정
 const GNB = () => {
