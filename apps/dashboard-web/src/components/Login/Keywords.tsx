@@ -34,7 +34,7 @@ const Keywords = ({ keyword }: KeywordSchema) => {
 
   return (
     <ul className="flex gap-[0.5rem] flex-wrap mb-16">
-      {0 < keyword.length &&
+      {keyword.length > 0 ? <랜더링 요소 /> : null}
         keyword?.map((mock) => (
           <Style.TagItem
             key={`editor-${mock}`}
