@@ -1,6 +1,6 @@
 .turbo
 # compiled output
-/dist
+
 /node_modules
 /src/lib/**/*.d.ts
 /src/lib/**/*.d.ts.map
