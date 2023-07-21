@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 export const IconBox = styled.div`
   padding: 0.75rem;
   border-radius: 0.5rem;
-  background-color: white;
+  background-color: #fff;
   box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey300};
 `;
 
@@ -56,7 +56,7 @@ export const Container = styled.aside`
   padding: 1.5rem;
   border-right: 1px solid ${({ theme }) => theme.colors.grey400};
   box-sizing: border-box;
-  background-color: white;
+  background-color: #fff;
   transition: all 0.3s ease-out;
 
   &:hover {
@@ -152,13 +152,13 @@ export const Button = styled.button<{ $active: boolean }>`
   flex-shrink: 0;
   position: relative;
   padding: 0.5rem 1.25rem;
-  border: 1px solid white;
+  border: 1px solid #fff;
   border-radius: 0.5rem;
   box-sizing: border-box;
   font-size: 1rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.grey500};
-  background-color: ${({ theme }) => theme.colors.grey00};
+  background-color: #fff;
   box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey500} inset;
 
   ${({ $active, theme }) =>
