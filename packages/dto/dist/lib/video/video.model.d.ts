@@ -1,0 +1,55 @@
+import { z } from 'zod';
+export declare const zVideoModel: z.ZodObject<{
+    id: z.ZodNullable<z.ZodNumber>;
+    channelIndex: z.ZodString;
+    videoTitle: z.ZodString;
+    videoUrl: z.ZodString;
+    videoDescription: z.ZodString;
+    videoDuration: z.ZodString;
+    videoPublished: z.ZodString;
+    videoViews: z.ZodDefault<z.ZodString>;
+    videoLikes: z.ZodDefault<z.ZodNumber>;
+    videoTags: z.ZodDefault<z.ZodString>;
+    videoCategory: z.ZodDefault<z.ZodString>;
+    videoInfoCard: z.ZodDefault<z.ZodString>;
+    videoWithAds: z.ZodString;
+    videoEndScreen: z.ZodString;
+    videoAverageViews: z.ZodNumber;
+    crawlUpdateAt: z.ZodDate;
+}, "strip", z.ZodTypeAny, {
+    id?: number;
+    channelIndex?: string;
+    videoTitle?: string;
+    videoUrl?: string;
+    videoDescription?: string;
+    videoDuration?: string;
+    videoPublished?: string;
+    videoViews?: string;
+    videoLikes?: number;
+    videoTags?: string;
+    videoCategory?: string;
+    videoInfoCard?: string;
+    videoWithAds?: string;
+    videoEndScreen?: string;
+    videoAverageViews?: number;
+    crawlUpdateAt?: Date;
+}, {
+    id?: number;
+    channelIndex?: string;
+    videoTitle?: string;
+    videoUrl?: string;
+    videoDescription?: string;
+    videoDuration?: string;
+    videoPublished?: string;
+    videoViews?: string;
+    videoLikes?: number;
+    videoTags?: string;
+    videoCategory?: string;
+    videoInfoCard?: string;
+    videoWithAds?: string;
+    videoEndScreen?: string;
+    videoAverageViews?: number;
+    crawlUpdateAt?: Date;
+}>;
+export type VideoModel = z.TypeOf<typeof zVideoModel>;
+//# sourceMappingURL=video.model.d.ts.map
