@@ -23,9 +23,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 
         <StyledComponentsRegistry>
           <StyledTheme>
-            <ClientContext>
-              <div>{children}</div>
-            </ClientContext>
+            <ClientContext>{children}</ClientContext>
           </StyledTheme>
         </StyledComponentsRegistry>
       </body>
