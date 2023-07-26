@@ -1,3 +1,5 @@
+'use client';
+
 import { ResponsiveLine } from '@nivo/line';
 
 import { VIEWCHART_LABEL } from '../DashBoard';
