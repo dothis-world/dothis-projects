@@ -587,6 +587,9 @@ importers:
 
   packages/dashboard-storybook:
     dependencies:
+      '@dothis/theme':
+        specifier: workspace:*
+        version: link:../../config/theme
       '@radix-ui/react-checkbox':
         specifier: ^1.0.4
         version: 1.0.4(@types/react-dom@18.2.6)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
