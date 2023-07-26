@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { boolean } from 'zod';
 
 // SideBar.tsx
 export const IconBox = styled.div`
@@ -17,10 +18,18 @@ export const SideText = styled.span`
   white-space: nowrap;
 `;
 
-export const IconWrapper = styled.div`
+export const IconWrapper = styled.div<{ $isInActive: boolean }>`
   display: flex;
   width: 3.125rem;
   height: 3.125rem;
+
+  ${({ theme, $isInActive }) =>
+    css`
+      & path {
+        fill: ${$isInActive && theme.colors.grey00};
+        stroke: ${$isInActive && theme.colors.grey500};
+      }
+    `}
 
   &:hover {
     padding: 0.75rem;
@@ -43,8 +52,14 @@ export const IconWrapper = styled.div`
       /* IconBox padding이 없어지다보니 rem값을 추가해주었다. */
       transition: none;
     }
+    & path {
+      fill: ${({ theme }) => theme.colors.grey200};
+      stroke: ${({ theme }) => theme.colors.grey500};
+    }
   }
 `;
+
+export const TT = styled.p``;
 
 export const Container = styled.aside`
   display: flex;
