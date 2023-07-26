@@ -1,9 +1,6 @@
 'use client';
 
-import './svg.css';
-
 import { usePathname } from 'next/navigation';
-import { css } from 'styled-components';
 
 import { SIDE_MENUS } from '@/constants/SideMenus';
 import SvgComp from '@/share/SvgComp';
