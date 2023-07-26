@@ -118,7 +118,7 @@ const DailyViewChart = () => {
       tooltip={({ point }) => (
         <CustomTooltip
           keyword="물냉면"
-          label={VIEWCHART_LABEL.EXPECTEDVIEW}
+          label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',
           }).format(DAILYVIEW_DATA[0].data[point.index].y)}
