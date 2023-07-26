@@ -45,6 +45,9 @@
     "dashboard-storybook#build-storybook": {
       "dependsOn": ["@dothis/theme#build"]
     },
+    "dashboard-storybook#chromatic": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
     "theme-gen": {
       "inputs": ["./src/styles/**/*"],
       "outputs": ["./src/types/theme.d.ts"],
