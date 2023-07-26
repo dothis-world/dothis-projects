@@ -103,7 +103,7 @@ const DailyViewChart = () => {
       axisBottom={null}
       axisLeft={{
         tickSize: 0,
-        tickPadding: 12,
+        tickPadding: 20,
         tickRotation: 0,
         tickValues: yAxisRange,
         legendOffset: -40,

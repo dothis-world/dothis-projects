@@ -41,15 +41,15 @@ const ExpectedViewChart = () => {
     <ResponsiveLine
       data={EXPECTEDVIEW_DATA}
       margin={{ bottom: 50, left: 60 }}
-      lineWidth={4}
-      colors={{ scheme: 'category10' }}
+      lineWidth={3}
+      colors={['#818CF8']}
+      curve="catmullRom"
       xScale={{
         format: '%Y-%m-%d',
         precision: 'day',
         type: 'time',
         useUTC: false,
       }}
-      enableGridX={false}
       yScale={{
         type: 'linear',
         min: 0,
@@ -58,6 +58,8 @@ const ExpectedViewChart = () => {
         reverse: false,
       }}
       yFormat=" >-.2f"
+      enableGridX={false}
+      gridYValues={[0, 20, 40, 60, 80, 100, 120]}
       axisTop={null}
       axisRight={null}
       axisBottom={{
@@ -66,17 +68,14 @@ const ExpectedViewChart = () => {
         tickValues: 'every 2 days',
       }}
       axisLeft={{
-        tickValues: [20, 40, 60, 80, 100],
         tickSize: 0,
         tickPadding: 20,
         tickRotation: 0,
-
+        tickValues: [20, 40, 60, 80, 100],
         legendOffset: -40,
         legendPosition: 'middle',
       }}
-      gridYValues={[0, 20, 40, 60, 80, 100, 120]}
       useMesh={true}
-      curve="catmullRom"
       enablePoints={false}
       legends={[
         {
@@ -107,19 +106,16 @@ const ExpectedViewChart = () => {
       theme={{
         axis: {
           ticks: {
-            line: {
-              stroke: 'green',
-            },
             text: {
-              fill: 'black',
-              fontSize: 16,
+              fill: '#71717A',
+              fontSize: 12,
             },
           },
         },
         grid: {
           line: {
-            stroke: 'pink',
-            strokeWidth: 2,
+            stroke: '#D4D4D8',
+            strokeWidth: 1,
             strokeDasharray: '4 4',
           },
         },
