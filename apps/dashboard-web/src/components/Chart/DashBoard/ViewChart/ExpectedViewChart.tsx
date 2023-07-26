@@ -1,5 +1,8 @@
 import { ResponsiveLine } from '@nivo/line';
 
+import { VIEWCHART_LABEL } from '../DashBoard';
+import CustomTooltip from './CustomTooltip';
+
 const EXPECTEDVIEW_DATA = [
   {
     id: '기대 조회 수(단위:배)',
@@ -77,6 +80,14 @@ const ExpectedViewChart = () => {
       }}
       useMesh={true}
       enablePoints={false}
+      tooltip={({ point }) => (
+        <CustomTooltip
+          keyword="물냉면"
+          label={VIEWCHART_LABEL.EXPECTEDVIEW}
+          value={EXPECTEDVIEW_DATA[0].data[point.index].y}
+          date={EXPECTEDVIEW_DATA[0].data[point.index].x}
+        />
+      )}
       legends={[
         {
           anchor: 'bottom',

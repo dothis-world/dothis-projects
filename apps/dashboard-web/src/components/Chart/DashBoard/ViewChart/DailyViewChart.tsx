@@ -1,5 +1,7 @@
 import { ResponsiveLine } from '@nivo/line';
 
+import { VIEWCHART_LABEL } from '../DashBoard';
+import CustomTooltip from './CustomTooltip';
 import {
   ceilToNearest,
   floorToNearest,
@@ -111,6 +113,16 @@ const DailyViewChart = () => {
         format: (value: number) => unitFormat(value, Math.min(...yAxisRange)),
       }}
       useMesh={true}
+      tooltip={({ point }) => (
+        <CustomTooltip
+          keyword="물냉면"
+          label={VIEWCHART_LABEL.EXPECTEDVIEW}
+          value={new Intl.NumberFormat('ko', {
+            notation: 'compact',
+          }).format(DAILYVIEW_DATA[0].data[point.index].y)}
+          date={DAILYVIEW_DATA[0].data[point.index].x}
+        />
+      )}
       legends={[
         {
           anchor: 'bottom',
