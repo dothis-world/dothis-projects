@@ -11,13 +11,13 @@ interface CustomTooltip {
 
 const DailyViewGraphPoint = () => {
   return (
-    <div className="w-2 h-2 mr-2 rounded-full border-2 border-solid border-primary500" />
+    <div className="w-2 h-2 rounded-full border-2 border-solid border-primary500" />
   );
 };
 
 const ExpectedViewGraphPoint = () => {
   return (
-    <div className="w-2 h-2 mr-2 rounded-full border-2 border-solid border-primary500" />
+    <div className="w-2 h-2 rounded-full border-2 border-solid border-indigo" />
   );
 };
 
@@ -32,7 +32,7 @@ const CustomTooltip = ({ keyword, label, value, date }: CustomTooltip) => {
         <div className="flex items-center">
           {label === VIEWCHART_LABEL.DAILYVIEW && <DailyViewGraphPoint />}
           {label === VIEWCHART_LABEL.EXPECTEDVIEW && <ExpectedViewGraphPoint />}
-          <div className="text-grey00 font-bold text-[14px]">{value}</div>
+          <div className="ml-2 text-grey00 font-bold text-[14px]">{value}</div>
         </div>
         <span className="text-grey500 text-[12px]">{label}</span>
       </div>
