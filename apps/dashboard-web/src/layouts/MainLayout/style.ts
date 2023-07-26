@@ -1,5 +1,5 @@
+import type { DefaultTheme } from 'styled-components';
 import styled, { css } from 'styled-components';
-import { boolean } from 'zod';
 
 // SideBar.tsx
 export const IconBox = styled.div`
@@ -18,48 +18,57 @@ export const SideText = styled.span`
   white-space: nowrap;
 `;
 
-export const IconWrapper = styled.div<{ $isInActive: boolean }>`
+const hover_active = ($isActive: boolean, theme: DefaultTheme) => css`
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: ${$isActive
+    ? theme.colors.primary50
+    : theme.colors.grey200};
+  ${!$isActive && `box-shadow: 0px 0px 0px 1px ${theme.colors.grey300};`}
+
+  transition: none;
+
+  ${IconBox} {
+    padding: 0;
+    border-radius: 0;
+    background-color: ${$isActive
+      ? theme.colors.primary50
+      : theme.colors.grey200};
+    box-shadow: 0 0 0 0;
+    transition: none;
+  }
+
+  ${SideText} {
+    padding-top: 0;
+    padding-left: 2rem;
+    /* IconBox padding이 없어지다보니 rem값을 추가해주었다. */
+    transition: none;
+    color: ${$isActive && theme.colors.primary500};
+  }
+  & path {
+    fill: ${$isActive ? theme.colors.primary500 : theme.colors.grey200};
+    stroke: ${$isActive ? theme.colors.primary50 : theme.colors.grey500};
+  }
+`;
+
+export const IconWrapper = styled.div<{ $isActive: boolean }>`
   display: flex;
   width: 3.125rem;
   height: 3.125rem;
 
-  ${({ theme, $isInActive }) =>
-    css`
-      & path {
-        fill: ${$isInActive && theme.colors.grey00};
-        stroke: ${$isInActive && theme.colors.grey500};
-      }
-    `}
+  border-radius: 0.5rem;
+
+  & path {
+    fill: ${({ theme }) => theme.colors.grey00};
+    stroke: ${({ theme }) => theme.colors.grey500};
+  }
 
   &:hover {
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    background-color: ${({ theme }) => theme.colors.primary50};
-    box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey300};
-    transition: none;
-
-    ${IconBox} {
-      padding: 0;
-      border-radius: 0;
-      background-color: ${({ theme }) => theme.colors.primary50};
-      box-shadow: 0 0 0 0;
-      transition: none;
-    }
-
-    ${SideText} {
-      padding-top: 0;
-      padding-left: 2rem;
-      /* IconBox padding이 없어지다보니 rem값을 추가해주었다. */
-      transition: none;
-    }
-    & path {
-      fill: ${({ theme }) => theme.colors.grey200};
-      stroke: ${({ theme }) => theme.colors.grey500};
-    }
+    ${({ theme, $isActive }) => hover_active($isActive, theme)}
   }
-`;
 
-export const TT = styled.p``;
+  ${({ theme, $isActive }) => $isActive && hover_active($isActive, theme)}
+`;
 
 export const Container = styled.aside`
   display: flex;
