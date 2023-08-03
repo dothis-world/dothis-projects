@@ -6,7 +6,7 @@
 
 /* ButtonTheme */
 
-.primary {
+.contained {
   @apply bg-primary500 text-grey00;
 }
 
@@ -14,13 +14,13 @@
   @apply bg-grey00 border-[1px] border-solid border-primary500 text-primary500;
 }
 
-.taxted {
+.primary {
   @apply text-primary500;
 }
 
 /* Hover */
 
-.primary {
+.contained {
   @apply hover:bg-primary300;
 }
 
@@ -28,13 +28,13 @@
   @apply hover:bg-primary100  hover:border-primary300 hover:text-primary300;
 }
 
-.taxted {
+.primary {
   @apply hover:bg-primary100  hover:text-primary300;
 }
 
 /* Active */
 
-.primary {
+.contained {
   @apply active:bg-primary600;
 }
 
@@ -42,12 +42,12 @@
   @apply active:bg-primary200  active:border-primary500 active:text-primary500;
 }
 
-.taxted {
+.primary {
   @apply active:bg-primary200  active:text-primary500;
 }
 
 /* disabled */
-.primary {
+.contained {
   @apply disabled:bg-grey300 disabled:text-grey500;
 }
 
@@ -55,7 +55,7 @@
   @apply disabled:bg-grey00 disabled:border-grey400 disabled:text-grey400;
 }
 
-.taxted {
+.primary {
   @apply disabled:bg-grey00 disabled:text-grey400;
 }
 

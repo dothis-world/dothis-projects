@@ -20,7 +20,7 @@ const meta = {
       control: 'radio',
     },
     buttonTheme: {
-      option: ['primary', 'outlined', 'taxted'],
+      option: ['primary', 'outlined', 'contained'],
       control: 'select',
     },
   },

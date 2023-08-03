@@ -7,7 +7,7 @@ interface ButtonProps {
   /**
    Button Style Type (primary, outlined,taxted )
    */
-  buttonTheme: 'primary' | 'outlined' | 'taxted';
+  buttonTheme: 'primary' | 'outlined' | 'contained';
   /**
    Button 비활성화 유무
    */
