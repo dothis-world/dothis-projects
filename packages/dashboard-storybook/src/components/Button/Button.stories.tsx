@@ -19,7 +19,7 @@ const meta = {
       option: ['S', 'M', 'L'],
       control: 'radio',
     },
-    buttonTheme: {
+    theme: {
       option: ['primary', 'outlined', 'contained'],
       control: 'select',
     },
@@ -33,7 +33,7 @@ export const Primary: Story = {
   args: {
     label: '버튼',
     size: 'S',
-    buttonTheme: 'primary',
+    theme: 'primary',
   },
 
   render: (args) => <Button {...args} />,
@@ -43,7 +43,7 @@ export const OutLine: Story = {
   args: {
     label: '버튼',
     size: 'M',
-    buttonTheme: 'outlined',
+    theme: 'outlined',
   },
 
   render: (args) => <Button {...args} />,
@@ -53,7 +53,7 @@ export const Contain: Story = {
   args: {
     label: '버튼',
     size: 'L',
-    buttonTheme: 'contained',
+    theme: 'contained',
   },
 
   render: (args) => <Button {...args} />,

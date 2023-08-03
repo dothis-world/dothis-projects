@@ -7,7 +7,7 @@ interface ButtonProps {
   /**
    Button Style Type (primary, outlined,taxted )
    */
-  buttonTheme: 'primary' | 'outlined' | 'contained';
+  theme: 'primary' | 'outlined' | 'contained';
   /**
    Button 비활성화 유무
    */
@@ -28,10 +28,10 @@ interface ButtonProps {
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { buttonTheme = 'primary', size = 'S', disabled = false, label, ...props },
+    { theme = 'primary', size = 'S', disabled = false, label, ...props },
     ref,
   ) => {
-    const rootClassName = clsx(styles.root, styles[buttonTheme], styles[size]);
+    const rootClassName = clsx(styles.root, styles[theme], styles[size]);
 
     return (
       <button
