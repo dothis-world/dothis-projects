@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { forwardRef } from 'react';
+import { forwardRef, PropsWithChildren } from 'react';
 
 import styles from './button.module.css';
 
@@ -16,19 +16,15 @@ interface ButtonProps {
    Button 사이즈 (S,M,L)
    */
   size: 'S' | 'M' | 'L';
-  /**
-    Button 내용
-   */
-  label: string;
 }
 
 /**
  * Primary UI component for user interaction
  */
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
   (
-    { theme = 'primary', size = 'S', disabled = false, label, ...props },
+    { theme = 'primary', size = 'S', disabled = false, children, ...props },
     ref,
   ) => {
     const rootClassName = clsx(styles.root, styles[theme], styles[size]);
@@ -41,7 +37,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {label}
+        {children}
       </button>
     );
   },
