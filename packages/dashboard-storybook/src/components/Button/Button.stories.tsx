@@ -24,12 +24,6 @@ const meta = {
       control: 'select',
     },
   },
-  args: {
-    label: '디폴트',
-    size: 'M',
-    buttonTheme: 'outlined',
-  },
-  // args 부분이 어떤 역할이지?? (default args 느낌인 것 같다.)
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -38,10 +32,29 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     label: '버튼',
+    size: 'S',
+    buttonTheme: 'primary',
+  },
+
+  render: (args) => <Button {...args} />,
+};
+
+export const OutLine: Story = {
+  args: {
+    label: '버튼',
     size: 'M',
     buttonTheme: 'outlined',
   },
 
   render: (args) => <Button {...args} />,
-  // 다른요소나 태그까지 포함해서 rendering 하고싶을 때 render 사용.
+};
+
+export const Contain: Story = {
+  args: {
+    label: '버튼',
+    size: 'L',
+    buttonTheme: 'contained',
+  },
+
+  render: (args) => <Button {...args} />,
 };
