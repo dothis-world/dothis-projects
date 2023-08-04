@@ -1,5 +1,7 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 
+import styles from './input.module.css';
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /** Input 컴포넌트 상단 영역에 요소가 추가됩니다. */
   label?: string;
@@ -14,25 +16,20 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <>
         {label && (
-          <label
-            htmlFor="input"
-            className="inline-block text-sm text-grey700 mb-[0.62rem]"
-          >
+          <label htmlFor="input" className={styles.label}>
             {label}
           </label>
         )}
         <input
           id="input"
           type={type}
-          className="flex h-12 w-full rounded-lg border border-solid border-grey400 bg-grey00 px-6 py-3 text-[14px] text-grey900 placeholder:text-grey500 focus:outline-none focus:border-primary500 disabled:cursor-not-allowed disabled:bg-grey200"
+          className={styles.input}
           disabled={disabled}
           ref={ref}
           {...props}
         />
         {description && (
-          <span className="inline-block text-[12px] text-grey400 mt-2">
-            {description}
-          </span>
+          <span className={styles.description}>{description}</span>
         )}
       </>
     );
