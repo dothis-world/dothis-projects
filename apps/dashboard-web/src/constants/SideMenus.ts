@@ -1,4 +1,4 @@
-import type { SVGType } from '@/components/share/SvgComp';
+import type { SVGType } from '@/share/SvgComp';
 
 interface SideMenus {
   title: string;
@@ -15,21 +15,21 @@ export const SIDE_MENUS: SideMenus[] = [
   {
     title: '인기 영상 분석',
     icon: 'SideMagicPen',
-    link: '/chart',
+    link: '/chart2',
   },
   {
     title: '내 채널 분석',
     icon: 'SideUser',
-    link: '/chart',
+    link: '/chart3',
   },
   {
     title: '인기 키워드 분석',
     icon: 'SideTrendUp',
-    link: '/chart',
+    link: '/chart4',
   },
   {
     title: '커뮤니티',
     icon: 'SideMessage',
-    link: '/chart',
+    link: '/chart5',
   },
 ];

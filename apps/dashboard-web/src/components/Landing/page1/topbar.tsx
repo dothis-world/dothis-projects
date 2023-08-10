@@ -17,7 +17,7 @@ const SVG_SIZE = 32;
 
 export default function Topbar() {
   const [width, setWidth] = useState<number>(0);
-  // 해당 state 선언단계에서 바로 window 세팅 시 에러
+
   const router = useRouter();
 
   const resizeHandler = throttle(() => {
@@ -59,14 +59,7 @@ export default function Topbar() {
               </button>
             </a>
           </>
-        ) : (
-          <>
-            <Content width={SVG_SIZE} height={SVG_SIZE} />
-            <Magicpen width={SVG_SIZE} height={SVG_SIZE} />
-            <User width={SVG_SIZE} height={SVG_SIZE} />
-            <Contact width={SVG_SIZE} height={SVG_SIZE} />
-          </>
-        )}
+        ) : null}
       </Nav>
     </Bar>
   );

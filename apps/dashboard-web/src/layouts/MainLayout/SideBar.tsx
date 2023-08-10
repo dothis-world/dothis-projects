@@ -1,10 +1,9 @@
 'use client';
 
-import { theme } from '@dothis/theme/dashboard';
-import styled from 'styled-components';
+import { usePathname } from 'next/navigation';
 
-import SvgComp from '@/components/share/SvgComp';
 import { SIDE_MENUS } from '@/constants/SideMenus';
+import SvgComp from '@/share/SvgComp';
 
 import * as Style from './style';
 
@@ -12,19 +11,21 @@ import * as Style from './style';
 // transition은 추후에 변경 생각 중
 
 const SideBar = () => {
+  const pathName = usePathname();
+
   return (
     <Style.Container>
       <SvgComp icon="SideLogo" size={50} />
-      <Style.IconContainer>
+      <div className="flex flex-col gap-[5rem]">
         {SIDE_MENUS.map((item) => (
-          <Style.IconWrapper>
+          <Style.IconWrapper $isInActive={pathName !== item.link}>
             <Style.IconBox>
               <SvgComp icon={item.icon} size={24} />
             </Style.IconBox>
             <Style.SideText>{item.title}</Style.SideText>
           </Style.IconWrapper>
         ))}
-      </Style.IconContainer>
+      </div>
     </Style.Container>
   );
 };

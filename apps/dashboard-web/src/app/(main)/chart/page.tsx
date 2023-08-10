@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 
-import ChartSidebar from '@/components/Chart/ChartSidebar';
-import LineTwo from '@/components/Chart/LineChart';
-import Summary from '@/components/Chart/Summary';
+import ChartSidebar from '@/components/Chart/ChartSidebar/ChartSidebar';
+import CumulativeVideoChartFilter from '@/components/Chart/DashBoard/CumulativeVideoChartFilter';
+import DashBoard from '@/components/Chart/DashBoard/DashBoard';
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
@@ -12,18 +12,15 @@ import Summary from '@/components/Chart/Summary';
 
 const ChartPage = () => {
   return (
-    <div className="flex w-full	h-screen py-14 px-12">
-      {/* <p style={{ fontSize: '10rem' }}>
-        lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non nemo
-        voluptates, earum ratione aliquid voluptas nesciunt delectus magni
-        obcaecati commodi eligendi placeat recusandae quibusdam voluptatibus,
-        quis impedit animi sequi est.
-      </p> */}
+    <div className=" w-full px-12 py-[60px] bg-grey200">
       {/* <LineChart /> */}
-      <ChartSidebar />
-      <div className="grow ml-4 p-10 rounded-lg border border-solid bg-white">
-        <Summary />
-        <LineTwo />
+      <div className="flex mb-5">
+        <div>캘린더 위치</div>
+        <CumulativeVideoChartFilter />
+      </div>
+      <div className="flex">
+        <ChartSidebar />
+        <DashBoard />
       </div>
     </div>
   );

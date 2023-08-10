@@ -5,6 +5,8 @@ import { CommunityCrawlingApiModule } from '@Apps/modules/community-crawling/com
 import { DailyViewsApiModule } from '@Apps/modules/daily_views/daily-views-api.module';
 import { RelWordsApiModules } from '@Apps/modules/rel-words/rel-words.module';
 import { UserApiModule } from '@Apps/modules/user/user.module';
+import { VideoApiModule } from '@Apps/modules/video/video.module';
+import { VideoHistoryApiModule } from '@Apps/modules/video_history/video_history.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { UserApiModule } from '@Apps/modules/user/user.module';
     DailyViewsApiModule,
     RelWordsApiModules,
     UserApiModule,
+    VideoApiModule,
+    VideoHistoryApiModule,
   ],
 })
 export class BusinessModules {}
