@@ -1,13 +1,13 @@
 import type { PropsWithChildren } from 'react';
 
-interface ContentHeaderProps {
+interface ContentCardHeaderProps {
   title: string;
 }
 
-const ContentHeader = ({
+const ContentCardHeader = ({
   children,
   title,
-}: PropsWithChildren<ContentHeaderProps>) => {
+}: PropsWithChildren<ContentCardHeaderProps>) => {
   return (
     <header className="pb-[30px] border-b border-solid border-grey300 bg-grey00">
       <h1 className="text-[32px] font-bold">{title}</h1>
@@ -16,4 +16,4 @@ const ContentHeader = ({
   );
 };
 
-export default ContentHeader;
+export default ContentCardHeader;
