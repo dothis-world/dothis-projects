@@ -36,7 +36,7 @@ const Keyword = <T extends HTMLButtonElement>({
       }}
     >
       {label}
-      <SvgComp icon="NavSlideDelete" size="1rem" />
+      <SvgComp icon="KeywordDelete" size="1rem" />
     </Style.Button>
   );
 };
