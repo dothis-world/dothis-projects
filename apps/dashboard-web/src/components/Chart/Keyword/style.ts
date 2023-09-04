@@ -5,6 +5,7 @@ export const KeywordTapContiner = styled.nav`
   display: flex;
   flex-wrap: nowrap;
   gap: 1.5rem;
+  justify-content: flex-start;
 
   width: 658px;
 
@@ -21,6 +22,7 @@ export const ButtonContainer = styled.div`
   gap: 0.675rem;
   overflow-x: auto;
 
+  padding-right: 5rem;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -29,8 +31,6 @@ export const ButtonContainer = styled.div`
 export const ArrowLeftButton = styled.button`
   position: relative;
 
-  /* 오른쪽 정렬이 필요 (Keyword List가 적을 때) */
-  margin: 0 0 0 auto;
   padding: 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.grey500};
   border-radius: 0.5rem;
@@ -64,11 +64,17 @@ export const Button = styled.button<{ $active: boolean }>`
   box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey500} inset;
 
   ${({ $active, theme }) =>
-    $active &&
-    css`
-      box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.primary500}
-        inset;
-      background-color: ${theme.colors.primary50};
-      color: ${theme.colors.primary500};
-    `}
+    $active
+      ? css`
+          box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.primary500}
+            inset;
+          background-color: ${theme.colors.primary50};
+          color: ${theme.colors.primary500};
+        `
+      : css`
+          & path {
+            fill: ${theme.colors.grey200};
+            stroke: ${theme.colors.grey500};
+          }
+        `}
 `;
