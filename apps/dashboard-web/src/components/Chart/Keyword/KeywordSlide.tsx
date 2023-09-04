@@ -50,9 +50,9 @@ const KeywordSlide = () => {
 
   return (
     <Style.KeywordTapContiner>
-      <button className="px-5 py-2 border border-solid border-grey500 rounded-8">
-        <SvgComp icon="NavSlideReset" size="1.5rem" />
-      </button>
+      <Style.ArrowLeftButton>
+        <SvgComp icon="KeywordLeftArrow" size="1.5rem" />
+      </Style.ArrowLeftButton>
       <Style.ButtonContainer ref={containerRef}>
         {Object.entries(KEYWORD_CATEGORIES).map(([key, label]) => (
           <NavSlideContent
@@ -65,7 +65,9 @@ const KeywordSlide = () => {
           />
         ))}
       </Style.ButtonContainer>
-      <Style.ArrowButton />
+      <Style.ArrowRightButton>
+        <SvgComp icon="KeywordRightArrow" size="1.5rem" />
+      </Style.ArrowRightButton>
     </Style.KeywordTapContiner>
   );
 };
