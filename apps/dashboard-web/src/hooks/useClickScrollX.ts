@@ -1,10 +1,14 @@
 import type { MutableRefObject } from 'react';
 import { useRef } from 'react';
 
-const useClickScrollX = <T extends HTMLElement>(): [
-  (target: MutableRefObject<T | null>) => void,
-  MutableRefObject<HTMLDivElement | null>,
-] => {
+type UseKeywordScollType<T> = {
+  containerRef: MutableRefObject<HTMLDivElement | null>;
+  handleTapScrollX: (target: MutableRefObject<T | null>) => void;
+  handleRightScroll: () => void;
+  handleLeftScroll: () => void;
+};
+
+const useClickScrollX = <T extends HTMLElement>(): UseKeywordScollType<T> => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const tapScrollX = useRef<number | undefined>(0);
@@ -15,10 +19,30 @@ const useClickScrollX = <T extends HTMLElement>(): [
 
     containerRef.current?.scrollTo({
       behavior: 'smooth',
-      left: containerRef.current?.scrollLeft + tapScrollX.current! - 500,
+      left: containerRef.current?.scrollLeft + tapScrollX.current! - 700,
     });
   }
-  return [handleTapScrollX, containerRef];
+
+  function handleRightScroll() {
+    containerRef.current?.scrollTo({
+      behavior: 'smooth',
+      left: containerRef.current?.scrollLeft + 150,
+    });
+  }
+
+  function handleLeftScroll() {
+    containerRef.current?.scrollTo({
+      behavior: 'smooth',
+      left: containerRef.current?.scrollLeft - 150,
+    });
+  }
+
+  return {
+    containerRef,
+    handleTapScrollX,
+    handleRightScroll,
+    handleLeftScroll,
+  };
 };
 
 export default useClickScrollX;
