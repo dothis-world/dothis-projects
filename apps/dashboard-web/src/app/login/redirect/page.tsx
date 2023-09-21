@@ -3,7 +3,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { TEST } from '@/constants/test';
 import { apiInstance } from '@/utils/apiInstance';
 
 import Client from './client';
