@@ -29,7 +29,7 @@ const LoginKeyword = ({ keyword }: KeywordSchema) => {
     <FormProvider {...methods}>
       <Keywords keyword={keyword} />
 
-      <Style.LoginKeywordButton disabledBtn={keywords.length}>
+      <Style.LoginKeywordButton $disabledBtn={keywords.length}>
         {keywords.length > 0 && keywords.length + '개'} 작성
       </Style.LoginKeywordButton>
     </FormProvider>
