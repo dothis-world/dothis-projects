@@ -1,11 +1,16 @@
 'use client';
 
 import { setCookie } from 'cookies-next';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { apiClient } from '@/utils/apiClient';
 import { apiInstance } from '@/utils/apiInstance';
+
+const isServer = typeof window === 'undefined';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 const Client = ({
   accessToken,
@@ -19,9 +24,20 @@ const Client = ({
   const router = useRouter();
 
   setCookie('accessToken', `Bearer ${accessToken}`);
-  setCookie('refreshToken', `Bearer ${refreshToken}`);
+
+  if (!isProduction) {
+    Cookies.set('refreshToken', `${refreshToken}`, { domain: 'dothis.kr' });
+  }
+
+  // if (!isServer) {
+  //   console.log('test');
+  //   document.cookie = `refreshToken=${refreshToken}; domain=.dothis.kr; path=/`;
+  //   console.log(document.cookie);
+  // }
 
   const { data } = apiClient.auth.getOwnInfo.useQuery(['my']);
+
+  const { data: verify } = apiClient.auth.getVerifyToken.useQuery(['test']);
 
   useEffect(() => {
     if (accessToken && refreshToken) {
