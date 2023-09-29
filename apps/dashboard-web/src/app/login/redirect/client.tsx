@@ -1,18 +1,19 @@
 'use client';
 
-import { setCookie } from 'cookies-next';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { apiClient } from '@/utils/apiClient';
+import { apiClient, client } from '@/utils/apiClient';
 import { apiInstance } from '@/utils/apiInstance';
+import { headers } from 'next/headers';
+import axios from 'axios';
 
 const isServer = typeof window === 'undefined';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const Client = ({
+const Client = async ({
   accessToken,
   refreshToken,
   isNewUser,
@@ -23,11 +24,11 @@ const Client = ({
 }) => {
   const router = useRouter();
 
-  setCookie('accessToken', `Bearer ${accessToken}`);
-
-  if (!isProduction) {
-    Cookies.set('refreshToken', `${refreshToken}`, { domain: 'dothis.kr' });
-  }
+  // setCookie('accessToken', `Bearer ${accessToken}`);
+  //
+  // if (!isProduction) {
+  //   Cookies.set('refreshToken', `${refreshToken}`, { domain: '.dothis.kr' });
+  // }
 
   // if (!isServer) {
   //   console.log('test');
@@ -35,9 +36,13 @@ const Client = ({
   //   console.log(document.cookie);
   // }
 
+  apiInstance.interceptors.request.use(async (config) => {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+    return config;
+  });
   const { data } = apiClient.auth.getOwnInfo.useQuery(['my']);
 
-  const { data: verify } = apiClient.auth.getVerifyToken.useQuery(['test']);
+  const res = apiClient.auth.getVerifyToken.useQuery(['!!!!']);
 
   useEffect(() => {
     if (accessToken && refreshToken) {
