@@ -30,6 +30,7 @@ export default function RootHeader() {
         content="61cf01795f8a825e98136f98401fd7f3aa1bfa20"
       />
       {/* 네이버 서치어드바이저  */}
+      <img src="https://api.dothis.kr" />
     </>
   );
 }
