@@ -1,6 +1,7 @@
 'use client';
 
 import { setCookie } from 'cookies-next';
+import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -33,7 +34,7 @@ const Client = ({
       if (isNewUser === 'true') {
         router.replace('/login/choose-keyword');
       } else {
-        router.replace('/chart');
+        router.replace('/chart' as Route);
       }
     } else {
       throw new Error('로그인이 정상적으로 진행되지 않았습니다.');

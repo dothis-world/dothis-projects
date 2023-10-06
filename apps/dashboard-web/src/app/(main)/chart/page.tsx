@@ -1,7 +1,7 @@
 import ContentTopic from '@/features/chart/ContentTopic';
 import SocialMedia from '@/features/chart/SocialMedia';
 
-const ChartPage = ({
+const ChartPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -9,6 +9,7 @@ const ChartPage = ({
   return (
     <>
       <ContentTopic />
+      {/* @ts-expect-error Server Component */}
       <SocialMedia searchParams={searchParams} />
     </>
   );
