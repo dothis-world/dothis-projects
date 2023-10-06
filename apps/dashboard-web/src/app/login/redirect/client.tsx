@@ -20,7 +20,7 @@ const Client = ({
   isNewUser: string | string[] | undefined;
 }) => {
   const router = useRouter();
-  const { setIsSignedIn } = useAuthActions();
+  const { setIsSignedIn, setIsTokenRequired } = useAuthActions();
 
   if (!isProduction && accessToken) {
     setCookie('accessToken', `Bearer ${accessToken}`);
@@ -29,7 +29,8 @@ const Client = ({
   useEffect(() => {
     if (accessToken && refreshToken) {
       setIsSignedIn(true);
-      if (isNewUser) {
+      setIsTokenRequired(false);
+      if (isNewUser === 'true') {
         router.replace('/login/choose-keyword');
       } else {
         router.replace('/chart');
