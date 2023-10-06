@@ -17,7 +17,8 @@ import { apiServer } from '@/utils/apiServer';
 import { isRefreshTokenExpired, isTokenNotExist } from '@/utils/authUtils';
 
 /**
- *  해당 AuthProvider는 로그인이 필요한 라우팅 template에 삽입할 것이다.
+ *  해당 AuthProvider는 자동로그인을 위한 template입니다
+ *  추 후 로그인이 필요한 라우팅의 경우 다른 Provider로 template에 삽입할 것입니다.
  */
 function AuthProvider({ children }: StrictPropsWithChildren) {
   const router = useRouter();
