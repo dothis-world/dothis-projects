@@ -63,7 +63,7 @@ apiInstance.interceptors.response.use(
     console.log(error);
     count += 1;
 
-    if (count > 2) {
+    if (count > 1) {
       count = 0;
       return Promise.reject(error);
     }
