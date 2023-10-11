@@ -36,12 +36,12 @@ export default function Modal({ children }: { children: React.ReactNode }) {
   return (
     <div
       ref={overlay}
-      className="fixed inset-0 z-10 mx-auto bg-black/60"
+      className="bg-grey300 fixed inset-0 z-10 mx-auto bg-opacity-10"
       onClick={onClick}
     >
       <div
         ref={wrapper}
-        className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 p-6 sm:w-10/12 md:w-8/12 lg:w-1/2"
+        className="absolute left-1/2 top-1/2  -translate-x-1/2 -translate-y-1/2 p-6"
       >
         {children}
       </div>
