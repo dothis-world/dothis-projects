@@ -53,7 +53,9 @@ apiInstance.interceptors.response.use(
     /**
      * 현재 해당 response 마다 authorization을 체크해서 cookie를 갱신하는 코드가 추가되었다. (ts-Rest query 내에서 headers를 response로 못받는갑다)
      */
+    console.log(response);
     if (response.headers['authorization'] && !isProduction) {
+      console.log('test');
       setCookie('accessToken', response.headers['authorization']);
     }
 

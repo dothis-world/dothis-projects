@@ -1,10 +1,7 @@
 'use client';
 
 import { isAxiosError } from 'axios';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
 
 import {
@@ -12,7 +9,6 @@ import {
   useIsSignedIn,
   useIsTokenRequired,
 } from '@/store/authStore';
-import { apiInstance } from '@/utils/apiInstance';
 import { apiServer } from '@/utils/apiServer';
 import { isRefreshTokenExpired, isTokenNotExist } from '@/utils/authUtils';
 
@@ -46,8 +42,9 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
         /**
          * Access Token이 존재하지 않을 경우 재발급
          */
-        await apiServer.auth.getVerifyToken();
+        const data = await apiServer.auth.getVerifyToken();
 
+        console.log(data);
         setIsSignedIn(true);
       } catch (error) {
         if (isAxiosError(error)) {
@@ -55,6 +52,8 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
           const statusCode = err.response?.status as number;
           const errorData = err.response?.data.data;
           const title = errorData?.title as string;
+
+          console.log(err);
 
           /**
            * Refresh Token이 만료되었거나 모든 토큰이 존재하지 않을 경우 홈으로 리다이렉트
