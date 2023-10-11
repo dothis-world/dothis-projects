@@ -8,18 +8,11 @@ const ChartPage = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const steps = searchParams?.steps;
-
   return (
     <>
       <ContentTopic />
       {/* @ts-expect-error Server Component */}
       <SocialMedia searchParams={searchParams} />
-      {steps === 'signUp' && (
-        <Modal>
-          <SignUpContents />
-        </Modal>
-      )}
     </>
   );
 };
