@@ -8,7 +8,7 @@ const page = () => {
         로딩 테스트
       </Link>
 
-      <Button size="M" theme="primary">
+      <Button size="M" theme="primary" paddingX={50}>
         대쉬보드 스토리북 테스트 버튼
       </Button>
     </>
