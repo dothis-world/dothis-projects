@@ -19,7 +19,7 @@ interface ButtonProps {
   /**
    * Button 좌우패딩 커스터마이징
    */
-  paddingX?: number;
+  paddingX?: string;
 }
 
 /**
@@ -32,16 +32,22 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
       theme = 'primary',
       size = 'S',
       disabled = false,
+
       paddingX,
       children,
       ...props
     },
     ref,
   ) => {
-    const paddingX_inclsx = `!px-[${paddingX!}px]`;
-    const rootClassName = clsx(styles.root, styles[theme], styles[size], {
-      [paddingX_inclsx]: !!paddingX,
-    });
+    const rootClassName = clsx(
+      styles.root,
+      styles[theme],
+      styles[size],
+
+      {
+        [paddingX!]: paddingX,
+      },
+    );
 
     return (
       <button
