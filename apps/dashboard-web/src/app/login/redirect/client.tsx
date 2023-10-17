@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { isProduction } from '@/constants/dev';
 import { useAuthActions } from '@/store/authStore';
 import { apiClient } from '@/utils/apiClient';
+import { isHashKeyword } from '@/utils/isHashKeyword';
 
 const isServer = typeof window === 'undefined';
 
@@ -42,13 +43,13 @@ const Client = ({
       if (accessToken && refreshToken) {
         setIsSignedIn(true);
         setIsTokenRequired(false);
-        if (isNewUser === 'true' || !userData?.body.argeePromotion) {
+        if (isNewUser === 'true' || !userData?.body.data.argeePromotion) {
           router.replace('/login/choose-keyword');
           // router.replace('/loginnew/terms');
         }
         if (
-          isHashKeyword(keyword?.body[0].channel_keywords) &&
-          isHashKeyword(keyword?.body[0].channel_tags)
+          isHashKeyword(keyword?.body.data[0].channel_keywords) &&
+          isHashKeyword(keyword?.body.data[0].channel_tags)
         ) {
           router.replace('/login/choose-keyword');
         }
