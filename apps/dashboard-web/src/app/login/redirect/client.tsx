@@ -44,8 +44,7 @@ const Client = ({
         setIsSignedIn(true);
         setIsTokenRequired(false);
         if (isNewUser === 'true' || !userData?.body.data.argeePromotion) {
-          router.replace('/login/choose-keyword');
-          // router.replace('/loginnew/terms');
+          router.replace('/login/terms');
         }
         if (
           isHashKeyword(keyword?.body.data[0].channel_keywords) &&
