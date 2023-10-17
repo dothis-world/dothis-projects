@@ -45,12 +45,14 @@ const Client = ({
         setIsTokenRequired(false);
         if (isNewUser === 'true' || !userData?.body.data.argeePromotion) {
           router.replace('/login/terms');
+          return;
         }
         if (
           isHashKeyword(keyword?.body.data[0].channel_keywords) &&
           isHashKeyword(keyword?.body.data[0].channel_tags)
         ) {
           router.replace('/login/choose-keyword');
+          return;
         }
 
         router.replace('/contents');
