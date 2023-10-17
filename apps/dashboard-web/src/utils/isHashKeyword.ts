@@ -1,4 +1,4 @@
-function isHashKeyword(arr: Array<string> | null | undefined) {
+export function isHashKeyword(arr: Array<string> | null | undefined) {
   if (arr === null || arr === undefined) {
     return false;
   }
