@@ -1,6 +1,7 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
+import { Input } from 'dashboard-storybook/src/components/Input/Input';
 import { type PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -14,6 +15,12 @@ import TermsModal from '../common/Modal/TermsModal/TermsModal';
 import TermsModalContents from '../common/Modal/TermsModal/TermsModalContents';
 
 const LoginTerms = () => {
+  const [onError, setOnError] = useState(false);
+
+  const { data: userData, isLoading: userLoading } = apiClient(
+    1,
+  ).auth.getOwnInfo.useQuery(['user']);
+
   const methods = useForm({
     mode: 'onSubmit',
     resolver: zodResolver(LOGIN_TERMS_SCHEMA),
@@ -34,8 +41,6 @@ const LoginTerms = () => {
     console.log(data);
     // 약관동의 코드 작성
   };
-
-  const [onError, setOnError] = useState(false);
 
   useEffect(() => {
     (errors.privacy || errors.service) && setOnError(true);
@@ -68,6 +73,13 @@ const LoginTerms = () => {
             <TermsBox>마케팅 정보 제공 동의</TermsBox>
           </div>
         </div>
+
+        <div className="mb-5 flex  justify-center">
+          <div className="w-[322px]">
+            <Input placeholder={userData?.body.data.userEmail!} disabled />
+          </div>
+        </div>
+
         <div className="flex justify-center">
           <Button size="L" theme="contained" type="submit">
             가입하기
