@@ -1,6 +1,5 @@
-import { SSTConfig } from 'sst';
+import type { SSTConfig } from 'sst';
 import { NextjsSite } from 'sst/constructs';
-import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 export default {
   config(_input) {
     return {
@@ -12,11 +11,9 @@ export default {
     app.stack(function Site({ stack }) {
       const site = new NextjsSite(stack, 'site', {
         customDomain: {
-          domainName: 'www.dothis.kr',
-          isExternalDomain: true,
-          cdk: {
-            // certificate: Certificate.fromCertificateArn(stack, 'MyCert'),
-          },
+          domainName: 'dothis.kr',
+          domainAlias: 'www.dothis.kr',
+          hostedZone: 'dothis.kr',
         },
       });
 

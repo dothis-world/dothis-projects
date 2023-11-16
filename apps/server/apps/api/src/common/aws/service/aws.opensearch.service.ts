@@ -26,11 +26,11 @@ export class AwsOpensearchConnetionService {
           );
         },
       }),
-      node: `https://search-dothis-js7jgo2actyuzihx7zz335k2nq.ap-northeast-2.es.amazonaws.com/`,
+      node: this.configService.get<string>('aws.OPENSEARCH_NODE'),
     });
   }
 
-  async fullScan(query: any): Promise<Record<string, any>[]> {
+  async fullScan<T>(query: any): Promise<T[]> {
     const start_time: number = Date.now();
     const first_query: any = query;
 
@@ -57,16 +57,16 @@ export class AwsOpensearchConnetionService {
       }
     }
 
-    console.log(
-      'Total results:',
-      result.length,
-      'total_length:',
-      total_length,
-      '길이가 맞나?',
-      result.length === total_length,
-    );
+    console.log('길이가 맞나?', total_length, result.length === total_length);
 
     console.log('TOTAL TIME:', Date.now() - start_time, 'milliseconds.');
+    console.log(
+      '쿼리타입 , 함수타입',
+      query,
+      'TOTAL TIME:',
+      (Date.now() - start_time) / 1000,
+      'seconds.',
+    );
 
     return result;
   }

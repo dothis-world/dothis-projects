@@ -1,6 +1,7 @@
 import { GetUserCommandHandler } from './get-user.service';
-import { User } from '@Apps/config/database/domain/entities/user/user.entity';
+import { User } from '@Apps/modules/user/domain/user.entity';
 import { MockGetUser } from '@Apps/modules/user/__mock__/getUser.mock';
+import { Ok } from 'oxide.ts';
 describe('get-user spec', () => {
   test('유저 하나를 리턴한다.', async () => {
     const user: User = {
@@ -14,13 +15,15 @@ describe('get-user spec', () => {
       isAdmin: null,
       status: null,
       dateSignIn: new Date('2023-01-25 16:22:23'),
-      UserChannelData: null,
       Membership: null,
       channel: null,
+      personalizationTag: 's',
+      isEnvLocal: false,
     };
     const getOneUserService = new GetUserCommandHandler(new MockGetUser(user));
 
     const res = await getOneUserService.execute({ userId: '5' });
-    expect(res).toStrictEqual(user);
+    expect(res.isOk()).toStrictEqual(true);
+    expect(res.unwrap()).toStrictEqual(user);
   });
 });

@@ -1,8 +1,14 @@
-import { Controller, HttpStatus, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  HttpStatus,
+  NotFoundException,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FindKeywordTagByUserCommand } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.service';
 import {
   ApiBearerAuth,
+  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -10,21 +16,21 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-
-import {
-  nestControllerContract,
-  TsRest,
-  NestRequestShapes,
-} from '@ts-rest/nest';
+import { match, Result } from 'oxide.ts';
+import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { UserInfoCommandDto } from '@Apps/common/auth/v1/commands/google-login-redirect/google-login-redirect.service';
-import { ChannelKeywordOrtagDtos } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
+import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import {
+  ChannelKeywordOrtagDtos,
+  ResultChannelKeywordTag,
+} from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
+import { IRes } from '@Libs/commons/src/types/res.types';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 const c = nestControllerContract(apiRouter.user);
-const { pathParams, summary, responses, description } = c.getUserKeyword;
-type RequestShapes = NestRequestShapes<typeof c>;
+const { summary, responses, description } = c.getUserKeyword;
 
-@ApiTags(pathParams)
+@ApiTags('유저 관련')
 @Controller()
 export class GetKeywordByUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
@@ -39,6 +45,12 @@ export class GetKeywordByUserHttpController {
     description: '유저의 태그나 키워드를 찾아 옵니다.',
     type: ChannelKeywordOrtagDtos,
   })
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+    },
+  ])
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
     description: responses[404],
@@ -50,10 +62,22 @@ export class GetKeywordByUserHttpController {
   @ApiBearerAuth('Authorization')
   async getKeywordTag(
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<ChannelKeywordOrtagDtos> {
+  ): Promise<IRes<ChannelKeywordOrtagDtos>> {
     const command = new FindKeywordTagByUserCommand({
-      userId: userInfo.id,
+      userId: userInfo.id.toString(),
+      channelId: userInfo.channelId,
     });
-    return await this.commandBus.execute(command);
+    const result: Result<ResultChannelKeywordTag, ChannelNotFoundError> =
+      await this.commandBus.execute(command);
+
+    return match(result, {
+      Ok: (result) => ({ success: true, data: result }),
+      Err: (err: Error) => {
+        if (err instanceof ChannelNotFoundError) {
+          throw new NotFoundException(err.message);
+        }
+        throw err;
+      },
+    });
   }
 }

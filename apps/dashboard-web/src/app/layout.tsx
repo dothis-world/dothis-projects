@@ -1,6 +1,11 @@
+/* eslint-disable @next/next/no-script-component-in-head */
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
+
 import '@/styles/global.css';
 
 import clsx from 'clsx';
+import Head from 'next/head';
+import Script from 'next/script';
 import type { PropsWithChildren } from 'react';
 
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
@@ -14,13 +19,14 @@ import RootHeader from './head';
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="ko">
-      <RootHeader />
+      <Head>
+        <RootHeader />
+        <Analytics />
+      </Head>
       <body
         className={clsx(pretendard.className, 'text-[16px]')}
         suppressHydrationWarning={true}
       >
-        <Analytics />
-
         <StyledComponentsRegistry>
           <StyledTheme>
             <ClientContext>{children}</ClientContext>

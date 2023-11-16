@@ -1,28 +1,25 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { DailyViewModel } from './daily-views.model';
+import { zDailyViews } from './daily-views.model';
+import { findVideoBySearchKeyword } from '../video';
 
 export const dailyViewApiUrl = '/daily-views';
 
 export const dailyViewApi = c.router({
   getDailyViews: {
     method: 'GET',
-    path: `${dailyViewApiUrl}/:keyword`,
+    path: `${dailyViewApiUrl}/:clusterNumber`,
     pathParams: z.object({
-      keyword: z.string(),
+      clusterNumber: z.string(),
     }),
-    query: z.object({
-      relationKeyword: z.string().optional(),
-      from: z.string(),
-      to: z.string(),
-    }),
+    query: findVideoBySearchKeyword,
     responses: {
-      200: 'OK',
+      200: zDailyViews,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
-    summary: '데일리 뷰를 가져옵니다. 개선 버전, 그러나 더 개선해야됨',
+    summary: '일일 조회수를 가져옵니다',
     description:
-      'params relationKeyword video를 찾아 옵니다. 와서 video history 를 출력합니다.',
+      '클러스터 번호(clusterNumber),탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 일일 조회수 를 출력합니다.',
   },
 });

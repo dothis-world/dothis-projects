@@ -18,8 +18,14 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
-    origin: ['http://localhost:3666'],
+    origin: [
+      'http://localhost:3666',
+      'https://www.dothis.kr',
+      'https://dothis.kr',
+    ],
     methods: ['POST', 'PUT', 'DELETE', 'GET'],
+    credentials: true,
+    exposedHeaders: ['Authorization'],
   });
   await app.listen(appPort);
 

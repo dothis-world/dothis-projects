@@ -1,25 +1,28 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import RevealWrapper from '@/components/Landing/RevealWrapper';
 import { CONTENT } from '@/constants/route';
 
-import { Background, ImageBox, Main, Texts, Title } from './style';
+import { Background, Description, ImageBox, Main, Texts, Title } from './style';
 
 export default function Page6() {
   const router = useRouter();
   return (
     <Background>
       <Main>
-        <ImageBox>
-          <Image
-            src={'/images/landing/page6.png'}
-            alt={''}
-            width={500}
-            height={500}
-          />
-        </ImageBox>
+        <RevealWrapper>
+          <ImageBox>
+            <Image
+              src={'/images/landing/page6.png'}
+              alt={''}
+              width={400}
+              height={400}
+            />
+          </ImageBox>
+        </RevealWrapper>
         <Texts>
-          <Title>영상 기획, 오랜 시간 고민하지 말고 두-디스</Title>
+          <Title>영상 기획, 오랜 시간 고민하지 말고 두디스</Title>
           <button
             onClick={() => {
               router.push(CONTENT);

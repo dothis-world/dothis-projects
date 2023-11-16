@@ -1,15 +1,14 @@
 import { z } from 'zod';
 
 export const zDailyViews = z.object({
-  id: z.number(),
-
-  channelIndex: z.number(),
-
-  videoId: z.number(),
-
-  date: z.date(),
-
-  views: z.number(),
+  data: z.array(
+    z.object({
+      date: z.string(),
+      increase_comments: z.number(),
+      increase_likes: z.number(),
+      increase_views: z.number(),
+    }),
+  ),
 });
 
 export const zVideoHistory = z.object({
@@ -27,8 +26,3 @@ export const zVideoHistory = z.object({
 });
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
-
-export type TVideoHistoryModel = z.TypeOf<typeof zVideoHistory>;
-
-export interface IVideoHistory extends TVideoHistoryModel {}
-export class VideoHistoryModel implements IVideoHistory {}

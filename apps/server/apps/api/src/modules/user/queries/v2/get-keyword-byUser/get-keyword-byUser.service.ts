@@ -1,34 +1,47 @@
-import { HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
-import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
+import { Inject, NotFoundException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CHANNEL_DATA_REPOSITORY_BY_OS } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
-import { ChannelAdapter } from '@Apps/modules/channel/interface/channel.adapter';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
+import { Err, Ok, Result } from 'oxide.ts';
+
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
+import {
+  ChannelKeywordOrtagDtos,
+  ResultChannelKeywordTag,
+} from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 
 export class FindKeywordTagByUserCommand {
-  public readonly userId;
+  public readonly userId: string;
+  public readonly channelId: string;
   constructor(props: FindKeywordTagByUserCommand) {
     this.userId = props.userId;
+    this.channelId = props.channelId;
   }
 }
 
 @CommandHandler(FindKeywordTagByUserCommand)
 export class GetUserV2CommandHandler
-  implements ICommandHandler<FindKeywordTagByUserCommand>
+  implements
+    ICommandHandler<
+      FindKeywordTagByUserCommand,
+      Result<ResultChannelKeywordTag, ChannelNotFoundError>
+    >
 {
   constructor(
-    @Inject(USER_REPOSITORY)
-    protected readonly userRepo: UserRepositoryPort,
-
-    @Inject(CHANNEL_DATA_REPOSITORY_BY_OS)
-    protected readonly channelOpenSearchRepo: ChannelAdapter,
+    @Inject(CHANNEL_DATA_REPOSITORY)
+    protected readonly channelDataRepo: ChannelDataRepositoryPort,
   ) {}
-  async execute(command: FindKeywordTagByUserCommand) {
-    const found = await this.userRepo.findOneWithRelations(command.userId);
-    const res = await this.channelOpenSearchRepo.findChannelTagOrKeyword(
-      found.channelId,
+  async execute(
+    command: FindKeywordTagByUserCommand,
+  ): Promise<Result<ResultChannelKeywordTag, ChannelNotFoundError>> {
+    const res = await this.channelDataRepo.findOneByChannelId(
+      command.channelId,
     );
-    if (!res) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    return res;
+    if (!res) return Err(new ChannelNotFoundError());
+    const { keyword, tag } = res;
+    return Ok({
+      channel_keywords: keyword && keyword.split(','),
+      channel_tags: tag && tag.split(','),
+    });
   }
 }
