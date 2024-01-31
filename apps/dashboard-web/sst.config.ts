@@ -17,7 +17,11 @@ export default {
           domainAlias: 'www.dothis.kr',
           hostedZone: 'dothis.kr',
         },
+        environment: {
+          OPENAI_API_KEY: String(process.env.OPENAI_API_KEY),
+        },
       });
+
       stack.addOutputs({
         ProdSiteUrl: prodSite.url,
       });
