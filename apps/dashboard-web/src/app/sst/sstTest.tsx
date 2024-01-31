@@ -3,6 +3,7 @@
 import { apiClient } from '@/utils/api/apiClient';
 
 const SSTTEST = () => {
+  console.log('test');
   const queryResults = apiClient(2).dailyViews.getDailyViews.useQueries({
     queries: ['1', '2', '3', '4', '5'].map((clusterNumber) => {
       return {
@@ -11,8 +12,8 @@ const SSTTEST = () => {
           clusterNumber,
         },
         query: {
-          keyword: '먹방',
-          relationKeyword: '불닭',
+          search: '먹방',
+          related: '불닭',
           from: '2023-10-11',
           to: '2023-10-17',
         },
