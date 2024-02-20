@@ -1,26 +1,84 @@
 import type { Metadata, ResolvingMetadata } from 'next';
+import dynamic from 'next/dynamic';
 
-import TabNavigation from '@/components/common/TabNavigation';
-import Card from '@/components/MainContents/Card';
-import CardHeader from '@/components/MainContents/CardHeader';
-import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
-import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
-import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
-import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
-import Container from '@/components/MainOverallView/RelatedWordList/Container';
-import Chat from '@/components/OpenAI/Chat';
+import YoutubeArticlesContainer from '@/components/MainContents/MediaArticles/YoutubeArticlesContainer';
+// import TabNavigation from '@/components/common/TabNavigation';
+// import Card from '@/components/MainContents/Card';
+// import CardHeader from '@/components/MainContents/CardHeader';
+// import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
+// import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
+// import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
+// import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
+// import Container from '@/components/MainOverallView/RelatedWordList/Container';
+// import Chat from '@/components/OpenAI/Chat';
 import { CATEGORY_TABNAV_DATA } from '@/constants/TabNav';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 
+const TabNavigation = dynamic(
+  () => import('@/components/common/TabNavigation'),
+  { ssr: false },
+);
+const Card = dynamic(() => import('@/components/MainContents/Card'), {
+  ssr: false,
+});
+const CardHeader = dynamic(
+  () => import('@/components/MainContents/CardHeader'),
+  {
+    ssr: false,
+  },
+);
+const KeywordAnalyticsView = dynamic(
+  () =>
+    import(
+      '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView'
+    ),
+  {
+    ssr: false,
+  },
+);
+const KeywordRankingList = dynamic(
+  () =>
+    import('@/components/MainContents/InfoChartAndRanking/KeywordRankingList'),
+  {
+    ssr: false,
+  },
+);
+const MediaArticlesContainer = dynamic(
+  () =>
+    import('@/components/MainContents/MediaArticles/MediaArticlesContainer'),
+  {
+    ssr: false,
+  },
+);
+
+const MonthlyViewData = dynamic(
+  () =>
+    import('@/components/MainContents/MonthlyContentReport/MonthlyViewData'),
+  {
+    ssr: false,
+  },
+);
+
+const Container = dynamic(
+  () => import('@/components/MainOverallView/RelatedWordList/Container'),
+  {
+    ssr: false,
+  },
+);
+
+const Chat = dynamic(() => import('@/components/OpenAI/Chat'), {
+  ssr: false,
+});
 type Props = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata(
+// 요청이 따로 없어서 async 제거
+export function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata,
-): Promise<Metadata> {
+): Metadata {
   // read route params
   const keyword = searchParams.keyword;
 
@@ -44,7 +102,7 @@ export async function generateMetadata(
   return {};
 }
 
-const MainContentPage = async ({
+const MainContentPage = ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -67,14 +125,13 @@ const MainContentPage = async ({
     return (
       <div className=" mx-auto w-[1342px] ">
         <Card>
-          <CardHeader title="콘텐츠 소재">
-            <Chat />
-          </CardHeader>
+          <CardHeader title="콘텐츠 소재" />
           <div className="flex">
             <KeywordRankingList />
 
             <KeywordAnalyticsView />
           </div>
+          <Chat />
         </Card>
         <Card>
           <TabNavigation
@@ -84,14 +141,25 @@ const MainContentPage = async ({
           />
           <MonthlyViewData currentTab={secondSection} />
         </Card>
-        <Card>
-          <TabNavigation
-            tabKey="snsTab"
-            selectedArticle={selectedArticle}
-            tabNavData={MEDIA_TABNAV_DATA}
-          />
-          <MediaArticlesContainer selectedArticle={selectedArticle} />
-        </Card>
+        <div className="flex justify-between [&>*]:flex-1">
+          <Card>
+            <TabNavigation
+              tabKey="youtube"
+              selectedArticle={'youtube'}
+              tabNavData={[{ title: '유튜브', category: 'youtube' }]}
+            />
+            <YoutubeArticlesContainer />
+          </Card>
+
+          <Card>
+            <TabNavigation
+              tabKey="snsTab"
+              selectedArticle={selectedArticle}
+              tabNavData={MEDIA_TABNAV_DATA}
+            />
+            <MediaArticlesContainer selectedArticle={selectedArticle} />
+          </Card>
+        </div>
       </div>
     );
   }
