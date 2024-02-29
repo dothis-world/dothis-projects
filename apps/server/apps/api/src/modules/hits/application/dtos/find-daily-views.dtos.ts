@@ -2,8 +2,15 @@ import { IQuery } from '@nestjs/cqrs';
 import { VIDEO_DATA_KEY } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { findVideoBySearchKeyword, zClusterNumber } from '@dothis/dto';
+import {
+  findVideoBySearchKeyword,
+  zClusterNumber,
+  zClusterNumberMulti,
+} from '@dothis/dto';
 
+export class ClusterNumberMulti extends createZodDto(
+  extendApi(zClusterNumberMulti),
+) {}
 export class ClusterNumber extends createZodDto(extendApi(zClusterNumber)) {}
 export interface IPickDateFromLimitLast
   extends Pick<IDateRange, 'from'>,
@@ -75,7 +82,7 @@ export class FindDailyViewsV1Dto
 
 export interface IIncreaseData {
   date: string;
-  increase_views: number;
-  increase_likes: number;
-  increase_comments: number;
+  increaseViews: number;
+  increaseLikes: number;
+  increaseComments: number;
 }

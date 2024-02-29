@@ -44,7 +44,9 @@ export class IncreaseData extends createZodDto(extendApi(zDailyViewData)) {}
 export class WeeklyData extends createZodDto(
   extendApi(zWeeklyKeywordsListSourceSchema),
 ) {}
-export class VideoInfoRes extends createZodDto(extendApi(zVideoDetails)) {}
+export class VideoInfoRes extends createZodDto(
+  extendApi(zVideoDetails.shape.data),
+) {}
 
 export class ChannelAnalysisRes extends createZodDto(
   extendApi(zChannelAnalysis),
@@ -52,7 +54,9 @@ export class ChannelAnalysisRes extends createZodDto(
 export class WeeklyKeywordsRes extends createZodDto(
   extendApi(zWeeklyKeywordsList),
 ) {}
-
+export class WeeklyKeywordsListSchema extends createZodDto(
+  extendApi(zWeeklyKeywordsListSourceSchema),
+) {}
 export interface TTsRestRes<T> {
   status: any;
   body: T;

@@ -15,17 +15,36 @@ import {
 import { Err, Ok } from 'oxide.ts';
 import {
   VideosResultTransformer,
-  VideosDateFormatter,
+  DateFormatter,
 } from '@Apps/modules/video/infrastructure/utils';
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { GetVideoDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 
 const IgniteClient = require('apache-ignite-client');
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoAdapter extends IgniteService implements VideoOutboundPort {
+  private readonly videoColumns: string[] = [
+    'VIDEO_ID',
+    'CHANNEL_ID',
+    'VIDEO_TITLE',
+    'VIDEO_DESCRIPTION',
+    'VIDEO_TAGS',
+    'VIDEO_DURATION',
+    'VIDEO_PUBLISHED',
+    'VIDEO_CATEGORY',
+    'VIDEO_INFO_CARD',
+    'VIDEO_WITH_ADS',
+    'VIDEO_END_SCREEN',
+    'VIDEO_CLUSTER',
+    'CRAWLED_DATE',
+    'YEAR',
+    'MONTH',
+    'DAY',
+  ];
   constructor(configService: ConfigService) {
     super(configService);
   }
@@ -45,8 +64,8 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
     to: string,
     clusterNumber: string | string[],
   ): string {
-    const fromDate = VideosDateFormatter.getFormattedDate(from);
-    const toDate = VideosDateFormatter.getFormattedDate(to);
+    const fromDate = DateFormatter.getFormattedDate(from);
+    const toDate = DateFormatter.getFormattedDate(to);
     // clusterNumber가 배열이 아니라면 하나의 요소를 가진 배열로 변환
     const clusterNumbers = Array.isArray(clusterNumber)
       ? clusterNumber
@@ -55,8 +74,7 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
       .map((index) => {
         const tableName = `VIDEO_DATA_CLUSTER_${index}`;
         const joinTableName = `VIDEO_HISTORY_CLUSTER_${index}_${fromDate.year}_${fromDate.month}`;
-        return `(SELECT ${columns} FROM DOTHIS.${tableName} vd JOIN DOTHIS.${joinTableName} vh ON vd.video_id = vh.video_id  WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
-   AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') AND vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+        return `SELECT ${columns} FROM DOTHIS.${tableName} vd JOIN DOTHIS.${joinTableName} vh ON vd.video_id = vh.video_id WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       })
       .join(' UNION ');
   }
@@ -66,8 +84,8 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
     const { search, related, from, to, clusterNumber } = dao;
 
     try {
-      const fromDate = VideosDateFormatter.getFormattedDate(from);
-      const toDate = VideosDateFormatter.getFormattedDate(to);
+      const fromDate = DateFormatter.getFormattedDate(from);
+      const toDate = DateFormatter.getFormattedDate(to);
       const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber}_${fromDate.year}_${fromDate.month}`;
       const joinTableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumber}`;
 
@@ -88,6 +106,9 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
+      if (e.message.includes('Table')) {
+        return Err(new TableNotFoundException(e.message));
+      }
       return Err(e);
     }
   }
@@ -97,8 +118,8 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
 
     try {
       const cache = await this.client.getCache('dothis.VIDEO_DATA');
-      const fromDate = VideosDateFormatter.getFormattedDate(from);
-      const toDate = VideosDateFormatter.getFormattedDate(to);
+      const fromDate = DateFormatter.getFormattedDate(from);
+      const toDate = DateFormatter.getFormattedDate(to);
       const queryString = `SELECT vd.VIDEO_ID, vd.VIDEO_TITLE, vd.VIDEO_DESCRIPTION, vd.video_tags, vd.YEAR, vd.MONTH, vd.DAY FROM DOTHIS.VIDEO_DATA vd
          WHERE (vd.video_title LIKE '%${search}%' AND vd.video_tags LIKE '%${related}%')
          AND (vd.video_title LIKE '%${related}%' AND vd.video_tags LIKE '%${search}%')
@@ -117,6 +138,9 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
         ),
       );
     } catch (e) {
+      if (e.message.includes('Table')) {
+        return Err(new TableNotFoundException(e.message));
+      }
       return Err(e);
     }
   }
@@ -127,8 +151,8 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
     const { search, related, from, to, clusterNumber } = dao;
 
     try {
-      const fromDate = VideosDateFormatter.getFormattedDate(from);
-      const toDate = VideosDateFormatter.getFormattedDate(to);
+      const fromDate = DateFormatter.getFormattedDate(from);
+      const toDate = DateFormatter.getFormattedDate(to);
       const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber}_${fromDate.year}_${fromDate.month}`;
       const joinTableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumber}`;
       const cache = await this.client.getCache(tableName);
@@ -150,33 +174,18 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
+      if (e.message.includes('Table')) {
+        return Err(new TableNotFoundException(e.message));
+      }
       return Err(e);
     }
   }
 
   async getRelatedVideosPaginated(dao: GetVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to, clusterNumber, limit, page } = dao;
-    const columns = [
-      'VIDEO_ID',
-      'CHANNEL_ID',
-      'VIDEO_TITLE',
-      'VIDEO_DESCRIPTION',
-      'VIDEO_TAGS',
-      'VIDEO_DURATION',
-      'VIDEO_PUBLISHED',
-      'VIDEO_CATEGORY',
-      'VIDEO_INFO_CARD',
-      'VIDEO_WITH_ADS',
-      'VIDEO_END_SCREEN',
-      'VIDEO_CLUSTER',
-      'CRAWLED_DATE',
-      'YEAR',
-      'MONTH',
-      'DAY',
-    ];
 
     const queryString = this.getClusterQueryString(
-      columns.map((column) => `vd.${column}`),
+      this.videoColumns.map((column) => `vd.${column}`),
       search,
       related,
       from,
@@ -191,9 +200,11 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
     const currentPage = Number(page);
     try {
       const query = new SqlFieldsQuery(
-        queryString +
-          ` LIMIT ${pageSize} OFFSET ${(currentPage - 1) * pageSize})`,
+        '(' +
+          queryString +
+          `) LIMIT ${pageSize} OFFSET ${(currentPage - 1) * pageSize}`,
       );
+
       const cache = await this.client.getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
@@ -202,6 +213,9 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
+      if (e.message.includes('Table')) {
+        return Err(new TableNotFoundException(e.message));
+      }
       return Err(e);
     }
   }
@@ -209,7 +223,7 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
   async getRelatedVideosEntireCount(
     dao: GetVideoDao,
   ): Promise<TRelatedEntireCount> {
-    const { search, related, from, to, clusterNumber, limit, page } = dao;
+    const { search, related, from, to, clusterNumber } = dao;
 
     const queryString = this.getClusterQueryString(
       [`count(*)`],
@@ -233,6 +247,9 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
 
       return Ok(resArr);
     } catch (e) {
+      if (e.message.includes('Table')) {
+        return Err(new TableNotFoundException(e.message));
+      }
       return Err(e);
     }
   }
