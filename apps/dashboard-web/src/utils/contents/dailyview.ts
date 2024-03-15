@@ -128,6 +128,46 @@ export const formatToLineGraph = (
   return [{ id: title, data: formattedResult }];
 };
 
+/**
+ * ApexChart 포맷팅을 고정적으로 해주는 유틸을 만들고 싶었지만, apex의 chart는 type마다 data 형식의 변화가 있다.
+ * @param summedData
+ * @returns
+ */
+export const formatToApexLineChart = (
+  summedData: Record<string, number>,
+  title: string,
+) => {
+  const formattedResult = [];
+
+  for (const date in summedData) {
+    formattedResult.push({
+      x: date,
+      y: summedData[date],
+    });
+  }
+  return expectedViews;
+};
+
+const arrFunc = ({ a, b }: { a: string; b: number }) => {
+  return [a, b];
+};
+
+const formatToApexChart = <T extends any[], U extends any[]>(
+  dataFunction: (...args: U) => T,
+  name: string,
+) => {
+  return function (...args: U): ApexAxisChartSeries[number] {
+    const result = {
+      data: dataFunction(...args),
+      name,
+    };
+    return {
+      data: dataFunction(...args),
+      name,
+    };
+  };
+};
+
 export const expectedViews = (
   data: (ExpectedView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
