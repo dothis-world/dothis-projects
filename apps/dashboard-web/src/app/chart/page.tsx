@@ -1,6 +1,15 @@
 'use client';
 
-import { useDashboardDaily } from '@/hooks/contents/useDashboard';
+import { useEffect } from 'react';
+
+import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
+import DashboardLineChart from '@/components/common/Charts/DashboardLineChart';
+import {
+  useAveragePerformanceFormatter,
+  useDailyViewDataFormatter,
+  useScopePerformanceFormatter,
+} from '@/hooks/contents/useChartFormatter';
+import { useIsSignedIn } from '@/store/authStore';
 
 type DataObject = Extract<
   ApexAxisChartSeries[number]['data'][number],
@@ -8,14 +17,32 @@ type DataObject = Extract<
 >;
 
 const Page = () => {
-  const { data } = useDashboardDaily(
-    { keyword: '서울', relword: '정치' },
-    'wjd',
+  const dailyView = useDailyViewDataFormatter({
+    keyword: '서울',
+    relword: '정치',
+  });
+
+  const scopePerformance = useScopePerformanceFormatter({
+    keyword: '서울',
+    relword: '정치',
+  });
+
+  // console.log(scopeData);
+
+  const averagePerformance = useAveragePerformanceFormatter({
+    keyword: '서울',
+    relword: '정치',
+  });
+
+  return (
+    <div className="ml-10">
+      차트 확인용
+      <DashboardAreaChart
+        series={[{ ...scopePerformance }, { ...averagePerformance }]}
+      />
+      <DashboardLineChart series={[{ ...dailyView }]} />
+    </div>
   );
-
-  console.log((data.at(-1) as DataObject)?.y);
-
-  return <div>차트 확인용 </div>;
 };
 
 export default Page;
