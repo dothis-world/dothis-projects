@@ -6,6 +6,8 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { GUEST_AVERAGEVIEW } from '@/constants/guest';
 import type { DeepRequired } from '@/hooks/react-query/query/common';
 
+import { getDateObjTime } from './dateObject';
+
 dayjs.extend(isSameOrBefore);
 
 type DailyView = DeepRequired<
@@ -20,7 +22,7 @@ type ExpectedView = DeepRequired<
  * Date에 따른 initial object를 생성한다.
  * @returns sumViews, averageViews에서 사용하는 -> 설정한 날짜에 따른 initial Record<날짜,0> 객체가 들어가있는다
  */
-const initViewsObjectByDate = (startDate: string, endDate: string) => {
+const initViewsRangeObjectByDate = (startDate: string, endDate: string) => {
   const viewsObject: Record<string, number> = {};
 
   for (
@@ -35,6 +37,39 @@ const initViewsObjectByDate = (startDate: string, endDate: string) => {
 };
 
 /**
+ * Date에 따른 initial object를 생성한다.
+ * @returns sumViews, averageViews에서 사용하는 -> 설정한 날짜에 따른 initial Record<날짜,0> 객체가 들어가있는다
+ */
+type InferViewType<T> = T extends 'range' ? number[] : number;
+const initChartDateFormatter = <T extends 'single' | 'range'>({
+  startDate,
+  endDate,
+  format,
+}: {
+  startDate: string;
+  endDate: string;
+  format: T;
+}) => {
+  const viewsObject: Record<string, InferViewType<T>> = {};
+  for (
+    let date = dayjs(startDate);
+    date.isBefore(endDate, 'day');
+    date = date.add(1, 'day')
+  ) {
+    // if로 분기처리를 해도 타입추론이 안되서 에러가 발생했다.
+    if (format === 'range') {
+      // range 형식일 때
+      viewsObject[date.format('YYYY-MM-DD')] = [0, 0] as InferViewType<T>;
+    } else {
+      // single 형식일 때
+      viewsObject[date.format('YYYY-MM-DD')] = 0 as InferViewType<T>; // 여기서 as number를 명시적으로 지정
+    }
+  }
+
+  return viewsObject;
+};
+
+/**
  * getDailyView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 increase_views를 모두 합산하는 함수
  * @param data getDailyView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
  * @returns { date: increase_views, ~~ } 형식을 가진다. (increase_views를 모두 합산한 날짜를 key로 가진다.)
@@ -43,19 +78,24 @@ export const sumViews = (
   data: (DailyView | undefined)[],
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
-  const result = initViewsObjectByDate(startDate, endDate);
-
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
   data?.forEach((item) => {
     if (item) {
       const date = item.date;
 
-      const views = item.videoViews;
+      const views = item.increaseViews;
 
-      if (result.hasOwnProperty(date)) {
-        result[date] += views;
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += views;
       }
     }
   });
+
+  const result = createDateTimeApexChart(dateBasedDataSet);
 
   return result;
 };
@@ -69,9 +109,16 @@ export const averageViews = (
   data: (ExpectedView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
-  const result = initViewsObjectByDate(startDate, endDate);
-  const dateCount = initViewsObjectByDate(startDate, endDate);
-
+  const result = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  const dateCount = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
   data?.forEach((item) => {
     if (item) {
       const date = item.date;
@@ -103,93 +150,97 @@ export const averageViews = (
 };
 
 /**
- * sumViews의 return으로 나온 data를 Nivo Line그래프 형식에 맞게끔  x, y로 포맷팅을 수정 및 정렬하는 함수
- * @param summedData sumView return 형식으로 param를 받는다
- * @returns Line 그래프에서 활용할 수 있게 data =  [{ x: 날짜, y: 조회수 }] 형식을 가지며, Nivo 형식에 따라 Id값을 추가한 형식이다.
+ *  ApexChart series의 포맷팅을 고정적으로 해주는 유틸리티 함수입니다.
+ * @param dataFunction data 프로퍼티의 들어가는 포맷팅 함수입니다.
+ * @param name series 네임
+ * @param type chart 타입
+ * @returns @dataFunction을 반환합니다.
  */
-export const formatToLineGraph = (
-  summedData: Record<string, number>,
-  title: string,
-) => {
-  const formattedResult = [];
-
-  for (const date in summedData) {
-    formattedResult.push({
-      x: date,
-      y: summedData[date],
-    });
-  }
-
-  //   날짜로 정렬
-  formattedResult.sort(
-    (a, b) => new Date(a.x).getTime() - new Date(b.x).getTime(),
-  );
-
-  return [{ id: title, data: formattedResult }];
-};
-
-/**
- * ApexChart 포맷팅을 고정적으로 해주는 유틸을 만들고 싶었지만, apex의 chart는 type마다 data 형식의 변화가 있다.
- * @param summedData
- * @returns
- */
-export const formatToApexLineChart = (
-  summedData: Record<string, number>,
-  title: string,
-) => {
-  const formattedResult = [];
-
-  for (const date in summedData) {
-    formattedResult.push({
-      x: date,
-      y: summedData[date],
-    });
-  }
-  return expectedViews;
-};
-
-const arrFunc = ({ a, b }: { a: string; b: number }) => {
-  return [a, b];
-};
-
-const formatToApexChart = <T extends any[], U extends any[]>(
+export const formatToApexChart = <T extends any[], U extends any[]>(
   dataFunction: (...args: U) => T,
-  name: string,
+  { name, type }: { name: string; type: ChartType },
 ) => {
   return function (...args: U): ApexAxisChartSeries[number] {
     const result = {
       data: dataFunction(...args),
       name,
+      type,
     };
-    return {
-      data: dataFunction(...args),
-      name,
-    };
+    return result;
   };
 };
 
-export const expectedViews = (
+export const createDateTimeApexChart = (
+  dateBasedDataSet: Record<string, number | number[]>,
+) => {
+  const formattedResult = [];
+
+  for (const date in dateBasedDataSet) {
+    const data = dateBasedDataSet[date];
+    formattedResult.push({
+      x: getDateObjTime(date),
+      y: data,
+    });
+  }
+
+  return formattedResult.sort((a, b) => a.x - b.x);
+};
+
+export const handleAveragePerformanceData = (
   data: (ExpectedView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
-  const result = initViewsObjectByDate(startDate, endDate);
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+      // 소수점을 지우기 위해 round (평균성과로 변경이 되어 게스트 조회수 연산제거)
+      // const views = Math.round(item.expectedHits * GUEST_AVERAGEVIEW);
+      const views = Math.round(item.expectedHits);
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += views;
+      }
+    }
+  });
+
+  const result = createDateTimeApexChart(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleScopePerformanceData = (
+  data: (ExpectedView | undefined)[] | undefined,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'range',
+  });
 
   data?.forEach((item) => {
     if (item) {
       const date = item.date;
       // 소수점을 지우기 위해 round
-      const views = Math.round(item.expectedHits * GUEST_AVERAGEVIEW);
+      const maxPerformance = Math.round(item.maxPerformance);
+      const minPerformance = Math.round(item.minPerformance);
 
-      if (result.hasOwnProperty(date)) {
-        result[date] += views;
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date][0] += minPerformance;
+        dateBasedDataSet[date][1] += maxPerformance;
       }
     }
   });
 
-  // for (const date of Object.keys(result)) {
-  //   const count = data.filter((item) => item?.date === date).length;
-  //   result[date] = Math.round(result[date]) / count;
-  // }
+  const result = createDateTimeApexChart(dateBasedDataSet);
 
   return result;
 };
+
+export const handleDailyViewData = () => {};
