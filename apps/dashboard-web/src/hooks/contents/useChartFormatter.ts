@@ -38,7 +38,7 @@ export const useDailyViewDataFormatter = ({
   );
 };
 
-export const useAveragePerformance = ({
+export const useAveragePerformanceFormatter = ({
   keyword,
   relword,
 }: {
@@ -71,7 +71,7 @@ export const useAveragePerformance = ({
   );
 };
 
-export const useScopePerformance = ({
+export const useScopePerformanceFormatter = ({
   keyword,
   relword,
 }: {
