@@ -1,0 +1,30 @@
+.container {
+  > label:hover {
+    /* @apply bg-primary50 text-black; */
+    @apply text-yellow;
+  }
+
+  > div {
+    @apply bg-primary50 border-solid border-grey500;
+
+    position: absolute;
+    z-index: 1;
+  }
+
+  ul {
+    @apply bg-primary50 border-b-grey500;
+    padding: 6px 4px;
+  }
+
+  ul:hover {
+    filter: brightness(0.1);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.header {
+  @apply flex flex-row font-bold;
+}
