@@ -11,11 +11,6 @@ import {
 } from '@/hooks/contents/useChartFormatter';
 import { useIsSignedIn } from '@/store/authStore';
 
-type DataObject = Extract<
-  ApexAxisChartSeries[number]['data'][number],
-  { x: any; y: any }
->;
-
 const Page = () => {
   const dailyView = useDailyViewDataFormatter({
     keyword: '서울',
