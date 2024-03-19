@@ -8,14 +8,15 @@ import ReactApexChart from 'react-apexcharts';
 
 import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
 import DashboardLineChart from '@/components/common/Charts/DashboardLineChart';
-import {
-  useDailyViewChartDataForNivo,
-  useExpectedViewChartDataForNivo,
-} from '@/hooks/contents/useLineGraph';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
-import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import useGetExpectedView from '@/hooks/react-query/query/useGetPerformanceData';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
+import {
+  formatToApexChart,
+  handleAveragePerformanceData,
+  handleScopePerformanceData,
+} from '@/utils/contents/dailyview';
 import { getDateObjTime } from '@/utils/contents/dateObject';
 
 const ViewChart = () => {
@@ -26,17 +27,8 @@ const ViewChart = () => {
 
   const { isLoading: dailyViewIsLoading } = useGetDailyView(selectedWord);
 
-  const dailyViewChartData = useDailyViewChartDataForNivo(
-    selectedWord,
-    '일일 조회 수',
-  );
-
-  const { isLoading: expectedViewIsLoading } = useGetExpectedView(selectedWord);
-
-  const expectedViewChartData = useExpectedViewChartDataForNivo(
-    selectedWord,
-    '기대 조회 수',
-  );
+  const { data: performanceData, isLoading: expectedViewIsLoading } =
+    useGetExpectedView(selectedWord);
 
   // 1. true의 개수 세기
   const trueCount = dailyViewIsLoading.filter(
@@ -66,10 +58,46 @@ const ViewChart = () => {
       calculatePercentage(combinedArray)
         ? `${calculatePercentage(combinedArray)}%`
         : '0%',
-    [JSON.stringify(dailyViewChartData), JSON.stringify(expectedViewChartData)],
+    [],
   );
 
-  const rangeTargetData = [3300, 4900, 4300, 3700, 5500, 5900, 4500];
+  const rangeTargetData = [
+    [3300],
+    [4900],
+    [4300],
+    [3700],
+    [5500],
+    [5900],
+    [4500],
+  ];
+
+  const averagePerformanceCallback = formatToApexChart(
+    handleAveragePerformanceData,
+    {
+      name: '평균성과',
+      type: 'line',
+    },
+  );
+
+  const averagePerformanceData = averagePerformanceCallback(performanceData, {
+    startDate,
+    endDate,
+  });
+
+  const scopePerformanceCallback = formatToApexChart(
+    handleScopePerformanceData,
+    {
+      name: '범위성과',
+      type: 'rangeArea',
+    },
+  );
+
+  const scopePerformanceData = scopePerformanceCallback(performanceData, {
+    startDate,
+    endDate,
+  });
+
+  const { data: expected } = useGetExpectedView(selectedWord);
 
   const rangeData = [
     [3100, 3400],
@@ -143,14 +171,7 @@ const ViewChart = () => {
               },
 
               {
-                type: 'line',
-                name: '평균성과',
-                data: rangeTargetData.map((item, index) => ({
-                  x: getDateObjTime(
-                    dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
-                  ),
-                  y: item,
-                })),
+                ...averagePerformanceData,
               },
             ]}
           />
