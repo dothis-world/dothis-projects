@@ -9,7 +9,7 @@ import ReactApexChart from 'react-apexcharts';
 import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
 import DashboardLineChart from '@/components/common/Charts/DashboardLineChart';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
-import useGetExpectedView from '@/hooks/react-query/query/useGetPerformanceData';
+import useGetPerformanceData from '@/hooks/react-query/query/useGetPerformanceData';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import {
@@ -28,7 +28,7 @@ const ViewChart = () => {
   const { isLoading: dailyViewIsLoading } = useGetDailyView(selectedWord);
 
   const { data: performanceData, isLoading: expectedViewIsLoading } =
-    useGetExpectedView(selectedWord);
+    useGetPerformanceData(selectedWord);
 
   // 1. true의 개수 세기
   const trueCount = dailyViewIsLoading.filter(
@@ -96,8 +96,6 @@ const ViewChart = () => {
     startDate,
     endDate,
   });
-
-  const { data: expected } = useGetExpectedView(selectedWord);
 
   const rangeData = [
     [3100, 3400],
