@@ -13,7 +13,7 @@ import {
   useDailyViewDataFormatter,
 } from '@/hooks/contents/useChartFormatter';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
-import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import useGetPerformanceData from '@/hooks/react-query/query/useGetPerformanceData';
 import useGetUserChannelData from '@/hooks/react-query/query/useGetUserChannelData';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import { useGptOptionAction } from '@/store/gptOptionStore';
@@ -49,7 +49,8 @@ const KeywordAnalyticsView = () => {
     return sum + (item as SeriesDetail)?.y;
   }, 0);
 
-  const { isLoading: expectedViewIsLoading } = useGetExpectedView(selectedWord);
+  const { isLoading: expectedViewIsLoading } =
+    useGetPerformanceData(selectedWord);
 
   const { data: averagePerformanceData } =
     useAveragePerformanceFormatter(selectedWord);

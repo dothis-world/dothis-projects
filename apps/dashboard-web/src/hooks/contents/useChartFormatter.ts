@@ -9,7 +9,7 @@ import {
 } from '@/utils/contents/dailyview';
 
 import useGetDailyView from '../react-query/query/useGetDailyView';
-import useGetExpectedView from '../react-query/query/useGetExpectedView';
+import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
 
 export const useDailyViewDataFormatter = ({
   keyword,
@@ -45,7 +45,7 @@ export const useAveragePerformanceFormatter = ({
   keyword: string | null;
   relword: string | null;
 }) => {
-  const { data: performanceData } = useGetExpectedView({
+  const { data: performanceData } = useGetPerformanceData({
     keyword,
     relword,
   });
@@ -78,7 +78,7 @@ export const useScopePerformanceFormatter = ({
   keyword: string | null;
   relword: string | null;
 }) => {
-  const { data: performanceData } = useGetExpectedView({
+  const { data: performanceData } = useGetPerformanceData({
     keyword,
     relword,
   });
