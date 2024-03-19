@@ -48,7 +48,7 @@ const useGetPerformanceData = (
 
     {
       params: {
-        clusterNumber: '0',
+        clusterNumber: clusters.join(','),
       },
       query: {
         search: keyword!,
