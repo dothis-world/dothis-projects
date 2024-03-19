@@ -14,7 +14,7 @@ import useGetRelWords from './useGetRelWords';
  * @param queryOptions
  * @returns
  */
-const useGetExpectedView = (
+const useGetPerformanceData = (
   {
     keyword,
     relword,
@@ -48,7 +48,7 @@ const useGetExpectedView = (
 
     {
       params: {
-        clusterNumber: clusters.join(','),
+        clusterNumber: '0',
       },
       query: {
         search: keyword!,
@@ -73,4 +73,4 @@ const useGetExpectedView = (
   };
 };
 
-export default useGetExpectedView;
+export default useGetPerformanceData;
