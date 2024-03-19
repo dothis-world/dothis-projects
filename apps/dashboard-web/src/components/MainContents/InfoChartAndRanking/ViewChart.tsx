@@ -4,19 +4,18 @@ import './styles.css';
 
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
-import ReactApexChart from 'react-apexcharts';
 
 import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
 import DashboardLineChart from '@/components/common/Charts/DashboardLineChart';
+import {
+  useAveragePerformanceFormatter,
+  useDailyViewDataFormatter,
+  useScopePerformanceFormatter,
+} from '@/hooks/contents/useChartFormatter';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetPerformanceData from '@/hooks/react-query/query/useGetPerformanceData';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
-import {
-  formatToApexChart,
-  handleAveragePerformanceData,
-  handleScopePerformanceData,
-} from '@/utils/contents/dailyview';
 import { getDateObjTime } from '@/utils/contents/dateObject';
 
 const ViewChart = () => {
@@ -71,32 +70,6 @@ const ViewChart = () => {
     [4500],
   ];
 
-  const averagePerformanceCallback = formatToApexChart(
-    handleAveragePerformanceData,
-    {
-      name: '평균성과',
-      type: 'line',
-    },
-  );
-
-  const averagePerformanceData = averagePerformanceCallback(performanceData, {
-    startDate,
-    endDate,
-  });
-
-  const scopePerformanceCallback = formatToApexChart(
-    handleScopePerformanceData,
-    {
-      name: '범위성과',
-      type: 'rangeArea',
-    },
-  );
-
-  const scopePerformanceData = scopePerformanceCallback(performanceData, {
-    startDate,
-    endDate,
-  });
-
   const rangeData = [
     [3100, 3400],
     [4200, 5200],
@@ -106,6 +79,22 @@ const ViewChart = () => {
     [5400, 6700],
     [4300, 4600],
   ];
+
+  // api 데이터 -> 데이터 안정화시 적용작업 예정
+  const dailyView = useDailyViewDataFormatter({
+    keyword: '서울',
+    relword: '정치',
+  });
+
+  const scopePerformance = useScopePerformanceFormatter({
+    keyword: '서울',
+    relword: '정치',
+  });
+
+  const averagePerformance = useAveragePerformanceFormatter({
+    keyword: '서울',
+    relword: '정치',
+  });
 
   if (
     combinedArray.length === 0 ||
@@ -169,7 +158,14 @@ const ViewChart = () => {
               },
 
               {
-                ...averagePerformanceData,
+                type: 'line',
+                name: '평균성과',
+                data: rangeTargetData.map((item, index) => ({
+                  x: getDateObjTime(
+                    dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
+                  ),
+                  y: item,
+                })),
               },
             ]}
           />
@@ -190,6 +186,7 @@ const ViewChart = () => {
         <DashboardLineChart
           series={[
             {
+              // ...dailyView,
               name: '일일 조회 수',
               type: 'line',
               color: '#F0516D',
@@ -206,24 +203,27 @@ const ViewChart = () => {
               name: '검색량',
               type: 'line',
               color: '#818CF8',
-              data: [23, 31, 33, 14, 15, 12, 18].map((item, index) => [
-                getDateObjTime(
-                  dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
-                ),
-                item,
-              ]),
+              data: [23, 31, 33, 14, 15, 12, 18, 62, 55].map((item, index) => {
+                return {
+                  y: item,
+                  x: getDateObjTime(
+                    dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
+                  ),
+                };
+              }),
             },
             {
               name: '영상 수',
               type: 'column',
               color: '#34D399',
-              data: [20, 29, 37, 36, 44, 45, 75].map((item, index) => [
+              data: [20, 29, 37, 36, 44, 45, 75, 62, 55].map((item, index) => [
                 getDateObjTime(
                   dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
                 ),
                 item,
               ]),
             },
+            // 이거는 주석풀면 apex 에러가 발생한다 (series의 포맷팅은 동일해야함)
           ]}
         />
       </div>
@@ -231,6 +231,7 @@ const ViewChart = () => {
         <DashboardAreaChart
           series={[
             {
+              // ...scopePerformance,
               type: 'rangeArea',
               name: '평균성과 기대치',
               data: rangeData.map((item, index) => ({
@@ -242,6 +243,7 @@ const ViewChart = () => {
             },
 
             {
+              // ...averagePerformance,
               type: 'line',
               name: '평균성과',
               data: rangeTargetData.map((item, index) => ({
