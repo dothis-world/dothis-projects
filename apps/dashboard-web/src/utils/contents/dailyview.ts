@@ -74,7 +74,7 @@ const initChartDateFormatter = <T extends 'single' | 'range'>({
  * @param data getDailyView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
  * @returns { date: increase_views, ~~ } 형식을 가진다. (increase_views를 모두 합산한 날짜를 key로 가진다.)
  */
-export const sumViews = (
+export const handleDailyViewData = (
   data: (DailyView | undefined)[],
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
@@ -201,7 +201,7 @@ export const handleAveragePerformanceData = (
       const date = item.date;
       // 소수점을 지우기 위해 round (평균성과로 변경이 되어 게스트 조회수 연산제거)
       // const views = Math.round(item.expectedHits * GUEST_AVERAGEVIEW);
-      const views = Math.round(item.expectedHits);
+      const views = Math.round(item.expectedHits * 100) / 100;
 
       if (dateBasedDataSet.hasOwnProperty(date)) {
         dateBasedDataSet[date] += views;
@@ -228,8 +228,8 @@ export const handleScopePerformanceData = (
     if (item) {
       const date = item.date;
       // 소수점을 지우기 위해 round
-      const maxPerformance = Math.round(item.maxPerformance);
-      const minPerformance = Math.round(item.minPerformance);
+      const maxPerformance = Math.round(item.maxPerformance * 100) / 100;
+      const minPerformance = Math.round(item.minPerformance * 100) / 100;
 
       if (dateBasedDataSet.hasOwnProperty(date)) {
         dateBasedDataSet[date][0] += minPerformance;
@@ -242,5 +242,3 @@ export const handleScopePerformanceData = (
 
   return result;
 };
-
-export const handleDailyViewData = () => {};
