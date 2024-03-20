@@ -19,28 +19,13 @@ type ExpectedView = DeepRequired<
 >['data'][0];
 
 /**
- * Date에 따른 initial object를 생성한다.
- * @returns sumViews, averageViews에서 사용하는 -> 설정한 날짜에 따른 initial Record<날짜,0> 객체가 들어가있는다
- */
-const initViewsRangeObjectByDate = (startDate: string, endDate: string) => {
-  const viewsObject: Record<string, number> = {};
-
-  for (
-    let date = dayjs(startDate);
-    date.isBefore(endDate, 'day');
-    date = date.add(1, 'day')
-  ) {
-    viewsObject[date.format('YYYY-MM-DD')] = 0;
-  }
-
-  return viewsObject;
-};
-
-/**
- * Date에 따른 initial object를 생성한다.
- * @returns sumViews, averageViews에서 사용하는 -> 설정한 날짜에 따른 initial Record<날짜,0> 객체가 들어가있는다
+ * Date에 따른 initial 구조를 생성한다.
+ * @returns @single format이 single일 경우 value-number로 반환
+ * @returns @range format이 range일 경우 value-[0,0]로 반환
+ * @description single과 range로 나뉘게된 이유 Apex -> area차트일 경우 area의 형식은 [min,max] 구조로 받고있습니다.
  */
 type InferViewType<T> = T extends 'range' ? number[] : number;
+
 const initChartDateFormatter = <T extends 'single' | 'range'>({
   startDate,
   endDate,
@@ -70,9 +55,31 @@ const initChartDateFormatter = <T extends 'single' | 'range'>({
 };
 
 /**
+ * DateTime에 따라 x축이 정렬되는 ApexChart의 특징에 따른 x축의 DateTime으로 변환한 데이터를 삽입
+ * ApexChart series 타입인 x,y 구조로 데이터 생성
+ * @param timeSeriesData initChartDateFormatter 함수로 생성한 구조에서 data가 추가된 파라미터를 받는다.
+ * @returns x:DateTime y:value 형식의 오름차순으로 정렬된 배열 반환
+ */
+export const createDateTimeApexChart = (
+  timeSeriesData: Record<string, number | number[]>,
+) => {
+  const formattedResult = [];
+
+  for (const date in timeSeriesData) {
+    const data = timeSeriesData[date];
+    formattedResult.push({
+      x: getDateObjTime(date),
+      y: data,
+    });
+  }
+
+  return formattedResult.sort((a, b) => a.x - b.x);
+};
+
+/**
  * getDailyView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 increase_views를 모두 합산하는 함수
  * @param data getDailyView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
- * @returns { date: increase_views, ~~ } 형식을 가진다. (increase_views를 모두 합산한 날짜를 key로 가진다.)
+ * @returns @createDateTimeApexChart 에 반환된 형식을 가진다.
  */
 export const handleDailyViewData = (
   data: (DailyView | undefined)[],
@@ -101,55 +108,6 @@ export const handleDailyViewData = (
 };
 
 /**
- * getExpectedView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 expected_views의 평균을 구하는 함수
- * @param data getExpectedView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
- * @returns   date: expected_views의,  형식을 가진다. (expected_views의 평균을 value로, 날짜를 key로 가진다.)
- */
-export const averageViews = (
-  data: (ExpectedView | undefined)[] | undefined,
-  { startDate, endDate }: { startDate: string; endDate: string },
-) => {
-  const result = initChartDateFormatter({
-    startDate,
-    endDate,
-    format: 'single',
-  });
-  const dateCount = initChartDateFormatter({
-    startDate,
-    endDate,
-    format: 'single',
-  });
-  data?.forEach((item) => {
-    if (item) {
-      const date = item.date;
-      const views = item.expectedHits;
-
-      if (result.hasOwnProperty(date)) {
-        result[date] += views;
-        dateCount[date] += 1;
-      }
-    }
-  });
-
-  for (const date in result) {
-    //for-in 루프를 사용하여 객체의 속성을 반복할 때, 객체의 프로토타입 체인에 있는 속성도 포함될 수 있다, 이때 hasOwnProperty를 사용하면 해당 속성이 직접 객체에 속해 있는지를 확인하기 위해 안정성을 위해 추가
-    if (dateCount.hasOwnProperty(date)) {
-      const count = dateCount[date];
-
-      result[date] = Math.round(
-        Math.round(result[date]) / count === 0 ? 1 : count,
-      );
-    }
-  }
-  // for (const date of Object.keys(result)) {
-  //   const count = data.filter((item) => item?.date === date).length;
-  //   result[date] = Math.round(result[date]) / count;
-  // }
-
-  return result;
-};
-
-/**
  *  ApexChart series의 포맷팅을 고정적으로 해주는 유틸리티 함수입니다.
  * @param dataFunction data 프로퍼티의 들어가는 포맷팅 함수입니다.
  * @param name series 네임
@@ -170,22 +128,11 @@ export const formatToApexChart = <T extends any[], U extends any[]>(
   };
 };
 
-export const createDateTimeApexChart = (
-  dateBasedDataSet: Record<string, number | number[]>,
-) => {
-  const formattedResult = [];
-
-  for (const date in dateBasedDataSet) {
-    const data = dateBasedDataSet[date];
-    formattedResult.push({
-      x: getDateObjTime(date),
-      y: data,
-    });
-  }
-
-  return formattedResult.sort((a, b) => a.x - b.x);
-};
-
+/**
+ * getPerformance api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 평균성과를 모두 합산하는 함수
+ * @param data getPerformance api의 response에서 flat으로 펼쳐준 형식으로 받는다.
+ * @returns @createDateTimeApexChart 에 반환된 형식을 가진다.
+ */
 export const handleAveragePerformanceData = (
   data: (ExpectedView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
@@ -214,6 +161,11 @@ export const handleAveragePerformanceData = (
   return result;
 };
 
+/**
+ * getPerformance api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 범위성과를 모두 합산하는 함수
+ * @param data getPerformance api의 response에서 flat으로 펼쳐준 형식으로 받는다.
+ * @returns @createDateTimeApexChart 에 @range 로 반환된 형식을 가진다.
+ */
 export const handleScopePerformanceData = (
   data: (ExpectedView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
@@ -242,3 +194,52 @@ export const handleScopePerformanceData = (
 
   return result;
 };
+
+/**
+ * getExpectedView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 expected_views의 평균을 구하는 함수
+ * @param data getExpectedView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
+ * @returns   date: expected_views의,  형식을 가진다. (expected_views의 평균을 value로, 날짜를 key로 가진다.)
+ */
+// export const averageViews = (
+//   data: (ExpectedView | undefined)[] | undefined,
+//   { startDate, endDate }: { startDate: string; endDate: string },
+// ) => {
+//   const result = initChartDateFormatter({
+//     startDate,
+//     endDate,
+//     format: 'single',
+//   });
+//   const dateCount = initChartDateFormatter({
+//     startDate,
+//     endDate,
+//     format: 'single',
+//   });
+//   data?.forEach((item) => {
+//     if (item) {
+//       const date = item.date;
+//       const views = item.expectedHits;
+
+//       if (result.hasOwnProperty(date)) {
+//         result[date] += views;
+//         dateCount[date] += 1;
+//       }
+//     }
+//   });
+
+//   for (const date in result) {
+//     //for-in 루프를 사용하여 객체의 속성을 반복할 때, 객체의 프로토타입 체인에 있는 속성도 포함될 수 있다, 이때 hasOwnProperty를 사용하면 해당 속성이 직접 객체에 속해 있는지를 확인하기 위해 안정성을 위해 추가
+//     if (dateCount.hasOwnProperty(date)) {
+//       const count = dateCount[date];
+
+//       result[date] = Math.round(
+//         Math.round(result[date]) / count === 0 ? 1 : count,
+//       );
+//     }
+//   }
+//   // for (const date of Object.keys(result)) {
+//   //   const count = data.filter((item) => item?.date === date).length;
+//   //   result[date] = Math.round(result[date]) / count;
+//   // }
+
+//   return result;
+// };
