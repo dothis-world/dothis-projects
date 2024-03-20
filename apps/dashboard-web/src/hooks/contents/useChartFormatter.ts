@@ -43,6 +43,11 @@ export const useDailyViewDataFormatter = ({
   );
 };
 
+/**
+ * 서버에서 가져온 performance데이터를 Apex -> 평균성과 포맷으로 변경화는 과정을 추상화한 hook입니다.
+ * @param selectedWord 선택된 키워드 및 연관어를 받습니다.
+ * @returns
+ */
 export const useAveragePerformanceFormatter = ({
   keyword,
   relword,
@@ -76,6 +81,11 @@ export const useAveragePerformanceFormatter = ({
   );
 };
 
+/**
+ * 서버에서 가져온 performance데이터를 Apex ->  성과범위 포맷으로 변경화는 과정을 추상화한 hook입니다.
+ * @param selectedWord 선택된 키워드 및 연관어를 받습니다.
+ * @returns
+ */
 export const useScopePerformanceFormatter = ({
   keyword,
   relword,
