@@ -11,6 +11,11 @@ import {
 import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
 
+/**
+ * 서버에서 가져온 일일조회수 데이터를 Apex포맷으로 변경화는 과정을 추상화한 hook입니다.
+ * @param selectedWord 선택된 키워드 및 연관어를 받습니다.
+ * @returns
+ */
 export const useDailyViewDataFormatter = ({
   keyword,
   relword,
