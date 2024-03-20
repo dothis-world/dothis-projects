@@ -6,7 +6,7 @@ import {
   handleAveragePerformanceData,
   handleDailyViewData,
   handleScopePerformanceData,
-} from '@/utils/contents/dailyview';
+} from '@/utils/contents/chart';
 
 import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
