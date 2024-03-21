@@ -33,8 +33,6 @@ const TrendingPage = () => {
 
   const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
-  const [lastId, setLastId] = useState<string | undefined>('');
-
   const { setModalOpen, setModalContent } = useModalActions();
 
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
@@ -49,7 +47,7 @@ const TrendingPage = () => {
   const [keywordList, setKeywordList] = useState<string[]>([]);
 
   const [startDate, setStartDate] = useState(
-    dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
+    dayjs('2024-01-30').startOf('week').subtract(1, 'week').add(1, 'day'),
   );
 
   const isSignedIn = useIsSignedIn();
@@ -65,7 +63,6 @@ const TrendingPage = () => {
       startDate: trendingQueryOption.startDate,
       order: sortingParams.order,
       sort: sortingParams.sort,
-      lastIndex_ID: lastId,
     });
 
   const handleFetchNextPage = () => {
@@ -107,10 +104,6 @@ const TrendingPage = () => {
       return { ...prev, sort: key };
     });
   };
-
-  useEffect(() => {
-    setLastId(String(data?.at(-1)?.id));
-  }, [JSON.stringify(data)]);
 
   return (
     <>
@@ -207,16 +200,16 @@ const TrendingPage = () => {
                         }
                       </div>
                       <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
-                        {Number(item.weekly_views)?.toLocaleString('en-US')}
+                        {Number(item.weeklyViews)?.toLocaleString('en-US')}
                       </div>
                       <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                        {Number(item.video_count)?.toLocaleString('ko-kr')}
+                        {Number(item.videoCount)?.toLocaleString('ko-kr')}
                       </div>
                       <div className="text-grey700 py-[26px] text-center text-[14px]  font-bold">
                         {convertCompetitionScoreFormat(item.competitive)}
                       </div>
                       <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
-                        {item.mega_channel?.toLocaleString('ko-kr')}
+                        {item.megaChannel?.toLocaleString('ko-kr')}
                       </div>
                       <div className="invisible group-hover:visible">
                         <Dialog.Trigger
