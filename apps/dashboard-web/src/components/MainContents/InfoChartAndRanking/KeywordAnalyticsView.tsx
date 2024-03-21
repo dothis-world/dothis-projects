@@ -42,13 +42,21 @@ const KeywordAnalyticsView = () => {
   const firstDailyView = (dailyViewData.at(0) as SeriesDetail)?.y;
   const lastDailyView = (dailyViewData.at(-1) as SeriesDetail)?.y;
 
-  const totalDailyView = dailyViewData.reduce<number>((sum, item) => {
-    if (item === null) {
-      return sum;
-    }
-    return sum + (item as SeriesDetail)?.y;
-  }, 0);
+  const totalDailyView = (dailyViewData as SeriesDetail[])?.reduce<number>(
+    (sum, item) => {
+      console.log(item);
+      if (item === null) {
+        return sum;
+      }
+      if ((item as SeriesDetail)?.y === null) {
+        return sum;
+      }
+      return sum + (item as SeriesDetail)?.y;
+    },
+    0,
+  );
 
+  console.log(totalDailyView);
   const { isLoading: expectedViewIsLoading } =
     useGetPerformanceData(selectedWord);
 
