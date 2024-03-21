@@ -25,17 +25,20 @@ const useGetTrendingKeywords = (
     selectOptions,
     sort,
     order,
-    lastIndex_ID,
-  }: SortingQuery & TrendingQuery & { lastIndex_ID?: string },
+  }: SortingQuery & TrendingQuery,
   queryOptions?: UseInfiniteQueryOptions<
     typeof apiRouter.hits.getWeeklyKeywordListWithPaging
   >,
 ) => {
-  const date = startDate.format('YYYY-MM-DD');
+  const date = startDate
+    .startOf('week')
+    .subtract(1, 'week')
+    .add(1, 'day')
+    .format('YYYY-MM-DD');
 
   const isSignedIn = useIsSignedIn();
   const queryResults = apiClient(
-    1,
+    2,
   ).hits.getWeeklyKeywordListWithPaging.useInfiniteQuery(
     TRENDING_KEYWORD_KEY.list([
       {
@@ -49,22 +52,28 @@ const useGetTrendingKeywords = (
     /**
      * 저희는 pageParam의 대한 정보를 api 요청할 때 보내고 있지는않아서
      */
-    ({ pageParam = 0 }) => ({
-      query: {
-        limit: isSignedIn ? String(lastIndex_ID ? 30 : 300) : String(10),
-        from: date,
-        last: lastIndex_ID,
-        order: order,
-        sort: sort === 'rank' ? 'keyword' : sort,
-      },
-    }),
+    ({ pageParam }) => {
+      return {
+        query: {
+          // pageParam이 boolean이면 첫페이지니깐 300
+          limit: isSignedIn ? String(!pageParam ? 300 : 30) : String(10),
+          // 첫페이지 limit가 300이여서 10개를 추가한 형태
+          page: pageParam ? pageParam + 10 : 1,
+          from: date,
+          order: order,
+          sort: sort === 'rank' ? 'keyword' : sort,
+        },
+      };
+    },
     {
       ...queryOptions,
       getNextPageParam: (lastPage, allPages) => {
-        // return lastPage.body.data.length < 10 || allPages.length > 4
-        //   ? false
-        //   : true;
-        return true;
+        return lastPage.body.body?.count
+          ? lastPage.body.body.count >
+            allPages.flatMap((item) => item.body.body?.data).length
+            ? allPages.length
+            : false
+          : false;
       },
     },
   );
@@ -75,8 +84,8 @@ const useGetTrendingKeywords = (
 
   return {
     ...queryResults,
-    data: requiredQueryResult?.pages.flatMap((item) => item.body.data.data),
-    total: requiredQueryResult?.pages[0].body.data.total,
+    data: requiredQueryResult?.pages.flatMap((item) => item.body.body.data),
+    total: requiredQueryResult?.pages[0].body.body.count,
   };
 };
 
