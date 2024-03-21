@@ -48,8 +48,8 @@ export const zWeeklyKeywordsListSourceSchema = z.object(
   createWeeklyKeywordsListSourceSchema,
 );
 
-export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
+export const zWeeklyKeywordsList = dataObject(
+  zTotalData.merge(dataObject(z.array(zWeeklyKeywordsListSourceSchema))),
 );
 
 const VideoHistorySourceSchema = OsCommonSchema.extend({
