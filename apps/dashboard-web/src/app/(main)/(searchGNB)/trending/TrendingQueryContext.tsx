@@ -41,8 +41,7 @@ const TrendingQueryContextProvider = ({
   const [trendingQuery, setTrendingQuery] = useState<TrendingQuery>({
     categoryList: [],
     keywordList: [],
-    // startDate: dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
-    startDate: dayjs('2024-01-17'),
+    startDate: dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
   });
 
   // selectOptions를 업데이트하는 setter
