@@ -1,4 +1,5 @@
 import type { apiRouter } from '@dothis/dto';
+import { useQueryClient } from '@tanstack/react-query';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 import type { DeepRequired } from 'react-hook-form';
 
@@ -30,11 +31,13 @@ const useGetTrendingKeywords = (
     typeof apiRouter.hits.getWeeklyKeywordListWithPaging
   >,
 ) => {
-  const date = startDate
+  let date = startDate
     .startOf('week')
     .subtract(1, 'week')
     .add(1, 'day')
     .format('YYYY-MM-DD');
+
+  const queryClient = useQueryClient();
 
   const isSignedIn = useIsSignedIn();
   const queryResults = apiClient(
@@ -52,13 +55,13 @@ const useGetTrendingKeywords = (
     /**
      * 저희는 pageParam의 대한 정보를 api 요청할 때 보내고 있지는않아서
      */
-    ({ pageParam }) => {
+    (query) => {
       return {
         query: {
           // pageParam이 boolean이면 첫페이지니깐 300
-          limit: isSignedIn ? String(!pageParam ? 300 : 30) : String(10),
+          limit: isSignedIn ? String(!query.pageParam ? 300 : 30) : String(10),
           // 첫페이지 limit가 300이여서 10개를 추가한 형태
-          page: pageParam ? pageParam + 10 : 1,
+          page: query.pageParam ? query.pageParam + 10 : 1,
           from: date,
           order: order,
           sort: sort === 'rank' ? 'keyword' : sort,
@@ -74,6 +77,22 @@ const useGetTrendingKeywords = (
             ? allPages.length
             : false
           : false;
+      },
+
+      onError: (err) => {
+        const hasData = queryClient.getQueryData(
+          TRENDING_KEYWORD_KEY.list([
+            {
+              date: date,
+              isSignedIn,
+              sort,
+              order,
+            },
+          ]),
+        );
+
+        if (hasData) {
+        }
       },
     },
   );
