@@ -28,8 +28,10 @@ export type SortingQuery = {
 };
 
 const TrendingPage = () => {
-  const { trendingQueryOption, setTrendingQueryOption } =
-    useTrendingQueryContext('TrendingPage');
+  const {
+    trendingQuery: { categoryList, keywordList, startDate },
+    trendingQueryActions: { setCategoryList, setKeywordList, setStartDate },
+  } = useTrendingQueryContext('TrendingPage');
 
   const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
@@ -40,16 +42,6 @@ const TrendingPage = () => {
     order: 'desc',
   });
 
-  const [selectOptions, setSelectOptions] = useState<
-    { value: number; label: string }[]
-  >([]);
-
-  const [keywordList, setKeywordList] = useState<string[]>([]);
-
-  const [startDate, setStartDate] = useState(
-    dayjs('2024-01-30').startOf('week').subtract(1, 'week').add(1, 'day'),
-  );
-
   const isSignedIn = useIsSignedIn();
 
   const { setIsOpenSignUpModal } = useAuthActions();
@@ -58,9 +50,9 @@ const TrendingPage = () => {
 
   const { data, total, fetchNextPage, hasNextPage, isLoading, isFetching } =
     useGetTrendingKeywords({
-      selectOptions: trendingQueryOption.selectOptions,
-      keywordList: trendingQueryOption.keywordList,
-      startDate: trendingQueryOption.startDate,
+      categoryList,
+      keywordList,
+      startDate,
       order: sortingParams.order,
       sort: sortingParams.sort,
     });
@@ -111,7 +103,7 @@ const TrendingPage = () => {
         <div className="mx-auto flex max-w-[1342px] items-center gap-[20px]  p-[24px]">
           <h3 className="text-grey600 font-bold">검색 키워드</h3>
           <ul className="flex items-center gap-[10px]">
-            {trendingQueryOption.keywordList.map((item) => (
+            {keywordList.map((item) => (
               <li>
                 <Button key={item} $active={true}>
                   {item.replace('#', '').replace('*', '')}
@@ -137,7 +129,9 @@ const TrendingPage = () => {
                 키워드 {total || 0}개
               </p>
               <p className="text-grey500 font-bold">
-                {'2024-01-07 - 2024-01-14'}
+                {`${startDate.format('YYYY-MM-DD')} ~ ${startDate
+                  .add(6, 'day')
+                  .format('YYYY-MM-DD')}`}
               </p>
               <button className="text-primary500 bg-primary100 rounded-8 ml-auto px-4 py-2 text-[14px]">
                 엑셀 데이터로 다운로드 받기
@@ -239,18 +233,7 @@ const TrendingPage = () => {
               </ul>
             </div>
 
-            {openFilter && (
-              <TrendingFilter
-                selectOptions={selectOptions}
-                setSelectOptions={setSelectOptions}
-                keywordList={keywordList}
-                setKeywordList={setKeywordList}
-                startDate={startDate}
-                setStartDate={setStartDate}
-                setTrendingQueryOption={setTrendingQueryOption}
-                setOpenFilter={setOpenFilter}
-              />
-            )}
+            {openFilter && <TrendingFilter />}
           </div>
         </div>
       </div>
