@@ -23,7 +23,7 @@ const useGetTrendingKeywords = (
   {
     startDate,
     keywordList,
-    selectOptions,
+    categoryList,
     sort,
     order,
   }: SortingQuery & TrendingQuery,
