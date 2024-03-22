@@ -104,7 +104,7 @@ const TrendingPage = () => {
           <h3 className="text-grey600 font-bold">검색 키워드</h3>
           <ul className="flex items-center gap-[10px]">
             {keywordList.map((item) => (
-              <li>
+              <li key={item}>
                 <Button key={item} $active={true}>
                   {item.replace('#', '').replace('*', '')}
 
