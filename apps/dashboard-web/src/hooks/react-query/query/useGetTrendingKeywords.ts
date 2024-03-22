@@ -95,7 +95,10 @@ const useGetTrendingKeywords = (
           ]),
         );
 
-        if (!hasData) {
+        if (
+          !hasData &&
+          !startDate.subtract(1, 'week').isBefore('2024-01-01', 'day')
+        ) {
           setStartDate((prev) => prev.subtract(1, 'week'));
         } else {
           console.log('더 이상 데이터가 없다 정도');
