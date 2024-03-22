@@ -4,7 +4,10 @@ import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 import type { DeepRequired } from 'react-hook-form';
 
 import type { SortingQuery } from '@/app/(main)/(searchGNB)/trending/page';
-import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
+import {
+  type TrendingQuery,
+  useTrendingQueryContext,
+} from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import { TRENDING_KEYWORD_KEY } from '@/constants/querykey';
 import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
@@ -34,6 +37,11 @@ const useGetTrendingKeywords = (
   let date = startDate.format('YYYY-MM-DD');
 
   const queryClient = useQueryClient();
+
+  const {
+    trendingQuery,
+    trendingQueryActions: { setStartDate },
+  } = useTrendingQueryContext('useGetTrendingKeywords');
 
   const isSignedIn = useIsSignedIn();
   const queryResults = apiClient(
@@ -87,7 +95,10 @@ const useGetTrendingKeywords = (
           ]),
         );
 
-        if (hasData) {
+        if (!hasData) {
+          setStartDate((prev) => prev.subtract(1, 'week'));
+        } else {
+          console.log('더 이상 데이터가 없다 정도');
         }
       },
     },
