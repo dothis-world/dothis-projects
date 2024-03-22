@@ -31,11 +31,7 @@ const useGetTrendingKeywords = (
     typeof apiRouter.hits.getWeeklyKeywordListWithPaging
   >,
 ) => {
-  let date = startDate
-    .startOf('week')
-    .subtract(1, 'week')
-    .add(1, 'day')
-    .format('YYYY-MM-DD');
+  let date = startDate.format('YYYY-MM-DD');
 
   const queryClient = useQueryClient();
 
