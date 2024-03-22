@@ -29,7 +29,7 @@ export type SortingQuery = {
 
 const TrendingPage = () => {
   const { trendingQueryOption, setTrendingQueryOption } =
-    useTrendingQueryContext('trendingPage');
+    useTrendingQueryContext('TrendingPage');
 
   const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
