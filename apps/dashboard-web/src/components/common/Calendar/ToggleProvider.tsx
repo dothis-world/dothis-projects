@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import React, { createContext, useContext, useState } from 'react';
+import ReactDom from 'react-dom';
 
 interface ToggleState {
   isOpen: boolean;
@@ -58,6 +59,23 @@ const ToggleContent = ({ children }: { children: React.ReactNode }) => {
   return <> {isOpen && children}</>;
 };
 
+const TogglePortal = ({ children }: { children: React.ReactNode }) => {
+  const { isOpen, setIsOpen } = useToggleContext('ToggleContent');
+
+  return (
+    isOpen &&
+    ReactDom.createPortal(
+      <div
+        onClick={() => setIsOpen(false)}
+        className="absolute h-screen w-screen"
+      >
+        {children}
+      </div>,
+      globalThis.document?.body,
+    )
+  );
+};
+
 const ToggleClose = ({ children }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useToggleContext('ToggleClose');
 
@@ -88,3 +106,5 @@ ToggleProvider.Trigger = ToggleTrigger;
 ToggleProvider.Content = ToggleContent;
 
 ToggleProvider.Close = ToggleClose;
+
+ToggleProvider.Portal = TogglePortal;

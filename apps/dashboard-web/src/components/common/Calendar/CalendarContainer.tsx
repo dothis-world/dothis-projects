@@ -33,14 +33,16 @@ const CalendarContainer = () => {
         <ToggleProvider.Trigger>
           <button>여기 클릭해주세요</button>
         </ToggleProvider.Trigger>
-        <ToggleProvider.Content>
-          <Calendar
-            calendarbaseDate={dayjs().format('YYYY-MM-DD')}
-            selectedDate={selectedUploadDate.format('YYYY-MM-DD')}
-            setSelectedDate={handleSetSelectedUploadDate}
-            isInvalidate={isInvalidStartDate}
-          />
-        </ToggleProvider.Content>
+        <ToggleProvider.Portal>
+          <ToggleProvider.Content>
+            <Calendar
+              calendarbaseDate={dayjs().format('YYYY-MM-DD')}
+              selectedDate={selectedUploadDate.format('YYYY-MM-DD')}
+              setSelectedDate={handleSetSelectedUploadDate}
+              isInvalidate={isInvalidStartDate}
+            />
+          </ToggleProvider.Content>
+        </ToggleProvider.Portal>
       </ToggleProvider>
       <ToggleProvider>
         <ToggleProvider.Trigger>
