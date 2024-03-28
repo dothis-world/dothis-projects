@@ -25,6 +25,7 @@ export const relatedWordsApi = c.router({
     summary: '탐색어를 전부 가져옵니다.',
     description: '탐색어를 전부 가져옵니다.',
   },
+
   getRelWords: {
     method: 'GET',
     path: `${relWordsApiUrl}/:keyword`,
@@ -35,6 +36,7 @@ export const relatedWordsApi = c.router({
     summary: '키워드를 가지고 관련어를 가져옵니다.',
     description: '키워드를 가지고 관련어를 가져옵니다.',
   },
+
   updateAutoCompleteWords: {
     method: 'PUT',
     path: `${relWordsApiUrl}`,
@@ -46,6 +48,7 @@ export const relatedWordsApi = c.router({
     summary: '자동완성 단어를 업데이트 합니다.',
     description: '자동완성 단어를 업데이트 합니다.',
   },
+
   getAutoCompleteWords: {
     method: 'GET',
     path: `/auto-complete/:word`,
@@ -58,6 +61,7 @@ export const relatedWordsApi = c.router({
     description:
       '자동완성 단어를 가져옵니다. 뒤에 * 붙어있는 단어는 완전단어로 우리 디비에 탐색어로 등록되있는 단어를 뜻합니다.',
   },
+
   rankingRelatedWords: {
     method: 'GET',
     path: `${relWordsApiUrl}/:search/ranking`,
@@ -79,6 +83,17 @@ export const relatedWordsApi = c.router({
     summary: '입력으로 들어온 연관어를 삭제합니다.',
     description: '입력으로 들어온 연관어를 삭제합니다.',
   },
+
+  deleteKeyWord: {
+    method: 'DELETE',
+    path: `${keywordApiUrl}/:id`,
+    body: z.object({}),
+    pathParams: z.object({ id: z.string() }),
+    responses: { 200: zSuccessBase, ...zErrResBase },
+    summary: 'id에 맞는 related_words 행 한줄 삭제',
+    description: 'id에 맞는 related_words 행 한줄 삭제',
+  },
+
   setDicTerm: {
     method: 'GET',
     path: `${searchWordBaseApiUrl}/term-update`,
@@ -94,6 +109,7 @@ export const relatedWordsApi = c.router({
       '탐색어를 redis에 업데이트 하기위해 크롤링서버에서 http 요청을 받습니다.',
     description: 'http 요청을 받아 자동으로 redis에 업데이트합니다.',
   },
+
   getDicTerm: {
     method: 'GET',
     path: `${searchWordBaseApiUrl}/term`,
