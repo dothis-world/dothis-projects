@@ -1,24 +1,40 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
   STORYBOARD_EDITOR_SCHEMA,
   type StoryBoardFieldValues,
 } from '@/constants/schema/storyboard';
+import useGetStoryBoard from '@/hooks/react-query/query/useGetStoryBoard';
 
 import DetailForm from './Form/DetailForm';
 import OverviewForm from './Form/OverviewForm';
 import SearchParamNav from './Nav/SearchParamNav';
 
-const StoryBoardEditor = () => {
+interface StoryBoardEditorProps {
+  storyBoardId: string;
+}
+
+const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
   const searchParams = useSearchParams();
 
-  const { setValue, register, watch } = useForm({
+  const { data, isInitialLoading } = useGetStoryBoard(storyBoardId);
+  const { setValue, register, watch, reset } = useForm({
     resolver: zodResolver(STORYBOARD_EDITOR_SCHEMA),
     defaultValues: {} as StoryBoardFieldValues,
   });
+
+  useEffect(() => {
+    if (data)
+      reset({
+        ...data.overview,
+        title: data.title,
+        author: 'chae', // data.author
+        createdDate: new Date().toDateString(), // data.overview.createdDate
+      });
+  }, [isInitialLoading]);
 
   const update = (
     value: StoryBoardFieldValues[keyof StoryBoardFieldValues],

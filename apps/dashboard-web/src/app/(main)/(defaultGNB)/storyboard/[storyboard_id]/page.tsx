@@ -11,7 +11,7 @@ const StoryboardDetailPage = ({
   return (
     <div className="flex w-full flex-col items-stretch gap-[10px] text-black">
       <StoryBoardHeader button="export" />
-      <StoryBoardEditor />
+      <StoryBoardEditor storyBoardId={storyboard_id} />
     </div>
   );
 };
