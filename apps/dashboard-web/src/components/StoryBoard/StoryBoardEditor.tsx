@@ -7,6 +7,7 @@ import {
   STORYBOARD_EDITOR_SCHEMA,
   type StoryBoardFieldValues,
 } from '@/constants/schema/storyboard';
+import { useUpdateStoryBoardTitleMutation } from '@/hooks/react-query/mutation/useStoryboardMutation';
 import useGetStoryBoard from '@/hooks/react-query/query/useGetStoryBoard';
 
 import DetailForm from './Form/DetailForm';
@@ -21,7 +22,40 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
   const searchParams = useSearchParams();
 
   const { data, isInitialLoading } = useGetStoryBoard(storyBoardId);
-  const { setValue, register, watch, reset } = useForm({
+  const getData = (fieldName: keyof StoryBoardFieldValues) => {
+    if (data === undefined) return undefined;
+    switch (fieldName) {
+      case 'title':
+        return data.title;
+      case 'author':
+        return 'chae'; // data.title;
+      case 'createdDate':
+        return new Date().toDateString(); // data.overview.createdDate;
+      case 'uploadDate':
+        return data.overview.uploadDate;
+      case 'actors':
+        return data.overview.actors;
+      case 'location':
+        return data.overview.location;
+      case 'description':
+        return data.overview.description;
+    }
+  };
+
+  const mutates: Record<keyof StoryBoardFieldValues, (value: string) => void> =
+    {
+      title: useUpdateStoryBoardTitleMutation({
+        storyBoardId,
+      }).mutate,
+      author: (value: string) => {},
+      createdDate: (value: string) => {},
+      uploadDate: (value: string) => {},
+      actors: (value: string) => {},
+      location: (value: string) => {},
+      description: (value: string) => {},
+    };
+
+  const { setValue, register, reset, watch } = useForm({
     resolver: zodResolver(STORYBOARD_EDITOR_SCHEMA),
     defaultValues: {} as StoryBoardFieldValues,
   });
@@ -40,7 +74,8 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
     value: StoryBoardFieldValues[keyof StoryBoardFieldValues],
     fieldName: keyof StoryBoardFieldValues,
   ) => {
-    console.log('update', fieldName, value);
+    if (getData(fieldName) === value) return;
+    mutates[fieldName](value);
   };
 
   return (
