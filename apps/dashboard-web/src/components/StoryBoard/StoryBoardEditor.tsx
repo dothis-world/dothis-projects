@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -9,8 +10,11 @@ import {
 
 import DetailForm from './Form/DetailForm';
 import OverviewForm from './Form/OverviewForm';
+import SearchParamNav from './Nav/SearchParamNav';
 
 const StoryBoardEditor = () => {
+  const searchParams = useSearchParams();
+
   const { setValue, register, watch } = useForm({
     resolver: zodResolver(STORYBOARD_EDITOR_SCHEMA),
     defaultValues: {} as StoryBoardFieldValues,
@@ -32,7 +36,15 @@ const StoryBoardEditor = () => {
         createdDate={watch('createdDate')}
         uploadDate={watch('uploadDate')}
       />
-      <DetailForm register={register} update={update} />
+      <SearchParamNav navKeys={['영상 개요', '스토리보드']} searchKey="e" />
+      {!searchParams?.get('e') ? (
+        <>
+          <DetailForm register={register} update={update} />
+          <p className="text-pink">파일 추가</p>
+        </>
+      ) : (
+        <p className="text-pink">씬 리스트</p>
+      )}
     </>
   );
 };
