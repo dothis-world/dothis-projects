@@ -10,7 +10,7 @@ import {
 import { useUpdateStoryBoardTitleMutation } from '@/hooks/react-query/mutation/useStoryboardMutation';
 import useGetStoryBoard from '@/hooks/react-query/query/useGetStoryBoard';
 
-import DetailForm from './Form/DetailForm';
+import OverviewForm from './Form/OverviewForm';
 import SummaryForm from './Form/SummaryForm';
 import SearchParamNav from './Nav/SearchParamNav';
 
@@ -90,7 +90,7 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
       <SearchParamNav navKeys={['영상 개요', '스토리보드']} searchKey="e" />
       {!searchParams?.get('e') ? (
         <>
-          <DetailForm register={register} update={update} />
+          <OverviewForm register={register} update={update} />
           <p className="text-pink">파일 추가</p>
         </>
       ) : (

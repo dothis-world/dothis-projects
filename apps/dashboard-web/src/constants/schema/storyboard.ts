@@ -2,14 +2,14 @@ import { z } from 'zod';
 
 type StoryBoardSummaryField = 'title' | 'author' | 'createdDate' | 'uploadDate';
 
-type StoryBoardDetailField = 'actors' | 'location' | 'description';
+type StoryBoardOverviewField = 'actors' | 'location' | 'description';
 
 type StoryBoardSummaryFieldValues = Record<StoryBoardSummaryField, string>;
 
-type StoryBoardDetailFieldValues = Record<StoryBoardDetailField, string>;
+type StoryBoardOverviewFieldValues = Record<StoryBoardOverviewField, string>;
 
 type StoryBoardFieldValues = StoryBoardSummaryFieldValues &
-  StoryBoardDetailFieldValues;
+  StoryBoardOverviewFieldValues;
 
 export type { StoryBoardFieldValues };
 
@@ -36,12 +36,12 @@ const STORYBOARD_SUMMARY_SCHEMA = z.object({
   }),
 });
 
-const STORYBOARD_DETAIL_SCHEMA = z.object({
+const STORYBOARD_OVERVIEW_SCHEMA = z.object({
   actors: z.string().max(120, { message: 'Title is too long' }),
   location: z.string().max(5000, { message: 'Title is too long' }),
   description: z.string().max(5000, { message: 'Title is too long' }),
 });
 
 export const STORYBOARD_EDITOR_SCHEMA = STORYBOARD_SUMMARY_SCHEMA.merge(
-  STORYBOARD_DETAIL_SCHEMA,
+  STORYBOARD_OVERVIEW_SCHEMA,
 );

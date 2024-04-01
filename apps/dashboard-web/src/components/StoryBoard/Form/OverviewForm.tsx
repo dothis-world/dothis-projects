@@ -1,10 +1,11 @@
 import type { UseFormRegister } from 'react-hook-form';
 
 import type { StoryBoardFieldValues } from '@/constants/schema/storyboard';
+
 import { InputField } from '../Field/InputField';
 import { TextAreaField } from '../Field/TextareaField';
 
-interface DetailFormProps {
+interface OverviewFormProps {
   register: UseFormRegister<StoryBoardFieldValues>;
   update: (
     value: StoryBoardFieldValues[keyof StoryBoardFieldValues],
@@ -13,7 +14,7 @@ interface DetailFormProps {
   show?: boolean;
 }
 
-const DetailForm = ({ register, update, show = true }: DetailFormProps) => {
+const OverviewForm = ({ register, update, show = true }: OverviewFormProps) => {
   return (
     <form className="flex flex-col gap-[10px] px-[30px]">
       <InputField
@@ -47,4 +48,4 @@ const DetailForm = ({ register, update, show = true }: DetailFormProps) => {
   );
 };
 
-export default DetailForm;
+export default OverviewForm;
