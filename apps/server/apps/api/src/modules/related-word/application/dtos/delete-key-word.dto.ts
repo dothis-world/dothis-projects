@@ -1,7 +1,7 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { relatedWordsApi } from '@dothis/dto';
-import { zSuccessBase } from '@dothis/dto/src/lib/success.response.zod';
+import { zSuccessBase } from '@dothis/dto/dist/lib/success.response.zod';
 
 export class DeleteKeyWordParams extends createZodDto(
   extendApi(relatedWordsApi.deleteKeyWord.pathParams),
