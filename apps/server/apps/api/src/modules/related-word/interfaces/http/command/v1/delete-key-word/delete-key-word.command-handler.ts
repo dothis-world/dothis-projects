@@ -14,11 +14,11 @@ export type TDeleteKeyWordCommandHandlerRes = Result<
 >;
 
 @CommandHandler(DeleteKeyWordCommandDto)
-export class DeleteRelWordsCommandHandler
+export class DeleteKeyWordCommandHandler
   implements ICommandHandler<DeleteKeyWordCommandDto>
 {
   constructor(
-    @Inject(RELWORDS_DI_TOKEN.DELETE_KEYWORD)
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: RelatedWordsRepositoryPort,
   ) {}
 
