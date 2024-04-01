@@ -11,7 +11,7 @@ import { useUpdateStoryBoardTitleMutation } from '@/hooks/react-query/mutation/u
 import useGetStoryBoard from '@/hooks/react-query/query/useGetStoryBoard';
 
 import DetailForm from './Form/DetailForm';
-import OverviewForm from './Form/OverviewForm';
+import SummaryForm from './Form/SummaryForm';
 import SearchParamNav from './Nav/SearchParamNav';
 
 interface StoryBoardEditorProps {
@@ -80,7 +80,7 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
 
   return (
     <>
-      <OverviewForm
+      <SummaryForm
         register={register}
         update={update}
         setValue={setValue}

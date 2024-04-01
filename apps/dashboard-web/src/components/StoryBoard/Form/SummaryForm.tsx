@@ -5,7 +5,7 @@ import type { StoryBoardFieldValues } from '@/constants/schema/storyboard';
 import CalendarField from '../Field/CalendarField';
 import { InputField } from '../Field/InputField';
 
-interface OverviewFormProps {
+interface SummaryFormProps {
   register: UseFormRegister<StoryBoardFieldValues>;
   update: (
     value: StoryBoardFieldValues[keyof StoryBoardFieldValues],
@@ -16,13 +16,13 @@ interface OverviewFormProps {
   uploadDate: string;
 }
 
-const OverviewForm = ({
+const SummaryForm = ({
   register,
   update,
   setValue,
   createdDate,
   uploadDate,
-}: OverviewFormProps) => {
+}: SummaryFormProps) => {
   return (
     <form className="flex flex-col gap-[30px] px-[30px]">
       <InputField
@@ -93,4 +93,4 @@ const OverviewForm = ({
   );
 };
 
-export default OverviewForm;
+export default SummaryForm;
