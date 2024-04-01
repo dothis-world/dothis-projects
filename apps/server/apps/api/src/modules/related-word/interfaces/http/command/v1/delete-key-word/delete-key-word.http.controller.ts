@@ -28,7 +28,7 @@ import { match } from 'oxide.ts';
 import { TDeleteKeyWordCommandHandlerRes } from './delete-key-word.command-handler';
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 
-@ApiTags('연관어')
+@ApiTags('탐색어')
 @Controller()
 export class DeleteKeyWordHttpController {
   constructor(private readonly commandBus: CommandBus) {}

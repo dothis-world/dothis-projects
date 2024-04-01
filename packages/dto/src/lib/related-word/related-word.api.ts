@@ -90,8 +90,8 @@ export const relatedWordsApi = c.router({
     body: z.object({}),
     pathParams: z.object({ id: z.string() }),
     responses: { 200: zSuccessBase, ...zErrResBase },
-    summary: 'id에 맞는 related_words 행 한줄 삭제',
-    description: 'id에 맞는 related_words 행 한줄 삭제',
+    summary: '탐색어 삭제',
+    description: 'related_words 테이블 id에 맞는 행 한줄 삭제',
   },
 
   setDicTerm: {
