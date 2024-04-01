@@ -1,28 +1,51 @@
-import type { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-import type { StoryBoardFieldValues } from '@/constants/schema/storyboard';
+import {
+  STORYBOARD_SUMMARY_SCHEMA,
+  type StoryBoardSummaryFieldValues,
+} from '@/constants/schema/storyboard';
+import { useUpdateStoryBoardTitleMutation } from '@/hooks/react-query/mutation/useStoryboardMutation';
 
 import CalendarField from '../Field/CalendarField';
 import { InputField } from '../Field/InputField';
 
 interface SummaryFormProps {
-  register: UseFormRegister<StoryBoardFieldValues>;
-  update: (
-    value: StoryBoardFieldValues[keyof StoryBoardFieldValues],
-    fieldName: keyof StoryBoardFieldValues,
-  ) => void;
-  setValue: UseFormSetValue<StoryBoardFieldValues>;
-  createdDate: string;
-  uploadDate: string;
+  storyBoardId: string;
+  defaultValues: StoryBoardSummaryFieldValues;
 }
 
-const SummaryForm = ({
-  register,
-  update,
-  setValue,
-  createdDate,
-  uploadDate,
-}: SummaryFormProps) => {
+const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
+  const { setValue, register, reset, watch } = useForm({
+    resolver: zodResolver(STORYBOARD_SUMMARY_SCHEMA),
+    defaultValues: {} as StoryBoardSummaryFieldValues,
+  });
+
+  const mutates: Record<
+    keyof StoryBoardSummaryFieldValues,
+    (value: string) => void
+  > = {
+    title: useUpdateStoryBoardTitleMutation({
+      storyBoardId,
+    }).mutate,
+    author: (value: string) => {},
+    createdDate: (value: string) => {},
+    uploadDate: (value: string) => {},
+  };
+
+  const update = (
+    value: StoryBoardSummaryFieldValues[keyof StoryBoardSummaryFieldValues],
+    fieldName: keyof StoryBoardSummaryFieldValues,
+  ) => {
+    if (defaultValues[fieldName] === value) return;
+    mutates[fieldName](value);
+  };
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
+
   return (
     <form className="flex flex-col gap-[30px] px-[30px]">
       <InputField
@@ -60,10 +83,10 @@ const SummaryForm = ({
               readOnly: true,
               maxLength: 8,
             }}
-            defaultDate={createdDate}
+            defaultDate={watch('createdDate')}
             handleSelectDate={(value) => {
               setValue('createdDate', value);
-              if (uploadDate < value) setValue('uploadDate', value);
+              if (watch('uploadDate') < value) setValue('uploadDate', value);
             }}
           />
         </div>
@@ -84,8 +107,8 @@ const SummaryForm = ({
             handleSelectDate={(value: string) => {
               setValue('uploadDate', value);
             }}
-            defaultDate={uploadDate ?? createdDate}
-            validAfterDate={createdDate}
+            defaultDate={watch('uploadDate') ?? watch('createdDate')}
+            validAfterDate={watch('createdDate')}
           />
         </div>
       </div>

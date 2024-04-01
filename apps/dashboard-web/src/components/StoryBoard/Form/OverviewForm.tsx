@@ -1,22 +1,58 @@
-import type { UseFormRegister } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-import type { StoryBoardFieldValues } from '@/constants/schema/storyboard';
+import {
+  STORYBOARD_OVERVIEW_SCHEMA,
+  type StoryBoardOverviewFieldValues,
+} from '@/constants/schema/storyboard';
 
 import { InputField } from '../Field/InputField';
 import { TextAreaField } from '../Field/TextareaField';
 
 interface OverviewFormProps {
-  register: UseFormRegister<StoryBoardFieldValues>;
-  update: (
-    value: StoryBoardFieldValues[keyof StoryBoardFieldValues],
-    fieldName: keyof StoryBoardFieldValues,
-  ) => void;
-  show?: boolean;
+  storyBoardId: string;
+  defaultValues: StoryBoardOverviewFieldValues;
+  hidden?: boolean;
 }
 
-const OverviewForm = ({ register, update, show = true }: OverviewFormProps) => {
+const OverviewForm = ({
+  storyBoardId,
+  defaultValues,
+  hidden = false,
+}: OverviewFormProps) => {
+  const { register, reset } = useForm({
+    resolver: zodResolver(STORYBOARD_OVERVIEW_SCHEMA),
+    defaultValues: {} as StoryBoardOverviewFieldValues,
+  });
+
+  const mutates: Record<
+    keyof StoryBoardOverviewFieldValues,
+    (value: string) => void
+  > = {
+    actors: (value: string) => {
+      storyBoardId;
+    },
+    location: (value: string) => {},
+    description: (value: string) => {},
+  };
+
+  const update = (
+    value: StoryBoardOverviewFieldValues[keyof StoryBoardOverviewFieldValues],
+    fieldName: keyof StoryBoardOverviewFieldValues,
+  ) => {
+    if (defaultValues[fieldName] === value) return;
+    mutates[fieldName](value);
+  };
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
+
   return (
-    <form className="flex flex-col gap-[10px] px-[30px]">
+    <form
+      className={`flex flex-col gap-[10px] px-[30px] ${hidden ? 'hidden' : ''}`}
+    >
       <InputField
         {...register('actors', {
           onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
