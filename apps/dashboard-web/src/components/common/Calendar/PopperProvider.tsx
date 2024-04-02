@@ -14,6 +14,9 @@ interface PopperState {
   setReference: (node: any) => void;
   setFloating: (node: HTMLElement | null) => void;
   floatingStyles: React.CSSProperties;
+  arrowRef: React.RefObject<HTMLSpanElement>;
+  middlewareData: any; //floating UI 타입이 없음
+  arrowProps: PopperContentContextValue;
 }
 
 const PopperContext = createContext<PopperState | null>(null);
@@ -31,14 +34,17 @@ export const usePopperContext = (componentName: string) => {
 
 const PopperProvider = ({
   children,
+
   side = 'bottom',
   align = 'center',
   isArrow = true,
+  arrowColor = '#fefefe',
 }: {
   children: React.ReactNode;
   side: Side;
   align: Align;
   isArrow: boolean;
+  arrowColor: string;
 }) => {
   const placement = side + (align !== 'center' ? '-' + align : '');
 
@@ -66,7 +72,7 @@ const PopperProvider = ({
 
   const arrowX = middlewareData.arrow?.x;
   const arrowY = middlewareData.arrow?.y;
-  const cannotCenterArrow = middlewareData.arrow?.centerOffset !== 0;
+  const cannotCenterArrow = isArrow && middlewareData.arrow?.centerOffset !== 0;
 
   return (
     <PopperContext.Provider
@@ -74,22 +80,25 @@ const PopperProvider = ({
         setFloating: refs.setFloating,
         setReference: refs.setReference,
         floatingStyles: floatingStyles,
+        arrowRef: arrowRef,
+        middlewareData,
+        arrowProps: {
+          color: arrowColor,
+          shouldHideArrow: cannotCenterArrow,
+          placedSide: side,
+          arrowX,
+          arrowY,
+        },
       }}
     >
-      <Arrow
-        ref={arrowRef}
-        placedSide={side}
-        arrowX={arrowX}
-        color="#ff0000"
-        arrowY={arrowY}
-        shouldHideArrow={cannotCenterArrow}
-      />
       {children}
     </PopperContext.Provider>
   );
 };
 
 export default PopperProvider;
+
+const PopperArrow = () => {};
 
 const SIDE_OPTIONS = ['top', 'right', 'bottom', 'left'] as const;
 
@@ -108,44 +117,45 @@ type PopperContentContextValue = {
   shouldHideArrow: boolean;
 };
 
-const Arrow = React.forwardRef<HTMLSpanElement, PopperContentContextValue>(
-  ({ placedSide, arrowX, arrowY, shouldHideArrow, color }, ref) => {
-    const OPPOSITE_SIDE: Record<Side, Side> = {
-      top: 'bottom',
-      right: 'left',
-      bottom: 'top',
-      left: 'right',
-    };
-    const baseSide = OPPOSITE_SIDE[placedSide];
+export const Arrow = React.forwardRef<
+  HTMLSpanElement,
+  PopperContentContextValue
+>(({ placedSide, arrowX, arrowY, shouldHideArrow, color }, ref) => {
+  const OPPOSITE_SIDE: Record<Side, Side> = {
+    top: 'bottom',
+    right: 'left',
+    bottom: 'top',
+    left: 'right',
+  };
+  const baseSide = OPPOSITE_SIDE[placedSide];
 
-    return (
-      <span
-        ref={ref}
-        style={{
-          position: 'absolute',
-          left: arrowX,
-          top: arrowY,
-          [baseSide]: 0,
-          transformOrigin: {
-            top: '',
-            right: '0 0',
-            bottom: 'center 0',
-            left: '100% 0',
-          }[placedSide],
-          transform: {
-            top: 'translateY(100%)',
-            right: 'translateY(50%) rotate(90deg) translateX(-50%)',
-            bottom: `rotate(180deg)`,
-            left: 'translateY(50%) rotate(-90deg) translateX(50%)',
-          }[placedSide],
-          // visibility: shouldHideArrow ? 'hidden' : undefined,
-        }}
-      >
-        <ArrowTest color={color} />
-      </span>
-    );
-  },
-);
+  return (
+    <span
+      ref={ref}
+      style={{
+        position: 'absolute',
+        left: arrowX,
+        top: arrowY,
+        [baseSide]: 0,
+        transformOrigin: {
+          top: '',
+          right: '0 0',
+          bottom: 'center 0',
+          left: '100% 0',
+        }[placedSide],
+        transform: {
+          top: 'translateY(100%)',
+          right: 'translateY(50%) rotate(90deg) translateX(-50%)',
+          bottom: `rotate(180deg)`,
+          left: 'translateY(50%) rotate(-90deg) translateX(50%)',
+        }[placedSide],
+        // visibility: shouldHideArrow ? 'hidden' : undefined,
+      }}
+    >
+      <ArrowTest color={color} />
+    </span>
+  );
+});
 
 const ArrowTest = ({ color }: { color: string }) => {
   return (
