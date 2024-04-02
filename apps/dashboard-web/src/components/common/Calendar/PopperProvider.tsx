@@ -10,6 +10,22 @@ import type { ReactElement } from 'react';
 import React, { createContext, useContext, useRef, useState } from 'react';
 import ReactDom from 'react-dom';
 
+const SIDE_OPTIONS = ['top', 'right', 'bottom', 'left'] as const;
+
+const ALIGN_OPTIONS = ['start', 'center', 'end'] as const;
+
+type Side = (typeof SIDE_OPTIONS)[number];
+
+type Align = (typeof ALIGN_OPTIONS)[number];
+
+type PopperContentContextValue = {
+  placedSide: Side;
+  color: string;
+  arrowX?: number;
+  arrowY?: number;
+  shouldHideArrow: boolean;
+};
+
 interface PopperState {
   setReference: (node: any) => void;
   setFloating: (node: HTMLElement | null) => void;
@@ -97,23 +113,6 @@ const PopperProvider = ({
 };
 
 export default PopperProvider;
-
-const SIDE_OPTIONS = ['top', 'right', 'bottom', 'left'] as const;
-
-const ALIGN_OPTIONS = ['start', 'center', 'end'] as const;
-
-type Side = (typeof SIDE_OPTIONS)[number];
-
-type Align = (typeof ALIGN_OPTIONS)[number];
-
-type PopperContentContextValue = {
-  placedSide: Side;
-  color: string;
-
-  arrowX?: number;
-  arrowY?: number;
-  shouldHideArrow: boolean;
-};
 
 export const PopperArrow = React.forwardRef<
   HTMLSpanElement,
