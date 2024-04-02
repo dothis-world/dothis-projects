@@ -31,7 +31,7 @@ const CalendarContainer = () => {
   return (
     <div className="flex flex-col">
       <ToggleProvider>
-        <PopperProvider align="center" side="bottom" isArrow arrowColor="red">
+        <PopperProvider isArrow align="center" side="bottom" arrowColor="red">
           <ToggleProvider.Trigger>
             <button>여기 클릭해주세요</button>
           </ToggleProvider.Trigger>
@@ -50,7 +50,7 @@ const CalendarContainer = () => {
       </ToggleProvider>
 
       <ToggleProvider>
-        <PopperProvider align="center" side="bottom" isArrow arrowColor="blue">
+        <PopperProvider isArrow align="center" side="bottom" arrowColor="blue">
           <ToggleProvider.Trigger>
             <button>여기 클릭해주세요</button>
           </ToggleProvider.Trigger>
