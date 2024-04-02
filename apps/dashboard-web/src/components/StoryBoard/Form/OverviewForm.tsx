@@ -1,94 +1,85 @@
-import type { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-import type { StoryBoardFieldValues } from '@/constants/schema/storyboard';
+import {
+  STORYBOARD_OVERVIEW_SCHEMA,
+  type StoryBoardOverviewFieldValues,
+} from '@/constants/schema/storyboard';
 
-import CalendarField from '../Field/CalendarField';
 import { InputField } from '../Field/InputField';
+import { TextAreaField } from '../Field/TextareaField';
 
 interface OverviewFormProps {
-  register: UseFormRegister<StoryBoardFieldValues>;
-  update: (
-    value: StoryBoardFieldValues[keyof StoryBoardFieldValues],
-    fieldName: keyof StoryBoardFieldValues,
-  ) => void;
-  setValue: UseFormSetValue<StoryBoardFieldValues>;
-  createdDate: string;
-  uploadDate: string;
+  storyBoardId: string;
+  defaultValues: StoryBoardOverviewFieldValues;
+  hidden?: boolean;
 }
 
 const OverviewForm = ({
-  register,
-  update,
-  setValue,
-  createdDate,
-  uploadDate,
+  storyBoardId,
+  defaultValues,
+  hidden = false,
 }: OverviewFormProps) => {
+  const { register, reset } = useForm({
+    resolver: zodResolver(STORYBOARD_OVERVIEW_SCHEMA),
+    defaultValues: {} as StoryBoardOverviewFieldValues,
+  });
+
+  const mutates: Record<
+    keyof StoryBoardOverviewFieldValues,
+    (value: string) => void
+  > = {
+    actors: (value: string) => {
+      storyBoardId;
+    },
+    location: (value: string) => {},
+    description: (value: string) => {},
+  };
+
+  const update = (
+    value: StoryBoardOverviewFieldValues[keyof StoryBoardOverviewFieldValues],
+    fieldName: keyof StoryBoardOverviewFieldValues,
+  ) => {
+    if (defaultValues[fieldName] === value) return;
+    mutates[fieldName](value);
+  };
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
+
   return (
-    <form className="flex flex-col gap-[30px] px-[30px]">
+    <form
+      className={`flex flex-col gap-[10px] px-[30px] ${hidden ? 'hidden' : ''}`}
+    >
       <InputField
-        {...register('title', {
-          required: true,
+        {...register('actors', {
           onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
-            update(e.target.value, 'title'),
+            update(e.target.value, 'actors'),
         })}
-        textSize={32}
-        bold
-        placeholder="제목"
+        label="출연진"
+        placeholder="출연진을 적어주세요"
         maxLength={120}
       />
       <InputField
-        {...register('author', {
-          required: true,
+        {...register('location', {
           onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
-            update(e.target.value, 'author'),
+            update(e.target.value, 'location'),
         })}
-        label="작성자"
-        placeholder="작성자를 적어주세요"
-        maxLength={120}
+        label="장소"
+        placeholder="장소을 적어주세요"
+        maxLength={5000}
       />
-      <div className="item-center flex flex-row px-[200px] text-center">
-        <div className="flex grow flex-col">
-          <CalendarField
-            label="작성일자"
-            inputProps={{
-              ...register('createdDate', {
-                required: true,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                  update(e.target.value, 'createdDate'),
-              }),
-              placeholder: '00.00.00',
-              readOnly: true,
-              maxLength: 8,
-            }}
-            defaultDate={createdDate}
-            handleSelectDate={(value) => {
-              setValue('createdDate', value);
-              if (uploadDate < value) setValue('uploadDate', value);
-            }}
-          />
-        </div>
-        <p>&gt;</p>
-        <div className="flex grow flex-col">
-          <CalendarField
-            label="업로드예정일"
-            inputProps={{
-              ...register('uploadDate', {
-                required: true,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                  update(e.target.value, 'uploadDate'),
-              }),
-              placeholder: '00.00.00',
-              readOnly: true,
-              maxLength: 8,
-            }}
-            handleSelectDate={(value: string) => {
-              setValue('uploadDate', value);
-            }}
-            defaultDate={uploadDate ?? createdDate}
-            validAfterDate={createdDate}
-          />
-        </div>
-      </div>
+      <TextAreaField
+        {...register('description', {
+          onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
+            update(e.target.value, 'description'),
+        })}
+        label="설명"
+        placeholder="설명을 적어주세요"
+        maxLength={5000}
+      />
     </form>
   );
 };
