@@ -2,6 +2,8 @@ import type { ReactElement } from 'react';
 import React, { createContext, useContext, useState } from 'react';
 import ReactDom from 'react-dom';
 
+import { Arrow, usePopperContext } from './PopperProvider';
+
 interface ToggleState {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,17 +48,29 @@ export default ToggleProvider;
 const ToggleTrigger = ({ children }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useToggleContext('ToggleTrigger');
 
+  const { setReference } = usePopperContext('ToggleTrigger');
+
   if (!children) return null; // children이 없는 경우 null을 반환하여 렌더링하지 않음
 
   return React.cloneElement(children as ReactElement, {
     onClick: () => setIsOpen((prev) => !prev),
+    ref: setReference,
   });
 };
 
 const ToggleContent = ({ children }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useToggleContext('ToggleContent');
 
-  return <> {isOpen && children}</>;
+  const { setFloating, floatingStyles, arrowRef, arrowProps } =
+    usePopperContext('ToggleContent');
+
+  return (
+    // children의 ref가 필요로 할 수도 있어서 제일 만만한 span태그에 주입을 시켰습니다.
+    <span ref={setFloating} style={{ ...floatingStyles }}>
+      <Arrow ref={arrowRef} {...arrowProps} />
+      {isOpen && children}
+    </span>
+  );
 };
 
 const TogglePortal = ({ children }: { children: React.ReactNode }) => {
@@ -65,10 +79,7 @@ const TogglePortal = ({ children }: { children: React.ReactNode }) => {
   return (
     isOpen &&
     ReactDom.createPortal(
-      <div
-        onClick={() => setIsOpen(false)}
-        className="absolute h-screen w-screen"
-      >
+      <div onClick={() => setIsOpen(false)} className="absolute inset-0">
         {children}
       </div>,
       globalThis.document?.body,
