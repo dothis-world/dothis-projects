@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import Calendar from './Calendar';
+import PopperProvider from './PopperProvider';
 import ToggleProvider from './ToggleProvider';
 
 const CalendarContainer = () => {
@@ -30,36 +31,44 @@ const CalendarContainer = () => {
   return (
     <div className="flex flex-col">
       <ToggleProvider>
-        <ToggleProvider.Trigger>
-          <button>여기 클릭해주세요</button>
-        </ToggleProvider.Trigger>
-        <ToggleProvider.Portal>
-          <ToggleProvider.Content>
-            <Calendar
-              calendarbaseDate={dayjs().format('YYYY-MM-DD')}
-              selectedDate={selectedUploadDate.format('YYYY-MM-DD')}
-              setSelectedDate={handleSetSelectedUploadDate}
-              isInvalidate={isInvalidStartDate}
-            />
-          </ToggleProvider.Content>
-        </ToggleProvider.Portal>
+        <PopperProvider align="center" side="bottom" isArrow arrowColor="red">
+          <ToggleProvider.Trigger>
+            <button>여기 클릭해주세요</button>
+          </ToggleProvider.Trigger>
+
+          <ToggleProvider.Portal>
+            <ToggleProvider.Content>
+              <Calendar
+                calendarbaseDate={dayjs().format('YYYY-MM-DD')}
+                selectedDate={selectedUploadDate.format('YYYY-MM-DD')}
+                setSelectedDate={handleSetSelectedUploadDate}
+                isInvalidate={isInvalidStartDate}
+              />
+            </ToggleProvider.Content>
+          </ToggleProvider.Portal>
+        </PopperProvider>
       </ToggleProvider>
+
       <ToggleProvider>
-        <ToggleProvider.Trigger>
-          <button>여기 클릭해주세요</button>
-        </ToggleProvider.Trigger>
-        <ToggleProvider.Content>
-          <Calendar
-            calendarbaseDate={selectedUploadDate.format('YYYY-MM-DD')}
-            selectedDate={
-              selectedExpectedDate
-                ? selectedExpectedDate.format('YYYY-MM-DD')
-                : selectedExpectedDate
-            }
-            setSelectedDate={handleSetSelectedExpectedDate}
-            isInvalidate={isInvalidEndDate}
-          />
-        </ToggleProvider.Content>
+        <PopperProvider align="center" side="bottom" isArrow arrowColor="blue">
+          <ToggleProvider.Trigger>
+            <button>여기 클릭해주세요</button>
+          </ToggleProvider.Trigger>
+          <ToggleProvider.Portal>
+            <ToggleProvider.Content>
+              <Calendar
+                calendarbaseDate={selectedUploadDate.format('YYYY-MM-DD')}
+                selectedDate={
+                  selectedExpectedDate
+                    ? selectedExpectedDate.format('YYYY-MM-DD')
+                    : selectedExpectedDate
+                }
+                setSelectedDate={handleSetSelectedExpectedDate}
+                isInvalidate={isInvalidEndDate}
+              />
+            </ToggleProvider.Content>
+          </ToggleProvider.Portal>
+        </PopperProvider>
       </ToggleProvider>
     </div>
   );
