@@ -5,7 +5,7 @@ import '@/styles/global.css';
 
 import clsx from 'clsx';
 import type { Metadata } from 'next';
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
 import Analytics from '@/components/Analytics';
