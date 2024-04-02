@@ -98,8 +98,6 @@ const PopperProvider = ({
 
 export default PopperProvider;
 
-const PopperArrow = () => {};
-
 const SIDE_OPTIONS = ['top', 'right', 'bottom', 'left'] as const;
 
 const ALIGN_OPTIONS = ['start', 'center', 'end'] as const;
@@ -117,7 +115,7 @@ type PopperContentContextValue = {
   shouldHideArrow: boolean;
 };
 
-export const Arrow = React.forwardRef<
+export const PopperArrow = React.forwardRef<
   HTMLSpanElement,
   PopperContentContextValue
 >(({ placedSide, arrowX, arrowY, shouldHideArrow, color }, ref) => {
@@ -152,12 +150,12 @@ export const Arrow = React.forwardRef<
         // visibility: shouldHideArrow ? 'hidden' : undefined,
       }}
     >
-      <ArrowTest color={color} />
+      <Arrow color={color} />
     </span>
   );
 });
 
-const ArrowTest = ({ color }: { color: string }) => {
+const Arrow = ({ color }: { color: string }) => {
   return (
     <svg
       width={10}

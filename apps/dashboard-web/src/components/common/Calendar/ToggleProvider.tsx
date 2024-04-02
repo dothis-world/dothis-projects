@@ -2,7 +2,7 @@ import type { ReactElement } from 'react';
 import React, { createContext, useContext, useState } from 'react';
 import ReactDom from 'react-dom';
 
-import { Arrow, usePopperContext } from './PopperProvider';
+import { PopperArrow, usePopperContext } from './PopperProvider';
 
 interface ToggleState {
   isOpen: boolean;
@@ -67,7 +67,7 @@ const ToggleContent = ({ children }: { children: React.ReactNode }) => {
   return (
     // children의 ref가 필요로 할 수도 있어서 제일 만만한 span태그에 주입을 시켰습니다.
     <span ref={setFloating} style={{ ...floatingStyles }}>
-      <Arrow ref={arrowRef} {...arrowProps} />
+      <PopperArrow ref={arrowRef} {...arrowProps} />
       {isOpen && children}
     </span>
   );
