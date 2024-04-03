@@ -13,6 +13,8 @@ interface SceneProps {
 type StoryBoardSceneField = 'description' | 'video' | 'audio';
 export type StoryBoardSceneFieldValues = Record<StoryBoardSceneField, string>;
 
+const ICON_MENU = '/icons/hamberger-menu.svg';
+
 const SceneListItem = ({ sceneNumber, sceneId, defaultValues }: SceneProps) => {
   const pathname = usePathname();
 
@@ -24,6 +26,7 @@ const SceneListItem = ({ sceneNumber, sceneId, defaultValues }: SceneProps) => {
       )}
     >
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
+        <img className="h-full" src={ICON_MENU} />
         <input className="absoulte" type="checkbox" />
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
