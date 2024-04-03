@@ -58,7 +58,10 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
           <p className="text-pink">파일 추가</p>
         </>
       ) : (
-        <SceneList />
+        <div className="flex flex-col items-center gap-[50px]">
+          <SceneControls />
+          <SceneList />
+        </div>
       )}
     </>
   );
