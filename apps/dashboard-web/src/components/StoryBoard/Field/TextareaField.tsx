@@ -12,7 +12,7 @@ const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
       <>
         <div
           className="grid "
-          style={{ gridTemplateColumns: label ? '5% 95%' : '100%' }}
+          style={{ gridTemplateColumns: label ? '8% 92%' : '100%' }}
         >
           {label && (
             <label

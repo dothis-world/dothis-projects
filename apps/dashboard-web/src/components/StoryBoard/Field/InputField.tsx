@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { InputHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 
@@ -17,7 +18,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       <>
         <div
           className="grid items-center"
-          style={{ gridTemplateColumns: label ? '5% 95%' : '100%' }}
+          style={{ gridTemplateColumns: label ? '8% 92%' : '100%' }}
         >
           {label && (
             <label
@@ -31,9 +32,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             <input
               id="input"
               type={type}
-              className={`border-grey400 bg-grey00 text-grey900 placeholder:text-grey500 focus:border-primary500 disabled:bg-grey200 rounded-lg border border-solid px-6 py-3 text-[${textSize}px] focus:outline-none disabled:cursor-not-allowed ${
-                bold ? 'font-bold' : ' '
-              }`}
+              className={clsx(
+                'border-grey400 bg-grey00 text-grey900 placeholder:text-grey500 focus:border-primary500 disabled:bg-grey200 rounded-lg border px-6 py-3 focus:outline-none disabled:cursor-not-allowed ',
+                `text-[${textSize}px]`,
+                bold && 'font-bold',
+              )}
               ref={ref}
               {...props}
             />
