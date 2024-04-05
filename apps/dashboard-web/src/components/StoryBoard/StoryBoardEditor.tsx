@@ -7,6 +7,7 @@ import type {
 } from '@/constants/schema/storyboard';
 import useGetStoryBoard from '@/hooks/react-query/query/useGetStoryBoard';
 
+import FileField from './Field/FileField';
 import OverviewForm from './Form/OverviewForm';
 import SummaryForm from './Form/SummaryForm';
 import SearchParamNav from './Nav/SearchParamNav';
@@ -53,7 +54,7 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
             storyBoardId={storyBoardId}
             defaultValues={overviewValues}
           />
-          <p className="text-pink">파일 추가</p>
+          <FileField />
         </>
       ) : (
         <p className="text-pink">씬 리스트</p>
