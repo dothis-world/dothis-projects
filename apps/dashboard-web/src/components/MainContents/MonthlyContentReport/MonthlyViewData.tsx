@@ -50,7 +50,9 @@ const MonthlyViewData = ({ currentTab }: Props) => {
 
   // const isLoading = isViewLoading || isVideoLoading || isWordLoading;
 
-  const clusterData: number[] = data && JSON.parse(data.cluster);
+  const clusterData: number[] =
+    (data && data.cluster.match(/\d+/g)?.map((item) => parseInt(item), 10)) ||
+    [];
 
   const categoryViewData = viewData.map((item, idx) => {
     const result = (item ?? []).reduce(
