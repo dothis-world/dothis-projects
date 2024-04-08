@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { OAuthProviderType } from 'next-auth/providers';
 import { signIn, signOut, useSession } from 'next-auth/react';
@@ -21,7 +22,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div>
       {/* <CalendarContainer /> */}
       {/* <nav className="flex items-center justify-between px-6"> */}
       <ul className="flex items-center gap-4 p-4">
@@ -41,8 +42,19 @@ const Page = () => {
           </button>
         )}
       </ul>
+
       {/* </nav> */}
-    </>
+
+      <div className="m-5">
+        인스타 이미지 로드 확인
+        <Image
+          src="https://www.instagram.com/p/C0B3KxCrSs2/media?size=l"
+          alt="이미지"
+          width={150}
+          height={150}
+        />
+      </div>
+    </div>
   );
 };
 
