@@ -21,13 +21,7 @@ const useGetVideoData = (
   },
   queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideoPageV1>,
 ) => {
-  const { data } = useGetRelWords(keyword);
-
-  let clusters: string[] = [];
-
-  if (data && data.cluster) {
-    clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
-  }
+  const { data, clusters } = useGetRelWords(keyword);
 
   const queryResults = apiClient(1).video.getVideoPageV1.useQueries({
     queries: clusters.map((clusterNumber) => {

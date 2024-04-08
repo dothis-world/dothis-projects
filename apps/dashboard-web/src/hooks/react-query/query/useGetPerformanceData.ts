@@ -28,13 +28,7 @@ const useGetPerformanceData = (
 
   const endDate = useEndDate();
 
-  const { data } = useGetRelWords(keyword);
-
-  let clusters: string[] = [];
-
-  if (data && data.cluster) {
-    clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
-  }
+  const { data, clusters } = useGetRelWords(keyword);
 
   const queryResult = apiClient(1).hits.getExpectedViews.useQuery(
     EXPECTEDVIEW_KEY.list([

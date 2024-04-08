@@ -28,13 +28,7 @@ const useGetDailyView = (
 
   const endDate = useEndDate();
 
-  const { data } = useGetRelWords(keyword);
-
-  let clusters: string[] = [];
-
-  if (data && data.cluster) {
-    clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
-  }
+  const { data, clusters } = useGetRelWords(keyword);
 
   const queryResults = apiClient(1).hits.getDailyViewsV1.useQueries({
     queries: clusters.map((clusterNumber) => {
