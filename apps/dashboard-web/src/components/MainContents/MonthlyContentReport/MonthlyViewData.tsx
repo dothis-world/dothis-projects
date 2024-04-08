@@ -123,7 +123,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
           ? clustersCategories[
               clusterData[idx] as keyof typeof clustersCategories
             ]
-          : '없음',
+          : '카테고리없음',
     };
   });
 
@@ -136,7 +136,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
           ? clustersCategories[
               clusterData[idx] as keyof typeof clustersCategories
             ]
-          : '없음',
+          : '카테고리없음',
     };
   });
 
@@ -160,7 +160,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
             ? clustersCategories[
                 clusterData[idx] as keyof typeof clustersCategories
               ]
-            : '없음',
+            : '카테고리없음',
       };
     },
   );
