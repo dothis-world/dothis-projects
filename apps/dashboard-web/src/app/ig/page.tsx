@@ -1,30 +1,21 @@
 'use client';
 
-import axios from 'axios';
+import Image from 'next/image';
 import React, { useEffect } from 'react';
-const token =
-  'IGQWRNZAXNBX244dUdyd2t6SmhGSTdaTl8tVVdRb0FYNWlXLXYwdGVUTkVxR3ZAicW8tcVo2T1hFT2JxZAEFYQ0V2TnhfZA2pud1NURllFTm85dDlkTHEtTE01TGdNc3JwMlEwb2FoQkR0cWk2NXJOMFJiMmFZAN0I5SFUZD';
 
-const token2 =
-  'IGQWRQZAHRtUVFiRDdBcXZASY1dfVENmbEJKMG50TjRvN045ZAjRfWUxaYjZAIY2xXdlVMN3h2QlB6ZA29VN1daMDMtSWlUMWh3dEFHRWZA6ei05SWVKcE0yb3R4bUpxWUp1eHFKUWpCdmw1dHRKd3A1TFFHRWY5aTNzNjAZD';
 const Page = () => {
-  useEffect(() => {
-    async function sendRequest() {
-      const response = await axios.post('http://localhost:3666/api/test');
-      console.log(response);
-    }
-    sendRequest();
+  return (
+    <div>
+      <p>xp</p>
 
-    async function test() {
-      const data = await axios.get(
-        `https://graph.instagram.com/me?fields=id,name,username&access_token=${token2}`,
-      );
-      console.log(data);
-    }
-
-    test();
-  }, []);
-  return <div>테스트</div>;
+      <Image
+        src="https://www.instagram.com/p/C0B3KxCrSs2/media?size=l"
+        alt="이미지"
+        width={150}
+        height={150}
+      />
+    </div>
+  );
 };
 // `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url&access_token=${token}`,
 //  `https://graph.instagram.com/me??fields=id&access_token=${token}`,
