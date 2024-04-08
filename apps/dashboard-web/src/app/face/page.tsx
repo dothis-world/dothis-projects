@@ -23,16 +23,25 @@ const Page = () => {
   return (
     <>
       {/* <CalendarContainer /> */}
-      // {/* <nav className="flex items-center justify-between px-6"> */}
+      {/* <nav className="flex items-center justify-between px-6"> */}
       <ul className="flex items-center gap-4 p-4">
         {session ? ( //세션 정보가 있으면 signOut()호출
           <button onClick={() => signOut()}>ddd</button>
         ) : (
           //세션 정보가 없으면 signIn()호출
-          <button onClick={() => hanldeLoginButton('facebook')}>test</button>
+          <button
+            onClick={async () =>
+              await signIn('facebook', {
+                callbackUrl: `${window.location.origin}`,
+              })
+            }
+            className="border p-8"
+          >
+            페이스북 로그인t
+          </button>
         )}
       </ul>
-      // {/* </nav> */}
+      {/* </nav> */}
     </>
   );
 };
