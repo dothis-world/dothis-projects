@@ -26,7 +26,7 @@ const useGetVideoData = (
   let clusters: string[] = [];
 
   if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
+    clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
   }
 
   const queryResults = apiClient(1).video.getVideoPageV1.useQueries({

@@ -29,7 +29,7 @@ const useGetVideoPagination = (
   let clusters: string[] = [];
 
   if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
+    clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
   }
 
   const queryResults = apiClient(2).video.getVideoPageV2.useQuery(

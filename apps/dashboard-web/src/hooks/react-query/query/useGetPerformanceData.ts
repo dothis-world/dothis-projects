@@ -33,7 +33,7 @@ const useGetPerformanceData = (
   let clusters: string[] = [];
 
   if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
+    clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
   }
 
   const queryResult = apiClient(1).hits.getExpectedViews.useQuery(
