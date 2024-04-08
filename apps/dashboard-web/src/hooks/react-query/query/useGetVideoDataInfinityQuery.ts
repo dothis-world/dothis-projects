@@ -30,7 +30,9 @@ const useGetVideoDataInfinityQuery = (
   lastIndex_ID?: string,
   queryOptions?: UseInfiniteQueryOptions<typeof apiRouter.video.getVideoPageV1>,
 ) => {
-  const { data, clusters } = useGetRelWords(keyword);
+  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
+
+  const clusters = getRelatedClusterArray();
 
   const queryResults = apiClient(1).video.getVideoPageV1.useInfiniteQuery(
     VIDEODATA_KEY.list([

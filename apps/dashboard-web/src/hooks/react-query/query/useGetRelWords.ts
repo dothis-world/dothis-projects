@@ -21,8 +21,6 @@ const useGetRelWords = (
   keyword: string | null,
   queryOptions?: UseQueryOptions<typeof apiRouter.relatedWords.getRelWords>,
 ) => {
-  let clusters: string[] = [];
-
   const { isLoading } = useGetUserInfo();
 
   const queryResult = apiClient(1).relatedWords.getRelWords.useQuery(
@@ -40,14 +38,18 @@ const useGetRelWords = (
 
   const data = requiredQueryResult?.body.data;
 
-  if (data && data.cluster) {
-    clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
-  }
-
   return {
     ...queryResult,
     data,
-    clusters,
+    getRelatedClusterArray: () => {
+      let clusters: string[] = [];
+
+      if (data && data.cluster) {
+        clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
+      }
+
+      return clusters;
+    },
   };
 };
 export default useGetRelWords;

@@ -24,7 +24,9 @@ const useGetVideoPagination = (
   lastIndex_ID?: string,
   queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideoPageV2>,
 ) => {
-  const { data, clusters } = useGetRelWords(keyword);
+  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
+
+  const clusters = getRelatedClusterArray();
 
   const queryResults = apiClient(2).video.getVideoPageV2.useQuery(
     VIDEODATA_KEY.list([
