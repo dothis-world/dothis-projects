@@ -48,7 +48,7 @@ const useGetRelWords = (
         clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
       }
 
-      return clusters;
+      return clusters.slice(0, 5);
     },
   };
 };
