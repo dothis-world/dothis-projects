@@ -4,6 +4,9 @@ import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
 
 const handler = NextAuth({
+  pages: {
+    signIn: '/face',
+  },
   providers: [
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID || '',
