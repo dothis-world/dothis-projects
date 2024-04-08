@@ -1,7 +1,7 @@
 'use client';
 
 import PopperProvider from './PopperProvider';
-import ToggleProvider from './ToggleProvider';
+import ToggleProvider from './TestProvider';
 
 const CounterTest = () => {
   // Dialog Context생성
@@ -13,19 +13,18 @@ const CounterTest = () => {
       <ToggleProvider>
         <AnotherDialog>
           <ToggleProvider.Trigger>
-            <button>여기 클릭해주세요</button>
+            <button>동일한 프로바이더1 Trigger</button>
           </ToggleProvider.Trigger>
           <AnotherDialog.Trigger>
-            <div>안녕</div>
+            <button>동일한 프로바이더2 Trigger</button>
           </AnotherDialog.Trigger>
           <AnotherDialog.Content>
             이거는 테스트 프로바이더
           </AnotherDialog.Content>
-          <ToggleProvider.Portal>
-            <ToggleProvider.Content>
-              <p>안녕</p>
-            </ToggleProvider.Content>
-          </ToggleProvider.Portal>
+
+          <ToggleProvider.Content>
+            <p>안녕</p>
+          </ToggleProvider.Content>
         </AnotherDialog>
       </ToggleProvider>
     </div>
