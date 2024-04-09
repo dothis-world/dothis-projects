@@ -10,24 +10,18 @@ interface SceneProps {
   sceneNumber: number;
   sceneId: string;
   defaultValues: StoryBoardSceneFieldValues;
-  handleDragStart?: () => void;
 }
 
 type StoryBoardSceneField = 'description' | 'video' | 'audio';
 export type StoryBoardSceneFieldValues = Record<StoryBoardSceneField, string>;
 
-const SceneListItem = ({
-  sceneNumber,
-  sceneId,
-  defaultValues,
-  handleDragStart,
-}: SceneProps) => {
+const SceneListItem = ({ sceneNumber, sceneId, defaultValues }: SceneProps) => {
   const pathname = usePathname();
   const dragDivRef = useRef<HTMLDivElement>(null);
   return (
     <div className="flex w-full flex-col p-5" ref={dragDivRef}>
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
-        <DragHandle dragDivRef={dragDivRef} handleDragStart={handleDragStart} />
+        <DragHandle index={sceneNumber} dragDivRef={dragDivRef} />
         <input className="absoulte" type="checkbox" />
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
