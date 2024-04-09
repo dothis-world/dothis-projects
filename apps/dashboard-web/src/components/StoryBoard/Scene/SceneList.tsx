@@ -3,6 +3,7 @@
 import React from 'react';
 
 import Draggable from '@/components/common/Dnd/Draggable';
+import DraggableContextProvider from '@/components/common/Dnd/DraggableContext';
 
 import SceneListItem from './SceneListItem';
 
@@ -26,27 +27,29 @@ const SceneList = ({
   };
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex w-full items-center gap-[50px] px-[10px] pt-[20px] text-center font-bold text-black">
-        <div className="bg-grey100 grow p-2">Content</div>
-        <div className="bg-grey100 grow p-2">Vedio</div>
-        <div className="bg-grey100 grow p-2">Audio</div>
+    <DraggableContextProvider>
+      <div className="flex w-full flex-col">
+        <div className="flex w-full items-center gap-[50px] px-[10px] pt-[20px] text-center font-bold text-black">
+          <div className="bg-grey100 grow p-2">Content</div>
+          <div className="bg-grey100 grow p-2">Vedio</div>
+          <div className="bg-grey100 grow p-2">Audio</div>
+        </div>
+        <Draggable className="px-[10px]" handle>
+          {exData &&
+            Object.entries(exData).map(([k, v], i) => (
+              <SceneListItem
+                sceneNumber={i + 1}
+                sceneId={k}
+                defaultValues={v}
+                key={k}
+                isEditing={isEditing}
+                checkedItems={checkedItems}
+                toggleChecked={toggleChecked}
+              />
+            ))}
+        </Draggable>
       </div>
-      <Draggable className="px-[10px]" handle>
-        {exData &&
-          Object.entries(exData).map(([k, v], i) => (
-            <SceneListItem
-              sceneNumber={i + 1}
-              sceneId={k}
-              defaultValues={v}
-              key={k}
-              isEditing={isEditing}
-              checkedItems={checkedItems}
-              toggleChecked={toggleChecked}
-            />
-          ))}
-      </Draggable>
-    </div>
+    </DraggableContextProvider>
   );
 };
 

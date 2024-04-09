@@ -1,11 +1,14 @@
+import { useDraggableContext } from './DraggableContext';
+
 interface DragHandleProps {
+  index: number;
   dragDivRef?: React.RefObject<HTMLDivElement>;
-  handleDragStart?: () => void;
 }
 
 const ICON_MENU = '/icons/hamberger-menu.svg';
 
-const DragHandle = ({ handleDragStart, dragDivRef }: DragHandleProps) => {
+const DragHandle = ({ index, dragDivRef }: DragHandleProps) => {
+  const { handleDragStart } = useDraggableContext('DragHandle');
   return (
     <div
       className="h-full cursor-move hover:opacity-80"
@@ -14,7 +17,7 @@ const DragHandle = ({ handleDragStart, dragDivRef }: DragHandleProps) => {
         if (dragDivRef?.current) {
           event.dataTransfer.setDragImage(dragDivRef.current, 0, 0);
         }
-        handleDragStart?.();
+        handleDragStart(index);
       }}
     >
       <img className="h-full cursor-move" src={ICON_MENU} />
