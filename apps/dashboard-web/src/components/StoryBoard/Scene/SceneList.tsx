@@ -8,9 +8,15 @@ import SceneListItem from './SceneListItem';
 
 interface SceneListProps {
   isEditing: boolean;
+  checkedItems: { [key: string]: boolean };
+  toggleChecked: (id: string) => void;
 }
 
-const SceneList = ({ isEditing }: SceneListProps) => {
+const SceneList = ({
+  isEditing,
+  checkedItems,
+  toggleChecked,
+}: SceneListProps) => {
   const exData = {
     1: { description: '설명1', video: '비디오1', audio: '오디오1' },
     2: { description: '설명2', video: '비디오2', audio: '오디오2' },
@@ -35,6 +41,8 @@ const SceneList = ({ isEditing }: SceneListProps) => {
               defaultValues={v}
               key={k}
               isEditing={isEditing}
+              checkedItems={checkedItems}
+              toggleChecked={toggleChecked}
             />
           ))}
       </Draggable>

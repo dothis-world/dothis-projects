@@ -2,10 +2,13 @@ import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
 interface SceneControlsProps {
   toggleEdit: () => void;
+  getCheckedSceneIds: () => void;
 }
 // TODO: 씬 추가, 삭제 버튼 design
-const SceneControls = ({ toggleEdit }: SceneControlsProps) => {
-  // 씬 삭제
+const SceneControls = ({
+  toggleEdit,
+  getCheckedSceneIds,
+}: SceneControlsProps) => {
   // 씬 순서 변경
   const addScene = () => {
     const pageRef = document.querySelector('#storyboard-detail-page');
@@ -15,6 +18,12 @@ const SceneControls = ({ toggleEdit }: SceneControlsProps) => {
   const createScene = () => {
     // TODO: mutate
     addScene();
+  };
+
+  const deleteScene = () => {
+    const checkedKeys = getCheckedSceneIds();
+    console.log('getCheckedSceneIds:', checkedKeys);
+    // TODO: mutate
   };
 
   return (
@@ -38,6 +47,7 @@ const SceneControls = ({ toggleEdit }: SceneControlsProps) => {
           className=" bg-grey700 border-grey500 rounded-8 border-[1px] border-solid px-6 py-2 text-white focus:outline-none"
           size="L"
           theme="outlined"
+          onClick={deleteScene}
         >
           씬 삭제
         </Button>

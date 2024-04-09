@@ -12,6 +12,8 @@ interface SceneListItemProps {
   defaultValues: StoryBoardSceneFieldValues;
   handleDragStart?: () => void;
   isEditing: boolean;
+  checkedItems: { [key: string]: boolean };
+  toggleChecked: (id: string) => void;
 }
 
 type StoryBoardSceneField = 'description' | 'video' | 'audio';
@@ -23,6 +25,8 @@ const SceneListItem = ({
   defaultValues,
   handleDragStart,
   isEditing,
+  checkedItems,
+  toggleChecked,
 }: SceneListItemProps) => {
   const pathname = usePathname();
   const dragDivRef = useRef<HTMLDivElement>(null);
@@ -36,7 +40,12 @@ const SceneListItem = ({
             handleDragStart={handleDragStart}
           />
         )}
-        <input className="absoulte" type="checkbox" />
+        <input
+          className="absoulte"
+          type="checkbox"
+          checked={checkedItems[sceneId]}
+          onChange={() => toggleChecked(sceneId)}
+        />
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
         </p>
