@@ -6,6 +6,8 @@ import { useRef } from 'react';
 
 import DragHandle from '@/components/common/Dnd/DragHandle';
 
+import { useSceneContext } from './SceneContext';
+
 interface SceneProps {
   sceneNumber: number;
   sceneId: string;
@@ -24,10 +26,16 @@ const SceneListItem = ({
 }: SceneProps) => {
   const pathname = usePathname();
   const dragDivRef = useRef<HTMLDivElement>(null);
+  const { isEditing } = useSceneContext('SceneList');
   return (
     <div className="flex w-full flex-col p-5" ref={dragDivRef}>
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
-        <DragHandle dragDivRef={dragDivRef} handleDragStart={handleDragStart} />
+        {isEditing && (
+          <DragHandle
+            dragDivRef={dragDivRef}
+            handleDragStart={handleDragStart}
+          />
+        )}
         <input className="absoulte" type="checkbox" />
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
