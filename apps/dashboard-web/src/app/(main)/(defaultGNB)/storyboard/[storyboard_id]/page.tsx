@@ -9,7 +9,10 @@ const StoryboardDetailPage = ({
   params: { storyboard_id: string };
 }) => {
   return (
-    <div className="flex w-full flex-col items-stretch gap-[10px] text-black">
+    <div
+      className="no-scrollbar flex h-screen w-full flex-col items-stretch gap-[10px] overflow-y-auto text-black"
+      id="storyboard-detail-page"
+    >
       <StoryBoardHeader button="export" />
       <StoryBoardEditor storyBoardId={storyboard_id} />
     </div>
