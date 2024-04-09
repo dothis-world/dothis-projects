@@ -67,6 +67,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.550.0",
     "@babel/core": "^7.21.0",
     "@svgr/webpack": "^6.5.1",
     "@types/node": "^18.14.2",
@@ -76,6 +77,7 @@
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.13",
     "aws-cdk-lib": "2.84.0",
+    "aws-sdk": "^2.1360.0",
     "constructs": "10.1.156",
     "cross-env": "^7.0.3",
     "cssnano": "^6.0.1",
