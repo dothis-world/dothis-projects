@@ -1,6 +1,6 @@
 'use client';
 
-// import Draggable from '@/components/common/Draggable/Draggable';
+import Draggable from '@/components/common/Dnd/Draggable';
 
 import SceneListItem from './SceneListItem';
 
@@ -23,17 +23,17 @@ const SceneList = () => {
         <div className="bg-grey100 grow p-2">Vedio</div>
         <div className="bg-grey100 grow p-2">Audio</div>
       </div>
-      {/* <Draggable className="px-[10px]"> */}
-      {exData &&
-        Object.entries(exData).map(([k, v], i) => (
-          <SceneListItem
-            sceneNumber={i + 1}
-            sceneId={k}
-            defaultValues={v}
-            key={k}
-          />
-        ))}
-      {/* </Draggable> */}
+      <Draggable className="px-[10px]" handle>
+        {exData &&
+          Object.entries(exData).map(([k, v], i) => (
+            <SceneListItem
+              sceneNumber={i + 1}
+              sceneId={k}
+              defaultValues={v}
+              key={k}
+            />
+          ))}
+      </Draggable>
     </div>
   );
 };

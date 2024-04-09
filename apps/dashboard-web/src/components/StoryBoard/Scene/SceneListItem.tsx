@@ -3,30 +3,38 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRef } from 'react';
+
+import DragHandle from '@/components/common/Dnd/DragHandle';
 
 interface SceneProps {
   sceneNumber: number;
   sceneId: string;
   defaultValues: StoryBoardSceneFieldValues;
+  handleDragStart?: () => void;
 }
 
 type StoryBoardSceneField = 'description' | 'video' | 'audio';
 export type StoryBoardSceneFieldValues = Record<StoryBoardSceneField, string>;
 
-const ICON_MENU = '/icons/hamberger-menu.svg';
-
-const SceneListItem = ({ sceneNumber, sceneId, defaultValues }: SceneProps) => {
+const SceneListItem = ({
+  sceneNumber,
+  sceneId,
+  defaultValues,
+  handleDragStart,
+}: SceneProps) => {
   const pathname = usePathname();
-
+  const dragDivRef = useRef<HTMLDivElement>(null);
   return (
     <div
       className={clsx(
         'flex w-full flex-col p-5',
         sceneNumber % 2 ? '' : 'bg-grey200',
       )}
+      ref={dragDivRef}
     >
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
-        <img className="h-full" src={ICON_MENU} />
+        <DragHandle dragDivRef={dragDivRef} handleDragStart={handleDragStart} />
         <input className="absoulte" type="checkbox" />
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
