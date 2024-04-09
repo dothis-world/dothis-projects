@@ -5,6 +5,7 @@ const SceneControls = () => {
   // 씬 추가
   // 씬 삭제
   // 씬 순서 변경
+
   return (
     <div className="flex w-full gap-[24px] px-[10px] py-[30px] text-base">
       <div className="inline-flex grow gap-[20px]">

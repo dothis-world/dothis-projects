@@ -6,7 +6,7 @@ import { useRef } from 'react';
 
 import DragHandle from '@/components/common/Dnd/DragHandle';
 
-interface SceneProps {
+interface SceneListItemProps {
   sceneNumber: number;
   sceneId: string;
   defaultValues: StoryBoardSceneFieldValues;
@@ -21,9 +21,10 @@ const SceneListItem = ({
   sceneId,
   defaultValues,
   handleDragStart,
-}: SceneProps) => {
+}: SceneListItemProps) => {
   const pathname = usePathname();
   const dragDivRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="flex w-full flex-col p-5" ref={dragDivRef}>
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
