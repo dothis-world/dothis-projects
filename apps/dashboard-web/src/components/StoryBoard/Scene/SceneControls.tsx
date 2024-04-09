@@ -1,5 +1,8 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
+import ConfirmModal from '@/components/common/Modal/ModalContent/ConfirmModal';
+import { useModalActions } from '@/store/modalStore';
+
 interface SceneControlsProps {
   toggleEdit: () => void;
   getCheckedSceneIds: () => void;
@@ -9,6 +12,8 @@ const SceneControls = ({
   toggleEdit,
   getCheckedSceneIds,
 }: SceneControlsProps) => {
+  const { setModalOpen, setModalContent } = useModalActions();
+
   // 씬 순서 변경
   const addScene = () => {
     const pageRef = document.querySelector('#storyboard-detail-page');
@@ -24,6 +29,13 @@ const SceneControls = ({
     const checkedKeys = getCheckedSceneIds();
     console.log('getCheckedSceneIds:', checkedKeys);
     // TODO: mutate
+    setModalContent(
+      <ConfirmModal
+        message={`선택한 씬 스토리보드를 삭제하시겠습니까?\u000A삭제된 씬 스토리보드는 복구되지 않습니다.`}
+        callback={() => console.log('confirmed! mutate~')}
+      />,
+    );
+    setModalOpen(true);
   };
 
   return (
