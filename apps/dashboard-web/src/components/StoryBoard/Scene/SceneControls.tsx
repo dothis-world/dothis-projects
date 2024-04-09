@@ -4,10 +4,14 @@ import { useSceneContext } from './SceneContext';
 
 // TODO: 씬 추가, 삭제 버튼 design
 const SceneControls = () => {
-  // 씬 추가
   // 씬 삭제
   // 씬 순서 변경
-  const { toggleEdit } = useSceneContext('SceneControls');
+  const { toggleEdit, addScene } = useSceneContext('SceneControls');
+
+  const createScene = () => {
+    // TODO: mutate
+    addScene();
+  };
 
   return (
     <div className="flex w-full gap-[24px] px-[10px] py-[30px] text-base">
@@ -19,6 +23,7 @@ const SceneControls = () => {
           className=" text-primary500 bg-primary50 border-primary500 rounded-8 border-[1px] border-solid px-4 py-2 focus:outline-none"
           size="L"
           theme="outlined"
+          onClick={createScene}
         >
           + New Scene
         </Button>

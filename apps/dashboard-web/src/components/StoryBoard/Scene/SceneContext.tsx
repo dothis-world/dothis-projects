@@ -1,8 +1,10 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 
 interface SceneState {
   isEditing: boolean;
   toggleEdit: () => void;
+  scrollRef: React.RefObject<HTMLDivElement>;
+  addScene: () => void;
 }
 
 const SceneContext = createContext<SceneState | null>(null);
@@ -27,8 +29,15 @@ const SceneContextProvider = ({ children }: SceneContextProviderProps) => {
     setIsEditing((prevState) => !prevState);
   };
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const addScene = () => {
+    scrollRef.current?.scrollTo({ top: 10000, behavior: 'smooth' });
+  };
+
   return (
-    <SceneContext.Provider value={{ isEditing, toggleEdit }}>
+    <SceneContext.Provider
+      value={{ isEditing, toggleEdit, scrollRef, addScene }}
+    >
       {children}
     </SceneContext.Provider>
   );

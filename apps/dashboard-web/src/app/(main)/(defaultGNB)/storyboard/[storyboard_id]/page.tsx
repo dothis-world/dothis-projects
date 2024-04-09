@@ -9,7 +9,7 @@ const StoryboardDetailPage = ({
   params: { storyboard_id: string };
 }) => {
   return (
-    <div className="flex w-full flex-col items-stretch gap-[10px] text-black">
+    <div className="flex h-screen w-full flex-col items-stretch gap-[10px] text-black">
       <StoryBoardHeader button="export" />
       <StoryBoardEditor storyBoardId={storyboard_id} />
     </div>

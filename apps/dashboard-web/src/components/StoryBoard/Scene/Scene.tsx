@@ -5,7 +5,7 @@ import SceneList from './SceneList';
 const Scene = () => {
   return (
     <SceneContextProvider>
-      <div className="flex flex-col items-center gap-[50px]">
+      <div className="no-scrollbar flex h-full flex-col items-center overflow-y-auto">
         <SceneControls />
         <SceneList />
       </div>
