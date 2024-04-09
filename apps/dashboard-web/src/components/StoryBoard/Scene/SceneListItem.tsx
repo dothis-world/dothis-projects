@@ -26,7 +26,8 @@ const SceneListItem = ({
 }: SceneProps) => {
   const pathname = usePathname();
   const dragDivRef = useRef<HTMLDivElement>(null);
-  const { isEditing } = useSceneContext('SceneList');
+  const { isEditing, checkedItems, toggleChecked } =
+    useSceneContext('SceneList');
   return (
     <div className="flex w-full flex-col p-5" ref={dragDivRef}>
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
@@ -36,7 +37,12 @@ const SceneListItem = ({
             handleDragStart={handleDragStart}
           />
         )}
-        <input className="absoulte" type="checkbox" />
+        <input
+          className="absoulte"
+          type="checkbox"
+          checked={checkedItems[sceneId]}
+          onChange={() => toggleChecked(sceneId)}
+        />
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
         </p>

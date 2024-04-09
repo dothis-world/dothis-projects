@@ -5,6 +5,9 @@ interface SceneState {
   toggleEdit: () => void;
   scrollRef: React.RefObject<HTMLDivElement>;
   addScene: () => void;
+  checkedItems: { [key: string]: boolean };
+  toggleChecked: (id: string) => void;
+  getCheckedSceneIds: () => void;
 }
 
 const SceneContext = createContext<SceneState | null>(null);
@@ -34,9 +37,30 @@ const SceneContextProvider = ({ children }: SceneContextProviderProps) => {
     scrollRef.current?.scrollTo({ top: 10000, behavior: 'smooth' });
   };
 
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
+    {},
+  );
+  const toggleChecked = (id: string) => {
+    setCheckedItems((prevCheckedItems) => ({
+      ...prevCheckedItems,
+      [id]: !prevCheckedItems[id],
+    }));
+  };
+  const getCheckedSceneIds = () => {
+    return Object.keys(checkedItems).filter((key) => checkedItems[key]);
+  };
+
   return (
     <SceneContext.Provider
-      value={{ isEditing, toggleEdit, scrollRef, addScene }}
+      value={{
+        isEditing,
+        toggleEdit,
+        scrollRef,
+        addScene,
+        checkedItems,
+        toggleChecked,
+        getCheckedSceneIds,
+      }}
     >
       {children}
     </SceneContext.Provider>
