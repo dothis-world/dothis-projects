@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal, render } from 'react-dom';
 
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useOnScreen from '@/hooks/useOnScreen';
 
 import { useStickyContainerContext } from './StickyContainerContext';
@@ -17,21 +18,25 @@ const StickyContainer = ({ className, children }: StickyContainerProps) => {
   // const { triggerRef, stickyDivRef } =
   //   useStickyContainerContext('stickyContainer');
   // const [sticky, setSticky] = useState<boolean>(false);
-  const triggerRef = useRef<HTMLDivElement>(null);
+  // const triggerRef = useRef<HTMLDivElement>(null);
   const { stickyDivRef } = useStickyContainerContext('stickyContainer');
 
-  const sticky = !useOnScreen(triggerRef);
+  // const sticky = !useOnScreen(triggerRef);
 
-  const render = () => (
-    <>
-      <div ref={triggerRef}></div>
-      <div className={className}>{children}</div>
-    </>
-  );
+  const [isSticky, setIsSticky] = useState(false);
 
-  return sticky && stickyDivRef.current
-    ? createPortal(render(), stickyDivRef.current)
-    : render();
+  const triggerRef = useIntersectionObserver(() => {
+    setIsSticky(true);
+  }, {});
+
+  return isSticky && stickyDivRef.current
+    ? createPortal(
+        <div className={className}>{children}</div>,
+        stickyDivRef.current,
+      )
+    : React.cloneElement(children as React.ReactElement, {
+        ref: triggerRef,
+      });
   if (!triggerRef.current) {
     return <>{children}</>;
   }
