@@ -23,4 +23,9 @@ export const OAUTH_DATA: OauthInterface[] = [
     title: 'YouTube 로그인',
     colorSchemeName: 'primary500',
   },
+  {
+    iconName: 'Facebook',
+    title: 'Facebook 로그인',
+    colorSchemeName: 'chip',
+  },
 ];

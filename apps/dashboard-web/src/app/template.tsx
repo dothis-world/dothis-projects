@@ -4,6 +4,7 @@ import './styles.css';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import { useSearchParams } from 'next/navigation';
+import { SessionProvider } from 'next-auth/react';
 
 import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import AuthProvider from '@/components/common/Provider/AuthProvider';
@@ -23,17 +24,21 @@ const RootTemplate = ({ children }: StrictPropsWithChildren) => {
   const { setModalOpen } = useModalActions();
 
   return (
-    <AuthProvider>
-      <Dialog.Root open={modal} onOpenChange={setModalOpen}>
-        {children}
+    <SessionProvider>
+      <AuthProvider>
+        <Dialog.Root open={modal} onOpenChange={setModalOpen}>
+          {children}
 
-        <Dialog.Portal>
-          <Dialog.Overlay className="DialogOverlay">
-            <Dialog.Content className="DialogContent">{content}</Dialog.Content>
-          </Dialog.Overlay>
-        </Dialog.Portal>
-      </Dialog.Root>
-    </AuthProvider>
+          <Dialog.Portal>
+            <Dialog.Overlay className="DialogOverlay">
+              <Dialog.Content className="DialogContent">
+                {content}
+              </Dialog.Content>
+            </Dialog.Overlay>
+          </Dialog.Portal>
+        </Dialog.Root>
+      </AuthProvider>
+    </SessionProvider>
   );
 };
 

@@ -11,6 +11,7 @@ export { default as KeywordLeftArrow } from './Keyword/KeywordLeftArrow.svg';
 export { default as KeywordReset } from './Keyword/KeywordReset.svg';
 export { default as KeywordRightArrow } from './Keyword/KeywordRightArrow.svg';
 export { default as LogoSvg } from './Login/dothisLogo.svg';
+export { default as Facebook } from './Login/Facebook.svg';
 export { default as GoogleSvg } from './Login/Google.svg';
 export { default as YoutubeSvg } from './Login/Youtube.svg';
 export { default as SideLogo } from './SideBar/SideLogo.svg';

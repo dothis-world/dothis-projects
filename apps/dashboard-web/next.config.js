@@ -13,7 +13,7 @@ const config = {
   // },
 
   images: {
-    domains: ['bigkinds.or.kr', 'img.youtube.com'],
+    domains: ['bigkinds.or.kr', 'img.youtube.com', 'www.instagram.com'],
   },
   transpilePackages: [
     '@dothis/share',
