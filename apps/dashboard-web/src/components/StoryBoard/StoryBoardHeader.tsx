@@ -10,7 +10,7 @@ interface Props {
 const StoryBoardHeader = ({ title = '', button }: Props) => {
   const router = useRouter();
   return (
-    <div className="inline-flex gap-[24px] p-[30px]">
+    <div className="inline-flex w-full gap-[24px] p-[30px]">
       <Back
         onClick={router.back}
         width={30}
