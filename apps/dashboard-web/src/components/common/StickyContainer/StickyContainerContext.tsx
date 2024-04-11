@@ -1,11 +1,14 @@
 'use client';
 
 import clsx from 'clsx';
-import React, { createContext, useContext, useRef } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
+
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 interface StickyContainerState {
   portalId: string;
-  triggerRef: React.RefObject<HTMLDivElement>;
+  sticky: boolean;
+  triggerRef: React.RefObject<HTMLElement>;
   stickyDivRef: React.RefObject<HTMLDivElement>;
 }
 
@@ -34,10 +37,14 @@ export const StickyContainerContextProvider = ({
 }: StickyContainerContextProviderProps) => {
   const triggerRef = useRef<HTMLDivElement>(null);
   const stickyDivRef = useRef<HTMLDivElement>(null);
+  const [sticky, setSticky] = useState<boolean>(false);
+  // const triggerRef = useIntersectionObserver(() => {
+  //   setSticky(true);
+  // });
 
   return (
     <StickyContainerContext.Provider
-      value={{ portalId, triggerRef, stickyDivRef }}
+      value={{ portalId, sticky, triggerRef, stickyDivRef }}
     >
       <div ref={triggerRef}></div>
       <div

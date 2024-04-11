@@ -13,6 +13,7 @@ interface StickyContainerProps {
 }
 
 const StickyContainer = ({ className, children }: StickyContainerProps) => {
+  // const { sticky, stickyDivRef } = useStickyContainerContext('stickyContainer');
   const { triggerRef, stickyDivRef } =
     useStickyContainerContext('stickyContainer');
 
