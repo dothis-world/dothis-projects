@@ -12,7 +12,10 @@ const StoryboardDetailPage = ({
 }) => {
   return (
     <div className="bg-grey00 flex h-screen w-full flex-col items-stretch gap-[10px] text-black">
-      <StickyContainerContextProvider portalId="storyboard-sticky-container">
+      <StickyContainerContextProvider
+        className="bg-grey00 z-10"
+        portalId="storyboard-sticky-container"
+      >
         <StickyContainer>
           <StoryBoardHeader button="export" />
         </StickyContainer>
