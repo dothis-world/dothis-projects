@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import FixedContainer from '@/components/common/FixedContainer/FixedContainer';
 import {
   STORYBOARD_SUMMARY_SCHEMA,
   type StoryBoardSummaryFieldValues,
@@ -48,17 +49,19 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
 
   return (
     <form className="flex flex-col gap-[30px] px-[30px]">
-      <InputField
-        {...register('title', {
-          required: true,
-          onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
-            update(e.target.value, 'title'),
-        })}
-        textSize={32}
-        bold
-        placeholder="제목"
-        maxLength={120}
-      />
+      <FixedContainer className="gap-[30px] px-[30px]">
+        <InputField
+          {...register('title', {
+            required: true,
+            onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
+              update(e.target.value, 'title'),
+          })}
+          textSize={32}
+          bold
+          placeholder="제목"
+          maxLength={120}
+        />
+      </FixedContainer>
       <InputField
         {...register('author', {
           required: true,
