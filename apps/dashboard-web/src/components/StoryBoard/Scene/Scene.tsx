@@ -8,9 +8,9 @@ const Scene = () => {
   return (
     <SceneContextProvider>
       <div className="no-scrollbar flex h-full flex-col items-center overflow-y-auto">
-        <StickyContainer>
-          <SceneControls />
-        </StickyContainer>
+        {/* <StickyContainer className="w-full"> */}
+        <SceneControls />
+        {/* </StickyContainer> */}
         <SceneList />
       </div>
     </SceneContextProvider>

@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { createPortal } from 'react-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal, render } from 'react-dom';
 
 import useOnScreen from '@/hooks/useOnScreen';
 
@@ -14,21 +14,42 @@ interface StickyContainerProps {
 
 const StickyContainer = ({ className, children }: StickyContainerProps) => {
   // const { sticky, stickyDivRef } = useStickyContainerContext('stickyContainer');
-  const { triggerRef, stickyDivRef } =
-    useStickyContainerContext('stickyContainer');
+  // const { triggerRef, stickyDivRef } =
+  //   useStickyContainerContext('stickyContainer');
+  // const [sticky, setSticky] = useState<boolean>(false);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const { stickyDivRef } = useStickyContainerContext('stickyContainer');
 
   const sticky = !useOnScreen(triggerRef);
 
-  return (
+  const render = () => (
     <>
-      {sticky && stickyDivRef.current
-        ? createPortal(
-            className ? <div className={className}>{children}</div> : children,
-            stickyDivRef.current,
-          )
-        : children}
+      <div ref={triggerRef}></div>
+      <div className={className}>{children}</div>
     </>
   );
+
+  return sticky && stickyDivRef.current
+    ? createPortal(render(), stickyDivRef.current)
+    : render();
+  if (!triggerRef.current) {
+    return <>{children}</>;
+  }
+
+  console.log('useOnScreen started');
+
+  // return (
+  //   <>
+  //     {sticky && stickyDivRef.current
+  //       ? createPortal(
+  //           <div ref={triggerRef} className={className}>
+  //             {children}
+  //           </div>,
+  //           stickyDivRef.current,
+  //         )
+  //       : children}
+  //   </>
+  // );
 };
 
 export default StickyContainer;

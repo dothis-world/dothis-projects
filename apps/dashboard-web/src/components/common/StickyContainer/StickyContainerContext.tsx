@@ -8,7 +8,7 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 interface StickyContainerState {
   portalId: string;
   sticky: boolean;
-  triggerRef: React.RefObject<HTMLElement>;
+  triggerRef: React.RefObject<HTMLDivElement>;
   stickyDivRef: React.RefObject<HTMLDivElement>;
 }
 
@@ -46,7 +46,7 @@ export const StickyContainerContextProvider = ({
     <StickyContainerContext.Provider
       value={{ portalId, sticky, triggerRef, stickyDivRef }}
     >
-      <div ref={triggerRef}></div>
+      {/* <div ref={triggerRef}></div> */}
       <div
         className={clsx('sticky top-0', className)}
         ref={stickyDivRef}
