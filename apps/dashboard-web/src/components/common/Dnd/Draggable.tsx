@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useDraggableContext } from './DraggableContext';
 
@@ -31,7 +31,10 @@ const Draggable = ({
     handleDragEnd,
     handleDragEnter,
   } = useDraggableContext('Draggable');
-  setDraggableItems(childArray);
+
+  useEffect(() => {
+    setDraggableItems(childArray);
+  }, [childArray]);
 
   return (
     <div className={clsx('flex', `flex-${layout}`, className)}>
