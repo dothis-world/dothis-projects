@@ -66,7 +66,8 @@
     "valtio": "^1.10.5",
     "zod": "^3.21.4",
     "zod-to-json-schema": "^3.20.4",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
