@@ -2,34 +2,25 @@
 
 import { ListBucketsCommand, S3Client } from '@aws-sdk/client-s3';
 import AWS from 'aws-sdk'; // Import entire SDK (optional)
-// import AWS from 'aws-sdk/global'; // Import global AWS namespace (recommended)
 import S3 from 'aws-sdk/clients/s3'; // Import only the S3 client
 
 const Page = () => {
   const s3client = new S3Client({
-    // region: process.env.NEXT_PUBLIC_ACCESS_REGION,
-    // credential: {
-    //   accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY_ID,
-    //   secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
-    // },
-
     region: 'ap-northeast-2',
     credentials: {
-      accessKeyId: '',
-      secretAccessKey: '',
+      accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
     },
   });
 
-  const params = {
-    /** input parameters */
-  };
+  const params = {};
   const command = new ListBucketsCommand(params);
 
   AWS.config.update({
     region: 'ap-northeast-2',
     credentials: {
-      accessKeyId: '',
-      secretAccessKey: '',
+      accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY || '',
     },
   });
 
