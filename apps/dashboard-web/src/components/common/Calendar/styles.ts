@@ -38,11 +38,11 @@ export const Week = styled(FlexGap)``;
 export const DayTitle = styled(FlexGap)``;
 
 export const Day = styled.div<{
-  isSunday: boolean;
-  isToday?: boolean;
-  isSelected?: boolean;
-  isOtherMonth?: boolean;
-  isInvalid?: boolean;
+  $isSunday: boolean;
+  $isToday?: boolean;
+  $isSelected?: boolean;
+  $isOtherMonth?: boolean;
+  $isInvalid?: boolean;
 }>`
   width: ${'34px'};
   height: ${'34px'};
@@ -51,28 +51,28 @@ export const Day = styled.div<{
   align-items: center;
   justify-content: center;
 
-  border: ${({ theme, isToday, isInvalid }) =>
-    isToday && !isInvalid && '2px solid rgba(255,100,125,0.5)'};
+  border: ${({ theme, $isToday, $isInvalid }) =>
+    $isToday && !$isInvalid && '2px solid rgba(255,100,125,0.5)'};
   border-radius: 6px;
 
-  background-color: ${({ isSelected }) => isSelected && '#FF647D'};
+  background-color: ${({ $isSelected }) => $isSelected && '#FF647D'};
 
-  color: ${({ theme, isSunday, isOtherMonth, isInvalid, isSelected }) =>
-    isInvalid
+  color: ${({ theme, $isSunday, $isOtherMonth, $isInvalid, $isSelected }) =>
+    $isInvalid
       ? '#bdbdbd'
-      : isSelected
+      : $isSelected
       ? '#fff'
-      : isOtherMonth
+      : $isOtherMonth
       ? '#bdbdbd'
-      : isSunday
+      : $isSunday
       ? '#cc4419'
       : '#2d2d2d'};
   &:hover {
-    background-color: ${({ theme, isInvalid, isSelected }) =>
-      !isSelected && !isInvalid && '#f1f2f3'};
+    background-color: ${({ theme, $isInvalid, $isSelected }) =>
+      !$isSelected && !$isInvalid && '#f1f2f3'};
   }
 
-  cursor: ${({ theme, isInvalid }) => !isInvalid && 'pointer'};
+  cursor: ${({ theme, $isInvalid }) => !$isInvalid && 'pointer'};
 `;
 
 export const DateTitle = styled.div`
@@ -84,7 +84,7 @@ export const DateTitle = styled.div`
 `;
 
 export const DayType = styled(Day)`
-  color: ${({ theme, isSunday }) => (isSunday ? '#cc4419' : '#6e6e6e')};
+  color: ${({ theme, $isSunday }) => ($isSunday ? '#cc4419' : '#6e6e6e')};
   background-color: white;
   &:hover {
     background-color: white;

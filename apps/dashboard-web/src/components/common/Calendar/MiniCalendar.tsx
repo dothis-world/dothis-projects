@@ -62,7 +62,7 @@ const MiniCalendar = ({
       </Style.DateTitle>
       <Style.DayTitle>
         {DAY_LIST.map((day, i) => (
-          <Style.DayType isSunday={i === 0} key={i}>
+          <Style.DayType $isSunday={i === 0} key={i}>
             {day}
           </Style.DayType>
         ))}
@@ -74,11 +74,11 @@ const MiniCalendar = ({
               const isInvalid = isInvalidate && isInvalidate(date);
               return (
                 <Style.Day
-                  isOtherMonth={date.month() !== baseDate.month()}
-                  isToday={date.isSame(dayjs(), 'day')}
-                  isSelected={selectedDate === date.format(dateFormat)}
-                  isSunday={i === 0}
-                  isInvalid={isInvalid}
+                  $isOtherMonth={date.month() !== baseDate.month()}
+                  $isToday={date.isSame(dayjs(), 'day')}
+                  $isSelected={selectedDate === date.format(dateFormat)}
+                  $isSunday={i === 0}
+                  $isInvalid={isInvalid}
                   onClick={() => {
                     if (isInvalid) return;
                     handleDate(date);
