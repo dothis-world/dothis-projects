@@ -11,9 +11,14 @@
       "dependsOn": ["^build"],
       "env": [
         "OPENAI_API_KEY",
-        "NEXT_PUBLIC_ACCESS_KEY_ID",
-        "NEXT_PUBLIC_SECRET_ACCESS_KEY",
-        "NEXT_PUBLIC_ACCESS_REGION"
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "AWS_BUCKET_NAME",
+        "NEXT_PUBLIC_AWS_ACCESS_KEY_ID",
+        "NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY",
+        "NEXT_PUBLIC_AWS_REGION",
+        "NEXT_PUBLIC_AWS_BUCKET_NAME"
       ]
     },
 
@@ -22,9 +27,14 @@
       "persistent": true,
       "env": [
         "OPENAI_API_KEY",
-        "NEXT_PUBLIC_ACCESS_KEY_ID",
-        "NEXT_PUBLIC_SECRET_ACCESS_KEY",
-        "NEXT_PUBLIC_ACCESS_REGION"
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "AWS_BUCKET_NAME",
+        "NEXT_PUBLIC_AWS_ACCESS_KEY_ID",
+        "NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY",
+        "NEXT_PUBLIC_AWS_REGION",
+        "NEXT_PUBLIC_AWS_BUCKET_NAME"
       ]
     },
     "request-web#build": {
@@ -43,9 +53,14 @@
       ],
       "env": [
         "OPENAI_API_KEY",
-        "NEXT_PUBLIC_ACCESS_KEY_ID",
-        "NEXT_PUBLIC_SECRET_ACCESS_KEY",
-        "NEXT_PUBLIC_ACCESS_REGION"
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "AWS_BUCKET_NAME",
+        "NEXT_PUBLIC_AWS_ACCESS_KEY_ID",
+        "NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY",
+        "NEXT_PUBLIC_AWS_REGION",
+        "NEXT_PUBLIC_AWS_BUCKET_NAME"
       ]
     },
     "dashboard-web#build": {
@@ -56,9 +71,14 @@
       ],
       "env": [
         "OPENAI_API_KEY",
-        "NEXT_PUBLIC_ACCESS_KEY_ID",
-        "NEXT_PUBLIC_SECRET_ACCESS_KEY",
-        "NEXT_PUBLIC_ACCESS_REGION"
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "AWS_BUCKET_NAME",
+        "NEXT_PUBLIC_AWS_ACCESS_KEY_ID",
+        "NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY",
+        "NEXT_PUBLIC_AWS_REGION",
+        "NEXT_PUBLIC_AWS_BUCKET_NAME"
       ]
     },
     "dashboard-storybook#build": {
@@ -164,9 +184,14 @@
     "NODE_ENV",
     "VERCEL",
     "OPENAI_API_KEY",
-    "NEXT_PUBLIC_ACCESS_KEY_ID",
-    "NEXT_PUBLIC_SECRET_ACCESS_KEY",
-    "NEXT_PUBLIC_ACCESS_REGION"
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_REGION",
+    "AWS_BUCKET_NAME",
+    "NEXT_PUBLIC_AWS_ACCESS_KEY_ID",
+    "NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY",
+    "NEXT_PUBLIC_AWS_REGION",
+    "NEXT_PUBLIC_AWS_BUCKET_NAME"
   ],
   "globalDependencies": [".env", ".env.local", "tsconfig.json"]
 }
