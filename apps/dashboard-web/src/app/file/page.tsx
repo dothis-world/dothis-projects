@@ -15,8 +15,8 @@ const Page = () => {
 
     region: 'ap-northeast-2',
     credentials: {
-      accessKeyId: 'AKIAXLNNECTIMQ2DRAN4',
-      secretAccessKey: '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',
+      accessKeyId: '',
+      secretAccessKey: '',
     },
   });
 
@@ -28,8 +28,8 @@ const Page = () => {
   AWS.config.update({
     region: 'ap-northeast-2',
     credentials: {
-      accessKeyId: 'AKIAXLNNECTIMQ2DRAN4',
-      secretAccessKey: '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',
+      accessKeyId: '',
+      secretAccessKey: '',
     },
   });
 
