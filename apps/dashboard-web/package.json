@@ -13,6 +13,7 @@
     "lending:deploy": "cross-env NODE_ENV=production cross-env SLS_INTERACTIVE_SETUP_ENABLE=1 serverless deploy"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.451.0",
     "@boiseitguru/cookie-cutter": "^0.2.1",
     "@dothis/dto": "workspace:^",
     "@dothis/share": "workspace:*",
@@ -67,7 +68,6 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.550.0",
     "@babel/core": "^7.21.0",
     "@svgr/webpack": "^6.5.1",
     "@types/node": "^18.14.2",
