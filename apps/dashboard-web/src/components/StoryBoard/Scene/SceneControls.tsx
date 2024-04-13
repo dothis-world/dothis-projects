@@ -1,7 +1,10 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
+interface SceneControlsProps {
+  toggleEdit: () => void;
+}
 // TODO: 씬 추가, 삭제 버튼 design
-const SceneControls = () => {
+const SceneControls = ({ toggleEdit }: SceneControlsProps) => {
   // 씬 추가
   // 씬 삭제
   // 씬 순서 변경
@@ -9,7 +12,7 @@ const SceneControls = () => {
   return (
     <div className="flex w-full gap-[24px] px-[10px] py-[30px] text-base">
       <div className="inline-flex grow gap-[20px]">
-        <Button size="L" theme="outlined">
+        <Button size="L" theme="outlined" onClick={toggleEdit}>
           씬 전체 편집
         </Button>
         <Button

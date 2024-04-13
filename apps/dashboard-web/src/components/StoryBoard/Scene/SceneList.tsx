@@ -4,7 +4,11 @@ import Draggable from '@/components/common/Dnd/Draggable';
 
 import SceneListItem from './SceneListItem';
 
-const SceneList = () => {
+interface SceneListProps {
+  isEditing: boolean;
+}
+
+const SceneList = ({ isEditing }: SceneListProps) => {
   const exData = {
     1: { description: '설명1', video: '비디오1', audio: '오디오1' },
     2: { description: '설명2', video: '비디오2', audio: '오디오2' },
@@ -27,6 +31,7 @@ const SceneList = () => {
               sceneId={k}
               defaultValues={v}
               key={k}
+              isEditing={isEditing}
             />
           ))}
       </Draggable>
