@@ -1,16 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 
-type DraggableItem =
-  | string
-  | number
-  | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-  | Iterable<React.ReactNode>
-  | React.ReactPortal
-  | React.PromiseLikeOfReactNode;
-
 interface DraggableState {
-  draggableItems: DraggableItem[];
-  setDraggableItems: React.Dispatch<React.SetStateAction<DraggableItem[]>>;
+  draggableItems: number[];
+  setDraggableItems: React.Dispatch<React.SetStateAction<number[]>>;
   draggingIndex: number | null;
   dragOverIndex: number | null;
   handleDragStart: (index: number) => void;
@@ -24,7 +16,7 @@ export const useDraggableContext = (componentName: string) => {
   const context = useContext(DraggableContext);
   if (context === null) {
     throw new Error(
-      `${componentName}에 상위 <DraggableContextProvider>기 존재하지 않습니다.`,
+      `${componentName}에 상위 <DraggableContextProvider>가 존재하지 않습니다.`,
     );
   }
   return context;
@@ -37,7 +29,7 @@ interface DraggableContextProviderProps {
 const DraggableContextProvider = ({
   children,
 }: DraggableContextProviderProps) => {
-  const [draggableItems, setDraggableItems] = useState<DraggableItem[]>([]);
+  const [draggableItems, setDraggableItems] = useState<number[]>([]);
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 

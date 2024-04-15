@@ -18,10 +18,6 @@ const Draggable = ({
   className,
   style,
 }: DraggableProps) => {
-  const childArray = useMemo(
-    () => React.Children.toArray(children),
-    [children],
-  );
   const {
     draggableItems,
     setDraggableItems,
@@ -33,37 +29,51 @@ const Draggable = ({
   } = useDraggableContext('Draggable');
 
   useEffect(() => {
-    setDraggableItems(childArray);
-  }, [childArray]);
+    setDraggableItems(() => {
+      const count = React.Children.count(children);
+      return Array.from({ length: count }, (_, index) => index);
+    });
+  }, [children]);
+
+  const childRecord: Record<number, React.ReactNode> = useMemo(() => {
+    const record: Record<number, React.ReactNode> = {};
+    React.Children.map(children, (child, index) => {
+      record[index] = child;
+      console.log(index, child);
+    });
+    return record;
+  }, [children]);
 
   return (
-    <div className={clsx('flex', `flex-${layout}`, className)}>
-      {draggableItems &&
-        draggableItems.map((child, index) => (
-          <li
-            key={(React.isValidElement(child) && child.props.key) ?? index}
-            className={clsx(
-              'even:bg-grey200 border-gery500 bg-grey00 select-none list-none gap-1 border-solid',
-              !handle && 'hover:bg-grey200 cursor-grab ',
-              draggingIndex !== null &&
-                index === dragOverIndex &&
-                clsx(
-                  index < draggingIndex && 'border-primary500 border-t-2',
-                  index > draggingIndex && 'border-primary500 border-b-2',
-                ),
-            )}
-            draggable={!handle}
-            onDragStart={() => !handle && handleDragStart(index)}
-            onDragEnter={() => handleDragEnter(index)}
-            onDragEnd={() => handleDragEnd()}
-            onDragOver={(event) => {
-              event.currentTarget.style.cursor = 'grabbing';
-              event.preventDefault();
-            }}
-          >
-            {child}
-          </li>
-        ))}
+    <div
+      className={clsx('flex', `flex-${layout}`, className)}
+      style={{ transition: 'transform 2s ease', ...style }}
+    >
+      {draggableItems.map((id, index) => (
+        <li
+          key={id}
+          className={clsx(
+            'even:bg-grey200 border-gery500 bg-grey00 select-none list-none gap-1 border-solid',
+            !handle && 'hover:bg-grey200 cursor-grab ',
+            draggingIndex !== null &&
+              index === dragOverIndex &&
+              clsx(
+                index < draggingIndex && 'border-primary500 border-t-2',
+                index > draggingIndex && 'border-primary500 border-b-2',
+              ),
+          )}
+          draggable={!handle}
+          onDragStart={() => !handle && handleDragStart(index)}
+          onDragEnter={() => handleDragEnter(index)}
+          onDragEnd={() => handleDragEnd()}
+          onDragOver={(event) => {
+            event.currentTarget.style.cursor = 'grabbing';
+            event.preventDefault();
+          }}
+        >
+          {childRecord[id]}
+        </li>
+      ))}
       <div
         className={clsx(
           'h-1',
