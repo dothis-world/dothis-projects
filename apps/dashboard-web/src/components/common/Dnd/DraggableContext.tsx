@@ -8,6 +8,7 @@ interface DraggableState {
   handleDragStart: (index: number) => void;
   handleDragEnd: () => void;
   handleDragEnter: (index: number) => void;
+  findItemIndex: (initIndex: number) => number;
 }
 
 const DraggableContext = createContext<DraggableState | null>(null);
@@ -55,6 +56,9 @@ const DraggableContextProvider = ({
     setDragOverIndex(index);
   };
 
+  const findItemIndex = (initIndex: number) =>
+    draggableItems.indexOf(initIndex);
+
   return (
     <DraggableContext.Provider
       value={{
@@ -65,6 +69,7 @@ const DraggableContextProvider = ({
         handleDragStart,
         handleDragEnd,
         handleDragEnter,
+        findItemIndex,
       }}
     >
       {children}

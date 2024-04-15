@@ -8,7 +8,7 @@ interface DragHandleProps {
 const ICON_MENU = '/icons/hamberger-menu.svg';
 
 const DragHandle = ({ index, dragDivRef }: DragHandleProps) => {
-  const { handleDragStart } = useDraggableContext('DragHandle');
+  const { handleDragStart, findItemIndex } = useDraggableContext('DragHandle');
   return (
     <div
       className="h-full cursor-move hover:opacity-80"
@@ -17,7 +17,7 @@ const DragHandle = ({ index, dragDivRef }: DragHandleProps) => {
         if (dragDivRef?.current) {
           event.dataTransfer.setDragImage(dragDivRef.current, 0, 0);
         }
-        handleDragStart(index);
+        handleDragStart(findItemIndex(index));
       }}
     >
       <img className="h-full cursor-move" src={ICON_MENU} />
