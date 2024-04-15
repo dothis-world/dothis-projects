@@ -6,11 +6,14 @@ import { useRef } from 'react';
 
 import DragHandle from '@/components/common/Dnd/DragHandle';
 
-interface SceneProps {
+interface SceneListItemProps {
   sceneNumber: number;
   sceneId: string;
   defaultValues: StoryBoardSceneFieldValues;
   handleDragStart?: () => void;
+  isEditing: boolean;
+  checkedItems: { [key: string]: boolean };
+  toggleChecked: (id: string) => void;
 }
 
 type StoryBoardSceneField = 'description' | 'video' | 'audio';
@@ -21,14 +24,28 @@ const SceneListItem = ({
   sceneId,
   defaultValues,
   handleDragStart,
-}: SceneProps) => {
+  isEditing,
+  checkedItems,
+  toggleChecked,
+}: SceneListItemProps) => {
   const pathname = usePathname();
   const dragDivRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="flex w-full flex-col p-5" ref={dragDivRef}>
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
-        <DragHandle dragDivRef={dragDivRef} handleDragStart={handleDragStart} />
-        <input className="absoulte" type="checkbox" />
+        {isEditing && (
+          <DragHandle
+            dragDivRef={dragDivRef}
+            handleDragStart={handleDragStart}
+          />
+        )}
+        <input
+          className="absoulte"
+          type="checkbox"
+          checked={checkedItems[sceneId]}
+          onChange={() => toggleChecked(sceneId)}
+        />
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
         </p>
