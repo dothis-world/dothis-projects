@@ -1,5 +1,7 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
+
+import { useDraggableContext } from './DraggableContext';
 
 interface DraggableProps {
   children: React.ReactNode;
@@ -16,41 +18,40 @@ const Draggable = ({
   className,
   style,
 }: DraggableProps) => {
-  const [draggableItems, setDraggableItems] = useState(
-    React.Children.toArray(children),
-  );
-  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const {
+    draggableItems,
+    setDraggableItems,
+    draggingIndex,
+    dragOverIndex,
+    handleDragStart,
+    handleDragEnd,
+    handleDragEnter,
+  } = useDraggableContext('Draggable');
 
-  const handleDragStart = (index: number) => {
-    setDraggingIndex(index);
-    setDragOverIndex(index);
-  };
+  useEffect(() => {
+    setDraggableItems(() => {
+      const count = React.Children.count(children);
+      return Array.from({ length: count }, (_, index) => index);
+    });
+  }, [children]);
 
-  const handleDragEnd = () => {
-    if (draggingIndex === null || dragOverIndex === null) return;
-    const newItems = [...draggableItems];
-    const item = newItems.splice(draggingIndex, 1)[0];
-    newItems.splice(dragOverIndex, 0, item);
-    setDraggableItems(newItems);
-    setDraggingIndex(null);
-    setDragOverIndex(null);
-  };
-
-  const handleDragEnter = (index: number) => {
-    console.log(draggingIndex, dragOverIndex);
-    if (draggingIndex === null) return;
-    setDragOverIndex(index);
-  };
+  const childRecord: Record<number, React.ReactNode> = useMemo(() => {
+    const record: Record<number, React.ReactNode> = {};
+    React.Children.map(children, (child, index) => {
+      record[index] = child;
+      console.log(index, child);
+    });
+    return record;
+  }, [children]);
 
   return (
     <div
       className={clsx('flex', `flex-${layout}`, className)}
       style={{ transition: 'transform 2s ease', ...style }}
     >
-      {draggableItems.map((child, index) => (
+      {draggableItems.map((id, index) => (
         <li
-          key={(React.isValidElement(child) && child.props.key) ?? index}
+          key={id}
           className={clsx(
             'even:bg-grey200 border-gery500 bg-grey00 select-none list-none gap-1 border-solid',
             !handle && 'hover:bg-grey200 cursor-grab ',
@@ -64,17 +65,13 @@ const Draggable = ({
           draggable={!handle}
           onDragStart={() => !handle && handleDragStart(index)}
           onDragEnter={() => handleDragEnter(index)}
-          onDragEnd={handleDragEnd}
+          onDragEnd={() => handleDragEnd()}
           onDragOver={(event) => {
             event.currentTarget.style.cursor = 'grabbing';
             event.preventDefault();
           }}
         >
-          {handle
-            ? React.cloneElement(child as React.ReactElement<any>, {
-                handleDragStart: () => handleDragStart(index),
-              })
-            : child}
+          {childRecord[id]}
         </li>
       ))}
       <div

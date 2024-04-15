@@ -23,7 +23,6 @@ const SceneListItem = ({
   sceneNumber,
   sceneId,
   defaultValues,
-  handleDragStart,
   isEditing,
   checkedItems,
   toggleChecked,
@@ -35,10 +34,7 @@ const SceneListItem = ({
     <div className="flex w-full flex-col p-5" ref={dragDivRef}>
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
         {isEditing && (
-          <DragHandle
-            dragDivRef={dragDivRef}
-            handleDragStart={handleDragStart}
-          />
+          <DragHandle index={sceneNumber - 1} dragDivRef={dragDivRef} />
         )}
         <input
           className="absoulte"
