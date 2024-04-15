@@ -10,6 +10,7 @@ import useGetStoryBoard from '@/hooks/react-query/query/useGetStoryBoard';
 import OverviewForm from './Form/OverviewForm';
 import SummaryForm from './Form/SummaryForm';
 import SearchParamNav from './Nav/SearchParamNav';
+import Scene from './Scene/Scene';
 
 interface StoryBoardEditorProps {
   storyBoardId: string;
@@ -56,7 +57,7 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
           <p className="text-pink">파일 추가</p>
         </>
       ) : (
-        <p className="text-pink">씬 리스트</p>
+        <Scene />
       )}
     </>
   );
