@@ -1,5 +1,6 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
+import { useDraggableContext } from '@/components/common/Dnd/DraggableContext';
 import ConfirmModal from '@/components/common/Modal/ModalContent/ConfirmModal';
 import { useModalActions } from '@/store/modalStore';
 
@@ -40,6 +41,20 @@ const SceneControls = ({
     setModalOpen(true);
   };
 
+  const { draggableItems } = useDraggableContext('SceneControls');
+  const applyEdit = () => {
+    // API에 따라서 수정되어야 함 (id리스트가 필요한지 등)
+    console.log('변경된 순서', draggableItems);
+    // TODO: mutate
+    setModalContent(
+      <ConfirmModal
+        message={`편집을 완료하시겠습니까?`}
+        callback={() => console.log('confirmed! mutate~')}
+      />,
+    );
+    setModalOpen(true);
+  };
+
   return (
     <div className="flex w-full gap-[24px] px-[10px] py-[30px] text-base">
       <div className="inline-flex grow gap-[20px]">
@@ -66,7 +81,7 @@ const SceneControls = ({
           >
             씬 삭제
           </Button>
-          <Button size="L" theme="contained">
+          <Button size="L" theme="contained" onClick={applyEdit}>
             완료
           </Button>
         </div>
