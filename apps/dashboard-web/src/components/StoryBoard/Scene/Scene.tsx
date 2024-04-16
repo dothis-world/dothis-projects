@@ -25,6 +25,7 @@ const Scene = () => {
   return (
     <div className="flex flex-col items-center gap-[50px]">
       <SceneControls
+        isEditing={isEditing}
         toggleEdit={toggleEdit}
         getCheckedSceneIds={getCheckedSceneIds}
       />

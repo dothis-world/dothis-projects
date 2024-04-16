@@ -33,15 +33,15 @@ const SceneListItem = ({
   return (
     <div className="flex w-full flex-col p-5" ref={dragDivRef}>
       <div className="flex h-12 w-[100px] flex-row items-center gap-[10px] object-cover ">
-        {isEditing && (
+        <div className={`flex h-full ${!isEditing && 'hidden'}`}>
           <DragHandle index={sceneNumber - 1} dragDivRef={dragDivRef} />
-        )}
-        <input
-          className="absoulte"
-          type="checkbox"
-          checked={checkedItems[sceneId]}
-          onChange={() => toggleChecked(sceneId)}
-        />
+          <input
+            className="absoulte"
+            type="checkbox"
+            checked={checkedItems[sceneId]}
+            onChange={() => toggleChecked(sceneId)}
+          />
+        </div>
         <p className="inline-text whitespace-nowrap text-black">
           # {sceneNumber}
         </p>

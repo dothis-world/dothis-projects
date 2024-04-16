@@ -4,11 +4,13 @@ import ConfirmModal from '@/components/common/Modal/ModalContent/ConfirmModal';
 import { useModalActions } from '@/store/modalStore';
 
 interface SceneControlsProps {
+  isEditing: boolean;
   toggleEdit: () => void;
   getCheckedSceneIds: () => void;
 }
 // TODO: 씬 추가, 삭제 버튼 design
 const SceneControls = ({
+  isEditing,
   toggleEdit,
   getCheckedSceneIds,
 }: SceneControlsProps) => {
@@ -54,19 +56,21 @@ const SceneControls = ({
         </Button>
         <p></p>
       </div>
-      <div className="inline-flex grow-0 gap-[10px]">
-        <Button
-          className=" bg-grey700 border-grey500 rounded-8 border-[1px] border-solid px-6 py-2 text-white focus:outline-none"
-          size="L"
-          theme="outlined"
-          onClick={deleteScene}
-        >
-          씬 삭제
-        </Button>
-        <Button size="L" theme="contained">
-          완료
-        </Button>
-      </div>
+      {isEditing && (
+        <div className="inline-flex grow-0 gap-[10px]">
+          <Button
+            className=" bg-grey700 border-grey500 rounded-8 border-[1px] border-solid px-6 py-2 text-white focus:outline-none"
+            size="L"
+            theme="outlined"
+            onClick={deleteScene}
+          >
+            씬 삭제
+          </Button>
+          <Button size="L" theme="contained">
+            완료
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
