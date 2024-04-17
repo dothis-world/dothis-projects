@@ -7,6 +7,9 @@ const THRESHOLD = 0;
 type ScrollDirection = 'up' | 'down';
 
 const useScrollDirection = (): ScrollDirection => {
+  /**
+   * @defaultValue 기본값을 down으로 지정해서 scroll을 내린상태에서 새로고침 시에도 바로 StickyContext Element가 주입하기위해 설정
+   */
   const [scrollDirection, setScrollDirection] =
     useState<ScrollDirection>('down');
 
