@@ -16,8 +16,6 @@ interface StickyContainerState {
   portalId: string;
   triggerRef: React.RefObject<HTMLDivElement>;
   stickyDivRef: React.RefObject<HTMLDivElement>;
-  rootMargin: any[];
-  setRootMargin: React.Dispatch<React.SetStateAction<any[]>>;
   renderTrigger: boolean;
   setRenderTrigger: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -48,11 +46,6 @@ export const StickyContainerContextProvider = ({
   const triggerRef = useRef<HTMLDivElement>(null);
 
   const stickyDivRef = useRef<HTMLDivElement>(null);
-
-  /**
-   * @rootMargin - rootMargin stickyOrder에 따른 Element들의 정보를 가지고있을 state 생성
-   */
-  const [rootMargin, setRootMargin] = useState<any[]>([]);
 
   /**
    * @renderTrigger - context에서 sticky변화에 따라서 render를 제어하는 state가 없어서 renderTrigger용으로 생성
@@ -88,8 +81,7 @@ export const StickyContainerContextProvider = ({
         portalId,
         triggerRef,
         stickyDivRef,
-        rootMargin,
-        setRootMargin,
+
         renderTrigger,
         setRenderTrigger,
       }}
