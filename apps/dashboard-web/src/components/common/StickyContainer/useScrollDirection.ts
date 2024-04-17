@@ -4,8 +4,11 @@ import usePrevious from './usePrevious';
 
 const THRESHOLD = 0;
 
-const useScrollDirection = () => {
-  const [scrollDirection, setScrollDirection] = useState('down');
+type ScrollDirection = 'up' | 'down';
+
+const useScrollDirection = (): ScrollDirection => {
+  const [scrollDirection, setScrollDirection] =
+    useState<ScrollDirection>('down');
 
   const blocking = useRef(false);
 
