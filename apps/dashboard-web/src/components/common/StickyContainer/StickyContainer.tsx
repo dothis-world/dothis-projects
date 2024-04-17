@@ -22,6 +22,18 @@ interface StickyContainerProps {
   className?: string;
 }
 
+/**
+ * @추가해야할 작업
+ * - Context 중첩해서 사용했을 경우 제대로 작동할지 장담할 수 없는상태
+ * - 위에 문제로인해 StickyContext에 대한 고유 네이밍을 부여해야할 수도 있음
+ * - sticky 순서에 대한 자유성을 부여 ----- (생각해보니 sticky는 waterfall 형식으로 오로지 순차적으로 작동하는 기능이라 생각 안해도 될듯)
+ */
+
+/**
+ * @param stickyOrder - sticky가 부여될 순서를 지정한다 (시작 index - 0)
+ * @param componentName - componentName을 부여함 (에러 트랙킹 및 추 후 중첩 Context문제 해결을 위한 네이밍) - 똑같은 Context로 중첩되는 구조일때는 이미 가까운 컨슈머에 적용되는 버그가 있음
+ */
+
 const StickyContainer = ({
   className,
   children,
@@ -32,44 +44,26 @@ const StickyContainer = ({
 
   const [topRootMargin, setTopRootMargin] = useState(0);
 
-  const {
-    stickyDivRef,
-    rootMargin,
-    setRootMargin,
-    renderTrigger,
-    setRenderTrigger,
-  } = useStickyContainerContext('stickyContainer');
+  const { stickyDivRef, renderTrigger, setRenderTrigger } =
+    useStickyContainerContext(`${componentName}-StickyContainer`);
 
+  /**
+   * @useEffect
+   * stickyOrder Props를 사용해서  stickyDivRef에 적용된 height만큼 rootMargin값을 Set합니다.
+   */
   useEffect(() => {
-    let total = 0;
-    let stickyHeight = 0;
+    let currentStickyHeight = 0;
 
     for (let i = 0; i < stickyOrder; i++) {
-      if (!rootMargin[i]) {
-        return;
-      }
-      total += rootMargin[i]?.getBoundingClientRect().height;
-    }
-
-    for (let i = 0; i < stickyOrder; i++) {
-      stickyHeight += stickyDivRef?.current?.children[
+      currentStickyHeight += stickyDivRef.current?.children[
         i
-      ]?.getBoundingClientRect()?.height
-        ? stickyDivRef?.current?.children[i]?.getBoundingClientRect()?.height
+      ]?.getBoundingClientRect().height
+        ? stickyDivRef.current?.children[i]?.getBoundingClientRect().height
         : 0;
     }
 
-    // setTopRootMargin(total > stickyHeight ? total : stickyHeight);
-    setTopRootMargin(stickyHeight);
-  }, [
-    rootMargin,
-    stickyOrder,
-    isSticky,
-    renderTrigger,
-    stickyDivRef.current?.getBoundingClientRect().height,
-    stickyDivRef.current?.children.length,
-    stickyDivRef.current,
-  ]);
+    setTopRootMargin(currentStickyHeight);
+  }, [stickyOrder, renderTrigger]);
 
   useEffect(() => {
     // setRenderTrigger는  StickyContainer 렌더링 trigger용도로 사용했다.
@@ -113,26 +107,9 @@ const StickyContainer = ({
           )
         : null}
 
-      {/* <div ref={triggerRef as React.RefObject<HTMLDivElement>}></div> */}
       {React.cloneElement(children as React.ReactElement, {
-        // 여기서의 sticky order는  순서대로 RootMargin에 주입을 하기위한 목적
-        'data-component-name': componentName,
-        'data-sticky-order': stickyOrder,
-        // component name 을 소지한 이유  StickyContext가 중첩되는 구조가 되었을 때 예방책 (하지만 Context 자체가 똑같은 상속이나,  똑같은 Context로 중첩되는 구조일때는 이미 가까운 프로시져로 적용되는 버그가 있음 )
-        // sticky order를 소지한 이유 현재 setRootmargin이 적용되는게 waterfall 형식으로 진행되가지고 문제는 없지만, waterfall에서 벗어난 구조를 가지고 싶을 때 해당 order를 기반으로 순서를 정의해야함
         ref: (node: any) => {
           triggerRef.current = node;
-
-          if (rootMargin.indexOf(node) === -1 && node !== null) {
-            // console.log(node?.getAttribute('data-component-name'));
-            // console.log(node?.getAttribute('data-sticky-order'));
-
-            const componentName = node.getAttribute('data-component-name');
-
-            const stickyOrder = node.getAttribute('data-sticky-order');
-
-            setRootMargin((prev) => [...prev, node]);
-          }
         },
       })}
     </React.Fragment>
