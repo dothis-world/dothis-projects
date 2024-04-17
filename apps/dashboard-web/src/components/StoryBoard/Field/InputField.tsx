@@ -31,9 +31,10 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             <input
               id="input"
               type={type}
-              className={`border-grey400 bg-grey00 text-grey900 placeholder:text-grey500 focus:border-primary500 disabled:bg-grey200 rounded-lg border border-solid px-6 py-3 text-[${textSize}px] focus:outline-none disabled:cursor-not-allowed ${
-                bold ? 'font-bold' : ' '
-              }`}
+              className={`border-grey400 bg-grey00 text-grey900 placeholder:text-grey500 focus:border-primary500 disabled:bg-grey200 text-[${textSize}px]
+               rounded-lg border border-solid px-6 py-3  focus:outline-none disabled:cursor-not-allowed ${
+                 bold ? 'font-bold' : ' '
+               }`}
               ref={ref}
               {...props}
             />
