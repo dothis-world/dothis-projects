@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import DraggableContextProvider from '@/components/common/Dnd/DraggableContext';
+
 import SceneControls from './SceneControls';
 import SceneList from './SceneList';
 
@@ -23,18 +25,20 @@ const Scene = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-[50px]">
-      <SceneControls
-        isEditing={isEditing}
-        toggleEdit={toggleEdit}
-        getCheckedSceneIds={getCheckedSceneIds}
-      />
-      <SceneList
-        isEditing={isEditing}
-        checkedItems={checkedItems}
-        toggleChecked={toggleChecked}
-      />
-    </div>
+    <DraggableContextProvider>
+      <div className="flex flex-col items-center gap-[50px]">
+        <SceneControls
+          isEditing={isEditing}
+          toggleEdit={toggleEdit}
+          getCheckedSceneIds={getCheckedSceneIds}
+        />
+        <SceneList
+          isEditing={isEditing}
+          checkedItems={checkedItems}
+          toggleChecked={toggleChecked}
+        />
+      </div>
+    </DraggableContextProvider>
   );
 };
 

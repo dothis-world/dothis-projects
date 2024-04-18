@@ -1,5 +1,6 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
+import { useDraggableContext } from '@/components/common/Dnd/DraggableContext';
 import ConfirmModal from '@/components/common/Modal/ModalContent/ConfirmModal';
 import { useModalActions } from '@/store/modalStore';
 
@@ -40,7 +41,10 @@ const SceneControls = ({
     setModalOpen(true);
   };
 
+  const { draggableItems } = useDraggableContext('SceneControls');
   const applyEdit = () => {
+    // API에 따라서 수정되어야 함 (id리스트가 필요한지 등)
+    console.log('변경된 순서', draggableItems);
     // TODO: mutate
     setModalContent(
       <ConfirmModal
