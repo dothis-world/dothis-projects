@@ -40,6 +40,17 @@ const SceneControls = ({
     setModalOpen(true);
   };
 
+  const applyEdit = () => {
+    // TODO: mutate
+    setModalContent(
+      <ConfirmModal
+        message={`편집을 완료하시겠습니까?`}
+        callback={() => console.log('confirmed! mutate~')}
+      />,
+    );
+    setModalOpen(true);
+  };
+
   return (
     <div className="flex w-full gap-[24px] px-[10px] py-[30px] text-base">
       <div className="inline-flex grow gap-[20px]">
@@ -66,7 +77,7 @@ const SceneControls = ({
           >
             씬 삭제
           </Button>
-          <Button size="L" theme="contained">
+          <Button size="L" theme="contained" onClick={applyEdit}>
             완료
           </Button>
         </div>
