@@ -94,7 +94,7 @@ const StickyContainer = ({
     },
     {
       threshold: 1,
-      rootMargin: `-${topRootMargin ? topRootMargin : 0}px 0px 0px 0px`,
+      rootMargin: `-${topRootMargin ?? 0}px 0px 0px 0px`,
     },
   );
 
