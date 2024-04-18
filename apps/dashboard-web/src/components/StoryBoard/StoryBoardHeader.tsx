@@ -20,7 +20,6 @@ const StoryBoardHeader = ({
 }: StoryBoardHeaderProps) => {
   const router = useRouter();
 
-  console.log(forwardRef);
   return (
     <div
       className="inline-flex w-full gap-[24px] p-[30px]"
