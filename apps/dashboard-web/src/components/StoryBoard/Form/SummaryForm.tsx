@@ -66,6 +66,16 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
         />
       </StickyContainer>
 
+      <InputField
+        {...register('author', {
+          required: true,
+          onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
+            update(e.target.value, 'author'),
+        })}
+        label="작성자"
+        placeholder="작성자를 적어주세요"
+        maxLength={120}
+      />
       <div className="item-center flex flex-row px-[200px] text-center">
         <div className="flex grow flex-col">
           <CalendarField
