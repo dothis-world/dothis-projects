@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import StickyContainer from '@/components/common/StickyContainer/StickyContainer';
 import {
   STORYBOARD_SUMMARY_SCHEMA,
   type StoryBoardSummaryFieldValues,
@@ -48,17 +49,23 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
 
   return (
     <form className="flex flex-col gap-[30px] px-[30px]">
-      <InputField
-        {...register('title', {
-          required: true,
-          onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
-            update(e.target.value, 'title'),
-        })}
-        textSize={32}
-        bold
-        placeholder="제목"
-        maxLength={120}
-      />
+      <StickyContainer
+        className="gap-[30px] p-[30px]"
+        componentName="Input Title"
+        stickyOrder={1}
+      >
+        <InputField
+          {...register('author', {
+            required: true,
+            onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
+              update(e.target.value, 'author'),
+          })}
+          label="작성자"
+          placeholder="작성자를 적어주세요"
+          maxLength={120}
+        />
+      </StickyContainer>
+
       <InputField
         {...register('author', {
           required: true,

@@ -67,7 +67,7 @@ const CalendarTest = ({
       </Style.DateTitle>
       <Style.DayTitle>
         {DAY_LIST.map((day, i) => (
-          <Style.DayType isSunday={i === 0} key={i}>
+          <Style.DayType $isSunday={i === 0} key={i}>
             {day}
           </Style.DayType>
         ))}
@@ -81,11 +81,11 @@ const CalendarTest = ({
               return (
                 <ToggleProvider.Close>
                   <Style.Day
-                    isOtherMonth={date.month() !== baseDate.month()}
-                    isToday={date.isSame(dayjs(), 'day')}
-                    isSelected={selectedDate === date.format('YYYY-MM-DD')}
-                    isSunday={i === 0}
-                    isInvalid={isInvalid}
+                    $isOtherMonth={date.month() !== baseDate.month()}
+                    $isToday={date.isSame(dayjs(), 'day')}
+                    $isSelected={selectedDate === date.format('YYYY-MM-DD')}
+                    $isSunday={i === 0}
+                    $isInvalid={isInvalid}
                     onClick={() => {
                       if (isInvalid) return;
                       handleDate(date);

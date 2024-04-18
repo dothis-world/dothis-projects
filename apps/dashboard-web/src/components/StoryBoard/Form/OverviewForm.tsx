@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import StickyContainer from '@/components/common/StickyContainer/StickyContainer';
 import {
   STORYBOARD_OVERVIEW_SCHEMA,
   type StoryBoardOverviewFieldValues,
@@ -71,15 +72,18 @@ const OverviewForm = ({
         placeholder="장소을 적어주세요"
         maxLength={5000}
       />
-      <TextAreaField
-        {...register('description', {
-          onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
-            update(e.target.value, 'description'),
-        })}
-        label="설명"
-        placeholder="설명을 적어주세요"
-        maxLength={5000}
-      />
+      <StickyContainer componentName="TextArea Description" stickyOrder={2}>
+        <TextAreaField
+          {...register('description', {
+            onBlur: (e: React.FocusEvent<HTMLInputElement>) =>
+              update(e.target.value, 'description'),
+          })}
+          label="설명"
+          placeholder="설명을 적어주세요"
+          maxLength={5000}
+        />
+      </StickyContainer>
+      ``
     </form>
   );
 };

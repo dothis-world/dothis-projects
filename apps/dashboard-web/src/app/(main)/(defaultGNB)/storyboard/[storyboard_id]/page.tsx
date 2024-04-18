@@ -1,5 +1,7 @@
 'use client';
 
+import StickyContainer from '@/components/common/StickyContainer/StickyContainer';
+import { StickyContainerContextProvider } from '@/components/common/StickyContainer/StickyContainerContext';
 import StoryBoardEditor from '@/components/StoryBoard/StoryBoardEditor';
 import StoryBoardHeader from '@/components/StoryBoard/StoryBoardHeader';
 
@@ -9,9 +11,16 @@ const StoryboardDetailPage = ({
   params: { storyboard_id: string };
 }) => {
   return (
-    <div className="flex h-screen w-full flex-col items-stretch gap-[10px] text-black">
-      <StoryBoardHeader button="export" />
-      <StoryBoardEditor storyBoardId={storyboard_id} />
+    <div className="bg-grey00 flex h-screen w-full flex-col items-stretch gap-[10px] text-black">
+      <StickyContainerContextProvider
+        className="bg-grey00 z-10"
+        portalId="storyboard-sticky-container"
+      >
+        <StickyContainer stickyOrder={0} componentName="StoryboardDetailPage">
+          <StoryBoardHeader />
+        </StickyContainer>
+        <StoryBoardEditor storyBoardId={storyboard_id} />
+      </StickyContainerContextProvider>
     </div>
   );
 };

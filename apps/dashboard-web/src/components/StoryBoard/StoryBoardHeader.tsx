@@ -1,16 +1,43 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useRouter } from 'next/navigation';
 import Back from 'public/icons/back.svg';
+import { forwardRef } from 'react';
 
-interface Props {
+import withForwardRef from '@/hocs/withForwardRef';
+
+interface StoryBoardHeaderProps {
+  forwardRef: React.Ref<any>;
   title?: string;
   button?: 'export' | 'close';
 }
 
-const StoryBoardHeader = ({ title = '', button }: Props) => {
+const StoryBoardHeader = ({
+  forwardRef,
+  title = '',
+  button,
+
+  ...props
+}: StoryBoardHeaderProps) => {
   const router = useRouter();
+
   return (
-    <div className="inline-flex gap-[24px] p-[30px]">
+    <div
+      className="inline-flex w-full gap-[24px] p-[30px]"
+      ref={forwardRef}
+      /**
+      * 만약 여기서도 콜백Ref를 사용해야하는 경우
+      ref={(node) => {
+        if (forwardRef) {
+          // forwardRef에 콜백 ref를 설정합니다.
+          if (typeof forwardRef === 'function') {
+            forwardRef(node);
+          }
+        }
+      }}
+       */
+
+      {...props}
+    >
       <Back
         onClick={router.back}
         width={30}
@@ -34,4 +61,4 @@ const StoryBoardHeader = ({ title = '', button }: Props) => {
   );
 };
 
-export default StoryBoardHeader;
+export default withForwardRef(StoryBoardHeader);
