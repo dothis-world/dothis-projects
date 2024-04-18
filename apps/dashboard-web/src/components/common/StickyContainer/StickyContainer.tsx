@@ -107,6 +107,10 @@ const StickyContainer = ({
           )
         : null}
 
+      {/* <div ref={triggerRef as React.RefObject<HTMLDivElement>} />
+      {children} */}
+      {/* 해당 방법 children의 gap이 존재할 경우 정확하지 않음  */}
+
       {React.cloneElement(children as React.ReactElement, {
         ref: (node: any) => {
           triggerRef.current = node;
