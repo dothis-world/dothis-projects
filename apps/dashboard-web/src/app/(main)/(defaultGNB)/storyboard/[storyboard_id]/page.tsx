@@ -16,8 +16,8 @@ const StoryboardDetailPage = ({
         className="bg-grey00 z-10"
         portalId="storyboard-sticky-container"
       >
-        <StickyContainer>
-          <StoryBoardHeader button="export" />
+        <StickyContainer stickyOrder={0} componentName="StoryboardDetailPage">
+          <StoryBoardHeader />
         </StickyContainer>
         <StoryBoardEditor storyBoardId={storyboard_id} />
       </StickyContainerContextProvider>
