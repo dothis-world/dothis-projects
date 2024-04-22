@@ -35,7 +35,10 @@ const SceneControls = ({
     setModalContent(
       <ConfirmModal
         message={`선택한 씬 스토리보드를 삭제하시겠습니까?\u000A삭제된 씬 스토리보드는 복구되지 않습니다.`}
-        callback={() => console.log('confirmed! mutate~')}
+        callback={() => {
+          console.log('confirmed! mutate~');
+          toggleEdit();
+        }}
       />,
     );
     setModalOpen(true);
@@ -49,7 +52,10 @@ const SceneControls = ({
     setModalContent(
       <ConfirmModal
         message={`편집을 완료하시겠습니까?`}
-        callback={() => console.log('confirmed! mutate~')}
+        callback={() => {
+          console.log('confirmed! mutate~');
+          toggleEdit();
+        }}
       />,
     );
     setModalOpen(true);
