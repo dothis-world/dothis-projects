@@ -2,91 +2,74 @@
 
 import clsx from 'clsx';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 
-import MiniCalendar from '@/components/common/Calendar/MiniCalendar';
+import Calendar from '@/components/common/Calendar/Calendar';
+import PopperProvider from '@/components/common/Calendar/PopperProvider';
+import ToggleProvider from '@/components/common/Calendar/ToggleProvider';
 
 interface CalendarFieldProps {
   inputProps: React.HTMLProps<HTMLInputElement>;
+  dateFormat?: string;
   label?: string;
-  defaultDate?: string;
-  handleSelectDate?: (value: string) => void;
-  validAfterDate?: string;
+  defaultDate?: Date;
+  handleSelectDate?: (dateStr: string) => void;
+  validAfterDate?: Date;
 }
 
 const CalendarField = ({
   inputProps,
+  dateFormat = 'YY.MM.DD',
   label,
-  defaultDate = new Date().toLocaleDateString(),
-  handleSelectDate = () => {},
+  defaultDate = new Date(),
+  handleSelectDate,
   validAfterDate,
 }: CalendarFieldProps) => {
-  const [show, setShow] = useState<boolean>(false);
-
   const isValidEndDate = (date: Dayjs) => {
-    const validAfter =
-      validAfterDate && validAfterDate.includes('.')
-        ? formatYYMMDDtoDate(validAfterDate).toDateString()
-        : validAfterDate;
+    const validAfter = validAfterDate && dayjs(validAfterDate, dateFormat);
     return validAfter ? date.isAfter(validAfter, 'day') : true;
   };
 
-  const formatDateToYYMMDD = (date: Date) => {
-    const year = date.getFullYear().toString().slice(2);
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-
-    return `${year}.${month}.${day}`;
-  };
-
-  const formatYYMMDDtoDate = (dateString: string) => {
-    const parts = dateString.split('.');
-    const year = parseInt(parts[0], 10) + 2000;
-    const month = parseInt(parts[1], 10) - 1;
-    const day = parseInt(parts[2], 10);
-
-    return new Date(year, month, day);
-  };
-
-  useEffect(() => {
-    handleSelectDate(
-      defaultDate.includes('.')
-        ? defaultDate
-        : formatDateToYYMMDD(new Date(defaultDate)),
-    );
-  }, [defaultDate]);
+  // useEffect(() => {
+  //   console.log(
+  //     '~~!!! useEffect - CalendarField',
+  //     defaultDate,
+  //     dayjs(defaultDate).format(dateFormat),
+  //   );
+  //   handleSelectDate?.(dayjs(defaultDate).format(dateFormat));
+  // }, [defaultDate]);
 
   return (
     <div className="flex flex-col">
       <label>{label}</label>
-      <input
-        {...inputProps}
-        onFocus={(e) => {
-          inputProps.onFocus?.(e);
-          setShow(true);
-        }}
-        className="border-none text-center focus:outline-none font-bold"
-      />
-      <div
-        className={clsx('absolute z-[2] translate-y-[50px]', !show && 'hidden')}
-      >
-        <MiniCalendar
-          calendarbaseDate={
-            defaultDate.includes('.')
-              ? formatYYMMDDtoDate(defaultDate).toDateString()
-              : defaultDate
-          }
-          selectedDate={defaultDate}
-          setSelectedDate={async (value: string) => {
-            handleSelectDate(value);
-            setShow(false);
-          }}
-          isInvalidate={(date: any) => {
-            return !isValidEndDate(date);
-          }}
-          dateFormat="YY.MM.DD"
-        />
-      </div>
+      <ToggleProvider>
+        <PopperProvider isArrow align="center" side="bottom" arrowColor="red">
+          <ToggleProvider.Trigger>
+            <input
+              {...inputProps}
+              className="border-none text-center font-bold focus:outline-none"
+            />
+          </ToggleProvider.Trigger>
+
+          <ToggleProvider.Portal>
+            <ToggleProvider.Content>
+              <Calendar
+                calendarbaseDate={defaultDate}
+                selectedDate={defaultDate}
+                setSelectedDate={(date: Date) => {
+                  const formattedDate = dayjs(date).format(dateFormat);
+                  handleSelectDate?.(formattedDate);
+                }}
+                isInvalidate={(date: any) => {
+                  return !isValidEndDate(date);
+                }}
+                dateFormat={dateFormat}
+              />
+            </ToggleProvider.Content>
+          </ToggleProvider.Portal>
+        </PopperProvider>
+      </ToggleProvider>
     </div>
   );
 };

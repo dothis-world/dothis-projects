@@ -66,9 +66,18 @@ const ToggleContent = ({ children }: { children: React.ReactNode }) => {
 
   return (
     // children의 ref가 필요로 할 수도 있어서 제일 만만한 span태그에 주입을 시켰습니다.
-    <span ref={setFloating} style={{ ...floatingStyles }}>
+    <span
+      ref={setFloating}
+      style={{ ...floatingStyles }}
+      onClick={(event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+      }}
+    >
       <PopperArrow ref={arrowRef} {...arrowProps} />
-      {isOpen && children}
+      {isOpen &&
+        React.cloneElement(children as ReactElement, {
+          callback: () => setIsOpen(false),
+        })}
     </span>
   );
 };
@@ -78,7 +87,13 @@ const TogglePortal = ({ children }: { children: React.ReactNode }) => {
 
   return isOpen
     ? ReactDom.createPortal(
-        <div onClick={() => setIsOpen(false)} className="absolute inset-0">
+        <div
+          onClick={(event: React.MouseEvent) => {
+            setIsOpen(false);
+            // event.preventDefault();
+          }}
+          className="absolute inset-0"
+        >
           {children}
         </div>,
         globalThis.document?.body,
@@ -88,7 +103,6 @@ const TogglePortal = ({ children }: { children: React.ReactNode }) => {
 
 const ToggleClose = ({ children }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useToggleContext('ToggleClose');
-
   if (!children) return null; // children이 없는 경우 null을 반환하여 렌더링하지 않음
 
   const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -100,7 +114,9 @@ const ToggleClose = ({ children }: { children: React.ReactNode }) => {
       children.props.onClick(event);
     }
     // 새로운 onClick 핸들러 실행
+    console.log('ToggleClose', isOpen);
     setIsOpen((prev) => !prev);
+    console.log('ToggleClose !prev', isOpen);
   };
 
   // children이 React 엘리먼트인 경우에만 onClick 이벤트를 추가하고, 그렇지 않은 경우에는 아무 작업도 하지 않음
