@@ -1,19 +1,20 @@
 'use client';
 
+import { Input } from 'dashboard-storybook/src/components/Input/Input';
+
 import Dropdown from '@/components/DropDown/Dropdown';
 import DropdownItem from '@/components/DropDown/DropdownItem';
-import { Input } from 'dashboard-storybook/src/components/Input/Input';
 import DropdownSub from '@/components/DropDown/DropdownSub';
 
 const Page = () => {
   return (
     <div>
       <p className="font-bold"> Dropdown 컴포넌트 테스트용 페이지</p>
-      <div className="flex text-center px-20">
+      <div className="flex px-20 text-center">
         <Dropdown
           trigger={
             <div>
-              <div className="px-3 min-w-[44px] min-h-[20px]">열려라 참깨</div>
+              <div className="min-h-[20px] min-w-[44px] px-3">열려라 참깨</div>
             </div>
           }
           className="bg-grey100"

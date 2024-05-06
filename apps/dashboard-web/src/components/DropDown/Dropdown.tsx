@@ -14,6 +14,7 @@ const Dropdown = ({
   className,
   sideOffset = 0,
   side = 'bottom',
+  arrow = false,
   ...props
 }: Props) => {
   return (
@@ -22,7 +23,7 @@ const Dropdown = ({
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           className={clsx(
-            'flex flex-col rounded-md border border-grey700 bg-grey00 shadow-md',
+            'border-grey700 bg-grey00 flex flex-col rounded-md border shadow-md',
             className,
           )}
           side={side}

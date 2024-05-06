@@ -1,9 +1,9 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import clsx from 'clsx';
-import { Route } from 'next';
+import type { Route } from 'next';
 import Link from 'next/link';
 import React from 'react';
-import { UrlObject } from 'url';
+import type { UrlObject } from 'url';
 
 // DropdownMenuItemProps에 왜 onSelect 가 없는지 모르겠음
 interface Props extends DropdownMenu.DropdownMenuItemProps {
@@ -42,11 +42,11 @@ const DropdownItem = ({
 
   const textItem = (
     <DropdownMenu.Item {...props} {...{ onSelect: handleClick }}>
-      <div className="flex flex-1 flex-col select-none cursor-pointer">
+      <div className="flex flex-1 cursor-pointer select-none flex-col">
         <div
           className={clsx(
             'flex items-center justify-between',
-            disabled && 'cursor-not-allowed pointer-events-none',
+            disabled && 'pointer-events-none cursor-not-allowed',
           )}
         >
           {typeof leftSlot === 'string' ? <div>{leftSlot}</div> : leftSlot}
