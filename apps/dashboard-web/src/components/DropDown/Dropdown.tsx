@@ -24,7 +24,7 @@ const Dropdown = ({
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           className={clsx(
-            'border-grey700 bg-grey00 flex flex-col rounded-md border shadow-md',
+            'border-grey700 bg-grey00 flex flex-col rounded-md border p-2 shadow-md',
             className,
           )}
           side={side}
