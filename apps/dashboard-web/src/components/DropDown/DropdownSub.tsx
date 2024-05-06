@@ -5,6 +5,7 @@ interface Props extends DropdownMenu.DropdownMenuContentProps {
   children: React.ReactNode;
   trigger?: React.ReactNode;
   className?: string;
+  arrow?: boolean;
 }
 
 const DropdownSub = ({
@@ -14,6 +15,7 @@ const DropdownSub = ({
   sideOffset = 2,
   alignOffset = -5,
   side = 'right',
+  arrow = false,
   ...props
 }: Props) => {
   return (
@@ -28,7 +30,7 @@ const DropdownSub = ({
           side={side}
           {...props}
         >
-          <DropdownMenu.Arrow />
+          {arrow && <DropdownMenu.Arrow />}
           {children}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

@@ -6,6 +6,7 @@ interface Props extends DropdownMenu.DropdownMenuContentProps {
   trigger?: React.ReactNode;
   className?: string;
   sideOffset?: number;
+  arrow?: boolean;
 }
 
 const Dropdown = ({
@@ -30,7 +31,7 @@ const Dropdown = ({
           sideOffset={sideOffset}
           {...props}
         >
-          <DropdownMenu.Arrow />
+          {arrow && <DropdownMenu.Arrow />}
           {children}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
