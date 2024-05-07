@@ -3,13 +3,14 @@
 import clsx from 'clsx';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import type { InputHTMLAttributes } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 
 import Calendar from '@/components/common/Calendar/Calendar';
 import PopperProvider from '@/components/common/Calendar/PopperProvider';
 import ToggleProvider from '@/components/common/Calendar/ToggleProvider';
 
-interface CalendarFieldProps {
+interface CalendarFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   inputProps: React.HTMLProps<HTMLInputElement>;
   dateFormat?: string;
   label?: string;
@@ -18,60 +19,58 @@ interface CalendarFieldProps {
   validAfterDate?: Date;
 }
 
-const CalendarField = ({
-  inputProps,
-  dateFormat = 'YY.MM.DD',
-  label,
-  defaultDate = new Date(),
-  handleSelectDate,
-  validAfterDate,
-}: CalendarFieldProps) => {
-  const isValidEndDate = (date: Dayjs) => {
-    const validAfter = validAfterDate && dayjs(validAfterDate, dateFormat);
-    return validAfter ? date.isAfter(validAfter, 'day') : true;
-  };
+const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
+  (
+    {
+      inputProps,
+      dateFormat = 'YY.MM.DD',
+      label,
+      defaultDate = new Date(),
+      handleSelectDate,
+      validAfterDate,
+      ...props
+    },
+    ref,
+  ) => {
+    const isValidEndDate = (date: Dayjs) => {
+      const validAfter = validAfterDate && dayjs(validAfterDate, dateFormat);
+      return validAfter ? date.isAfter(validAfter, 'day') : true;
+    };
 
-  // useEffect(() => {
-  //   console.log(
-  //     '~~!!! useEffect - CalendarField',
-  //     defaultDate,
-  //     dayjs(defaultDate).format(dateFormat),
-  //   );
-  //   handleSelectDate?.(dayjs(defaultDate).format(dateFormat));
-  // }, [defaultDate]);
-
-  return (
-    <div className="flex flex-col">
-      <label>{label}</label>
-      <ToggleProvider>
-        <PopperProvider isArrow align="center" side="bottom" arrowColor="red">
-          <ToggleProvider.Trigger>
-            <input
-              {...inputProps}
-              className="border-none text-center font-bold focus:outline-none"
-            />
-          </ToggleProvider.Trigger>
-
-          <ToggleProvider.Portal>
-            <ToggleProvider.Content>
-              <Calendar
-                calendarbaseDate={defaultDate}
-                selectedDate={defaultDate}
-                setSelectedDate={(date: Date) => {
-                  const formattedDate = dayjs(date).format(dateFormat);
-                  handleSelectDate?.(formattedDate);
-                }}
-                isInvalidate={(date: any) => {
-                  return !isValidEndDate(date);
-                }}
-                dateFormat={dateFormat}
+    return (
+      <div className="flex flex-col">
+        <label>{label}</label>
+        <ToggleProvider>
+          <PopperProvider isArrow align="center" side="bottom" arrowColor="red">
+            <ToggleProvider.Trigger>
+              <input
+                ref={ref}
+                {...props}
+                className="border-none text-center font-bold focus:outline-none"
               />
-            </ToggleProvider.Content>
-          </ToggleProvider.Portal>
-        </PopperProvider>
-      </ToggleProvider>
-    </div>
-  );
-};
+            </ToggleProvider.Trigger>
+
+            <ToggleProvider.Portal>
+              <ToggleProvider.Content>
+                <Calendar
+                  calendarbaseDate={defaultDate}
+                  selectedDate={defaultDate}
+                  setSelectedDate={(date: Date) => {
+                    const formattedDate = dayjs(date).format(dateFormat);
+                    handleSelectDate?.(formattedDate);
+                  }}
+                  isInvalidate={(date: any) => {
+                    return !isValidEndDate(date);
+                  }}
+                  dateFormat={dateFormat}
+                />
+              </ToggleProvider.Content>
+            </ToggleProvider.Portal>
+          </PopperProvider>
+        </ToggleProvider>
+      </div>
+    );
+  },
+);
 
 export default CalendarField;
