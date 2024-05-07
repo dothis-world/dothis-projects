@@ -30,11 +30,6 @@ const Calendar = ({
 
   useEffect(() => {
     setBaseDate(dayjs(calendarbaseDate, dateFormat));
-    console.log(
-      'baseDate:',
-      calendarbaseDate,
-      dayjs(calendarbaseDate, dateFormat),
-    );
   }, [calendarbaseDate]);
 
   const calendarArray = createCalendar(baseDate);
@@ -43,7 +38,6 @@ const Calendar = ({
 
   const handleDate = (date: Dayjs) => {
     setSelectedDate(date.toDate());
-    console.log(`handleDate(date): ${handleDate}(${date})`);
   };
 
   const decreaseMonth = () => {
