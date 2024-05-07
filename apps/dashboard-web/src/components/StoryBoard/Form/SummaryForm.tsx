@@ -89,9 +89,9 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
         <div className="flex grow flex-col">
           <CalendarField
             label="작성일자"
-            value={createdDate}
             readOnly
             maxLength={8}
+            value={createdDate}
             placeholder="2024.05.02"
             handleSelectDate={(dateStr) => {
               setValue('createdDate', dateStr);
@@ -106,15 +106,15 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
         <div className="flex grow flex-col">
           <CalendarField
             label="업로드예정일"
-            handleSelectDate={(dateStr: string) => {
-              setValue('uploadDate', dateStr);
-              update(dateStr, 'uploadDate');
-            }}
             readOnly
             maxLength={8}
             value={uploadDate}
             validAfterDate={createdDate}
             placeholder="2024.05.02"
+            handleSelectDate={(dateStr: string) => {
+              setValue('uploadDate', dateStr);
+              update(dateStr, 'uploadDate');
+            }}
             {...register('uploadDate', {
               required: true,
             })}
