@@ -61,7 +61,7 @@ const CalendarContainer = () => {
                 selectedDate={
                   selectedExpectedDate
                     ? selectedExpectedDate.format('YYYY-MM-DD')
-                    : selectedExpectedDate
+                    : ''
                 }
                 setSelectedDate={handleSetSelectedExpectedDate}
                 isInvalidate={isInvalidEndDate}
