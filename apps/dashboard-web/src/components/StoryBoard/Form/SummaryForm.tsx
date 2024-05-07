@@ -23,6 +23,19 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
     defaultValues: {} as StoryBoardSummaryFieldValues,
   });
 
+  const createdDate = watch('createdDate');
+  const uploadDate = watch('uploadDate') ?? watch('createdDate');
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
+
+  useEffect(() => {
+    if (dayjs(createdDate).isAfter(dayjs(uploadDate))) {
+      setValue('uploadDate', createdDate);
+    }
+  }, [createdDate]);
+
   const mutates: Record<
     keyof StoryBoardSummaryFieldValues,
     (value: string) => void
@@ -43,23 +56,11 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
     mutates[fieldName](value);
   };
 
-  useEffect(() => {
-    reset(defaultValues);
-  }, [defaultValues]);
-
   const formatDate = (dateStr: string | undefined): Date | undefined => {
     if (!dateStr) return undefined;
     const date = dateStr.length < 10 ? '20' + dateStr : dateStr;
     return new Date(date);
   };
-  const createdDate = watch('createdDate');
-  const uploadDate = watch('uploadDate') ?? watch('createdDate');
-
-  useEffect(() => {
-    if (dayjs(createdDate).isAfter(dayjs(uploadDate))) {
-      setValue('uploadDate', createdDate);
-    }
-  }, [createdDate]);
 
   return (
     <form className="flex flex-col gap-[30px] px-[30px]">
