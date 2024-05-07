@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -40,13 +41,10 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
   ) => {
     if (defaultValues[fieldName] === value) return;
     mutates[fieldName](value);
-    // console.log('update - SummaryForm', fieldName, value);
   };
 
   useEffect(() => {
     reset(defaultValues);
-    setValue('createdDate', '24.05.20');
-    setValue('uploadDate', '24.05.20');
   }, [defaultValues]);
 
   const formatDate = (dateStr: string | undefined): Date | undefined => {
@@ -54,8 +52,14 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
     const date = dateStr.length < 10 ? '20' + dateStr : dateStr;
     return new Date(date);
   };
-  const createdDate = formatDate(watch('createdDate'));
-  const uploadDate = formatDate(watch('uploadDate') ?? watch('createdDate'));
+  const createdDate = watch('createdDate');
+  const uploadDate = watch('uploadDate') ?? watch('createdDate');
+
+  useEffect(() => {
+    if (dayjs(createdDate).isAfter(dayjs(uploadDate))) {
+      setValue('uploadDate', createdDate);
+    }
+  }, [createdDate]);
 
   return (
     <form className="flex flex-col gap-[30px] px-[30px]">
@@ -84,40 +88,35 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
         <div className="flex grow flex-col">
           <CalendarField
             label="작성일자"
-            inputProps={{
-              ...register('createdDate', {
-                required: true,
-              }),
-              placeholder: 'YY.MM.DD',
-              readOnly: true,
-              maxLength: 8,
-            }}
-            defaultDate={createdDate}
+            value={createdDate}
+            readOnly
+            maxLength={8}
+            placeholder="2024.05.02"
             handleSelectDate={(dateStr) => {
-              console.log('!@#$#@!@#@#', dateStr);
               setValue('createdDate', dateStr);
               update(dateStr, 'createdDate');
             }}
+            {...register('createdDate', {
+              required: true,
+            })}
           />
         </div>
         <p>&gt;</p>
         <div className="flex grow flex-col">
           <CalendarField
             label="업로드예정일"
-            inputProps={{
-              ...register('uploadDate', {
-                required: true,
-              }),
-              placeholder: 'YY.MM.DD',
-              readOnly: true,
-              maxLength: 8,
-            }}
             handleSelectDate={(dateStr: string) => {
               setValue('uploadDate', dateStr);
               update(dateStr, 'uploadDate');
             }}
-            defaultDate={uploadDate}
+            readOnly
+            maxLength={8}
+            value={uploadDate}
             validAfterDate={createdDate}
+            placeholder="2024.05.02"
+            {...register('uploadDate', {
+              required: true,
+            })}
           />
         </div>
       </div>
