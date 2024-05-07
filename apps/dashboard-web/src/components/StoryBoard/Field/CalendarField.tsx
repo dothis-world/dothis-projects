@@ -1,8 +1,8 @@
 'use client';
 
-import clsx from 'clsx';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import type { InputHTMLAttributes } from 'react';
 import React, { forwardRef, useEffect, useState } from 'react';
 
@@ -10,22 +10,21 @@ import Calendar from '@/components/common/Calendar/Calendar';
 import PopperProvider from '@/components/common/Calendar/PopperProvider';
 import ToggleProvider from '@/components/common/Calendar/ToggleProvider';
 
+dayjs.extend(isSameOrAfter);
+
 interface CalendarFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  inputProps: React.HTMLProps<HTMLInputElement>;
   dateFormat?: string;
   label?: string;
-  defaultDate?: Date;
+
   handleSelectDate?: (dateStr: string) => void;
-  validAfterDate?: Date;
+  validAfterDate?: string;
 }
 
 const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
   (
     {
-      inputProps,
-      dateFormat = 'YY.MM.DD',
+      dateFormat = 'YYYY-MM-DD',
       label,
-      defaultDate = new Date(),
       handleSelectDate,
       validAfterDate,
       ...props
@@ -34,7 +33,7 @@ const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
   ) => {
     const isValidEndDate = (date: Dayjs) => {
       const validAfter = validAfterDate && dayjs(validAfterDate, dateFormat);
-      return validAfter ? date.isAfter(validAfter, 'day') : true;
+      return validAfter ? date.isSameOrAfter(validAfter, 'day') : true;
     };
 
     return (
@@ -46,6 +45,7 @@ const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
               <input
                 ref={ref}
                 {...props}
+                value={dayjs(props.value as string).format('YY.MM.DD')}
                 className="border-none text-center font-bold focus:outline-none"
               />
             </ToggleProvider.Trigger>
@@ -53,9 +53,9 @@ const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
             <ToggleProvider.Portal>
               <ToggleProvider.Content>
                 <Calendar
-                  calendarbaseDate={defaultDate}
-                  selectedDate={defaultDate}
-                  setSelectedDate={(date: Date) => {
+                  calendarbaseDate={props.value as string}
+                  selectedDate={props.value as string}
+                  setSelectedDate={(date: string) => {
                     const formattedDate = dayjs(date).format(dateFormat);
                     handleSelectDate?.(formattedDate);
                   }}
