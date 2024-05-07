@@ -10,9 +10,9 @@ import SvgComp from '../SvgComp';
 import * as Style from './styles';
 
 interface Props {
-  calendarbaseDate: Date;
-  selectedDate: Date;
-  setSelectedDate: (date: Date) => void;
+  calendarbaseDate: string;
+  selectedDate: string;
+  setSelectedDate: (date: string) => void;
   dateFormat?: string;
   isInvalidate?: (date: Dayjs) => boolean;
   callback?: () => void;
@@ -27,14 +27,10 @@ const Calendar = ({
   callback,
 }: Props) => {
   const [baseDate, setBaseDate] = useState(dayjs(calendarbaseDate, dateFormat));
+  // dayjs 생성 시 두번쨰 파라미터의 formatter를 넣으면 어떤 동작이 있는지?
 
   useEffect(() => {
     setBaseDate(dayjs(calendarbaseDate, dateFormat));
-    console.log(
-      'baseDate:',
-      calendarbaseDate,
-      dayjs(calendarbaseDate, dateFormat),
-    );
   }, [calendarbaseDate]);
 
   const calendarArray = createCalendar(baseDate);
@@ -42,8 +38,7 @@ const Calendar = ({
   const DAY_LIST = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handleDate = (date: Dayjs) => {
-    setSelectedDate(date.toDate());
-    console.log(`handleDate(date): ${handleDate}(${date})`);
+    setSelectedDate(date.format(dateFormat));
   };
 
   const decreaseMonth = () => {

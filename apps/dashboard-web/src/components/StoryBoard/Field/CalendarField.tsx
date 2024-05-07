@@ -1,77 +1,82 @@
 'use client';
 
-import clsx from 'clsx';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import type { InputHTMLAttributes } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 
 import Calendar from '@/components/common/Calendar/Calendar';
 import PopperProvider from '@/components/common/Calendar/PopperProvider';
 import ToggleProvider from '@/components/common/Calendar/ToggleProvider';
 
-interface CalendarFieldProps {
-  inputProps: React.HTMLProps<HTMLInputElement>;
+dayjs.extend(isSameOrAfter);
+
+interface CalendarFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   dateFormat?: string;
   label?: string;
-  defaultDate?: Date;
   handleSelectDate?: (dateStr: string) => void;
-  validAfterDate?: Date;
+  validAfterDate?: string;
 }
 
-const CalendarField = ({
-  inputProps,
-  dateFormat = 'YY.MM.DD',
-  label,
-  defaultDate = new Date(),
-  handleSelectDate,
-  validAfterDate,
-}: CalendarFieldProps) => {
-  const isValidEndDate = (date: Dayjs) => {
-    const validAfter = validAfterDate && dayjs(validAfterDate, dateFormat);
-    return validAfter ? date.isAfter(validAfter, 'day') : true;
-  };
+/**
+ * 기존 inputProps의 value, defaultValue의 타입을 Date 나 dayjs 타입으로 제어하려고 시도했습니다.
+ 
+ * InputHTMLAttributes -> value의 타입에서 해당 Date Object 형식의 구조로 적용할 수가 없어서 string으로 대체하였습니다.
+ */
+const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
+  (
+    {
+      dateFormat = 'YYYY-MM-DD',
+      label,
+      handleSelectDate,
+      validAfterDate,
+      ...props
+    },
+    ref,
+  ) => {
+    const date = dayjs(props.value as string);
 
-  // useEffect(() => {
-  //   console.log(
-  //     '~~!!! useEffect - CalendarField',
-  //     defaultDate,
-  //     dayjs(defaultDate).format(dateFormat),
-  //   );
-  //   handleSelectDate?.(dayjs(defaultDate).format(dateFormat));
-  // }, [defaultDate]);
+    const isValidEndDate = (date: Dayjs) => {
+      const validAfter = validAfterDate && dayjs(validAfterDate, dateFormat);
+      return validAfter ? date.isSameOrAfter(validAfter, 'day') : true;
+    };
 
-  return (
-    <div className="flex flex-col">
-      <label>{label}</label>
-      <ToggleProvider>
-        <PopperProvider isArrow align="center" side="bottom" arrowColor="red">
-          <ToggleProvider.Trigger>
-            <input
-              {...inputProps}
-              className="border-none text-center font-bold focus:outline-none"
-            />
-          </ToggleProvider.Trigger>
-
-          <ToggleProvider.Portal>
-            <ToggleProvider.Content>
-              <Calendar
-                calendarbaseDate={defaultDate}
-                selectedDate={defaultDate}
-                setSelectedDate={(date: Date) => {
-                  const formattedDate = dayjs(date).format(dateFormat);
-                  handleSelectDate?.(formattedDate);
-                }}
-                isInvalidate={(date: any) => {
-                  return !isValidEndDate(date);
-                }}
-                dateFormat={dateFormat}
+    return (
+      <div className="flex flex-col">
+        <label>{label}</label>
+        <ToggleProvider>
+          <PopperProvider isArrow align="center" side="bottom" arrowColor="red">
+            <ToggleProvider.Trigger>
+              <input
+                ref={ref}
+                {...props}
+                value={dayjs(props.value as string).format('YY.MM.DD')}
+                className="border-none text-center font-bold focus:outline-none"
               />
-            </ToggleProvider.Content>
-          </ToggleProvider.Portal>
-        </PopperProvider>
-      </ToggleProvider>
-    </div>
-  );
-};
+            </ToggleProvider.Trigger>
+
+            <ToggleProvider.Portal>
+              <ToggleProvider.Content>
+                <Calendar
+                  calendarbaseDate={props.value as string}
+                  selectedDate={props.value as string}
+                  setSelectedDate={(date: string) => {
+                    const formattedDate = dayjs(date).format(dateFormat);
+                    handleSelectDate?.(formattedDate);
+                  }}
+                  isInvalidate={(date: any) => {
+                    return !isValidEndDate(date);
+                  }}
+                  dateFormat={dateFormat}
+                />
+              </ToggleProvider.Content>
+            </ToggleProvider.Portal>
+          </PopperProvider>
+        </ToggleProvider>
+      </div>
+    );
+  },
+);
 
 export default CalendarField;
