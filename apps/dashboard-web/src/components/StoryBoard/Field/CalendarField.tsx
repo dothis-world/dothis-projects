@@ -15,11 +15,15 @@ dayjs.extend(isSameOrAfter);
 interface CalendarFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   dateFormat?: string;
   label?: string;
-
   handleSelectDate?: (dateStr: string) => void;
   validAfterDate?: string;
 }
 
+/**
+ * 기존 inputProps의 value, defaultValue의 타입을 Date 나 dayjs 타입으로 제어하려고 시도했습니다.
+ 
+ * InputHTMLAttributes -> value의 타입에서 해당 Date Object 형식의 구조로 적용할 수가 없어서 string으로 대체하였습니다.
+ */
 const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
   (
     {
@@ -31,6 +35,8 @@ const CalendarField = forwardRef<HTMLInputElement, CalendarFieldProps>(
     },
     ref,
   ) => {
+    const date = dayjs(props.value as string);
+
     const isValidEndDate = (date: Dayjs) => {
       const validAfter = validAfterDate && dayjs(validAfterDate, dateFormat);
       return validAfter ? date.isSameOrAfter(validAfter, 'day') : true;
