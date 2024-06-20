@@ -15,6 +15,7 @@ interface Props {
   setSelectedDate: (value: string) => void;
   isInvalidate?: (date: Dayjs) => boolean;
   dateFormat?: string;
+  callback?: () => void;
 }
 
 const MiniCalendar = ({
@@ -23,6 +24,7 @@ const MiniCalendar = ({
   setSelectedDate,
   isInvalidate,
   dateFormat = 'YYYY-MM-DD',
+  callback,
 }: Props) => {
   const [baseDate, setBaseDate] = useState(dayjs(calendarbaseDate, dateFormat));
 
@@ -36,6 +38,7 @@ const MiniCalendar = ({
 
   const handleDate = (date: Dayjs) => {
     setSelectedDate(date.format(dateFormat));
+    console.log(`handleDate(date): ${handleDate}(${date})`);
   };
 
   const decreaseMonth = () => {
@@ -82,6 +85,7 @@ const MiniCalendar = ({
                   onClick={() => {
                     if (isInvalid) return;
                     handleDate(date);
+                    callback?.();
                   }}
                   key={date.format(dateFormat)}
                 >

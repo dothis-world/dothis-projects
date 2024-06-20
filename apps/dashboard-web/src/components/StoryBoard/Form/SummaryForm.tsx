@@ -40,11 +40,22 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
   ) => {
     if (defaultValues[fieldName] === value) return;
     mutates[fieldName](value);
+    // console.log('update - SummaryForm', fieldName, value);
   };
 
   useEffect(() => {
     reset(defaultValues);
+    setValue('createdDate', '24.05.20');
+    setValue('uploadDate', '24.05.20');
   }, [defaultValues]);
+
+  const formatDate = (dateStr: string | undefined): Date | undefined => {
+    if (!dateStr) return undefined;
+    const date = dateStr.length < 10 ? '20' + dateStr : dateStr;
+    return new Date(date);
+  };
+  const createdDate = formatDate(watch('createdDate'));
+  const uploadDate = formatDate(watch('uploadDate') ?? watch('createdDate'));
 
   return (
     <form className="flex flex-col gap-[30px] px-[30px]">
@@ -76,17 +87,16 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
             inputProps={{
               ...register('createdDate', {
                 required: true,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                  update(e.target.value, 'createdDate'),
               }),
-              placeholder: '00.00.00',
+              placeholder: 'YY.MM.DD',
               readOnly: true,
               maxLength: 8,
             }}
-            defaultDate={watch('createdDate')}
-            handleSelectDate={(value) => {
-              setValue('createdDate', value);
-              if (watch('uploadDate') < value) setValue('uploadDate', value);
+            defaultDate={createdDate}
+            handleSelectDate={(dateStr) => {
+              console.log('!@#$#@!@#@#', dateStr);
+              setValue('createdDate', dateStr);
+              update(dateStr, 'createdDate');
             }}
           />
         </div>
@@ -97,18 +107,17 @@ const SummaryForm = ({ storyBoardId, defaultValues }: SummaryFormProps) => {
             inputProps={{
               ...register('uploadDate', {
                 required: true,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                  update(e.target.value, 'uploadDate'),
               }),
-              placeholder: '00.00.00',
+              placeholder: 'YY.MM.DD',
               readOnly: true,
               maxLength: 8,
             }}
-            handleSelectDate={(value: string) => {
-              setValue('uploadDate', value);
+            handleSelectDate={(dateStr: string) => {
+              setValue('uploadDate', dateStr);
+              update(dateStr, 'uploadDate');
             }}
-            defaultDate={watch('uploadDate') ?? watch('createdDate')}
-            validAfterDate={watch('createdDate')}
+            defaultDate={uploadDate}
+            validAfterDate={createdDate}
           />
         </div>
       </div>
