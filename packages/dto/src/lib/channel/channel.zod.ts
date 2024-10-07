@@ -112,6 +112,8 @@ export const zGetVideoTimelineResponse = z.object({
   }),
 });
 
+export const zGetVideoTimelineList = dataObject(zGetVideoTimelineResponse);
+
 export const zRegisterChannelListResponseObject =
   zChannelListResponseObject.pick({
     channelId: true,
