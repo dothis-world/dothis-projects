@@ -102,6 +102,7 @@ export const zAutocompleteChannelName = zChannelNameAutocompleteListData;
 export const zGetVideoTimelineQuery = zChannelId;
 
 export const zGetRegisterChannelIdQuery = zChannelId;
+
 export const zGetVideoTimelineResponse = z.object({
   videoId: z.string().url(),
   title: z.string().min(1, 'Title must not be empty'),
@@ -110,6 +111,7 @@ export const zGetVideoTimelineResponse = z.object({
     message: 'Invalid date format',
   }),
 });
+
 export const zRegisterChannelListResponseObject =
   zChannelListResponseObject.pick({
     channelId: true,
@@ -117,8 +119,13 @@ export const zRegisterChannelListResponseObject =
     channelThumbnail: true,
     channelSubscribers: true,
   });
+
 export const zRegisterChannelAnalysisResponse = z.array(
   zRegisterChannelListResponseObject,
+);
+
+export const zRegisterChannelAnalysisList = dataObject(
+  zRegisterChannelAnalysisResponse,
 );
 
 // Define the response schema
