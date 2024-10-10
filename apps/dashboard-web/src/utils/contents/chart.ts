@@ -29,6 +29,11 @@ type CombineExpectedView = ClientInferResponseBody<
   200
 >['data'][number]['data'][number];
 
+type Timeline = ClientInferResponseBody<
+  typeof apiRouter.channel.getVideoTimeline,
+  200
+>['data'];
+
 /**
  * Date에 따른 initial 구조를 생성한다.
  * @returns @single format이 single일 경우 value-number로 반환
@@ -64,6 +69,76 @@ const initChartDateFormatter = <T extends 'single' | 'range'>({
 
   return viewsObject;
 };
+
+/**
+ * Timeline 경계선
+ * @param param0
+ */
+
+const initChartMonthFormatter = ({
+  startMonth,
+  endMonth,
+}: {
+  startMonth: string;
+  endMonth: string;
+}) => {
+  const viewsObject: Record<string, number> = {};
+
+  for (
+    let date = dayjs(startMonth);
+    date.isSameOrBefore(endMonth, 'month');
+    date = date.add(1, 'month')
+  ) {
+    viewsObject[date.format('YYYY-MM')] = 0;
+  }
+  return viewsObject;
+};
+
+export const handleTimelineDailyView = (
+  data: Timeline | undefined,
+  { startMonth, endMonth }: { startMonth: string; endMonth: string },
+) => {
+  const monthBasedDataSet = initChartMonthFormatter({ startMonth, endMonth });
+
+  data?.forEach((item) => {
+    if (item) {
+      const month = dayjs(item.publishedDate).format('YYYY-MM');
+
+      const views = item.views;
+
+      if (monthBasedDataSet.hasOwnProperty(month)) {
+        monthBasedDataSet[month] += Math.abs(views);
+      }
+    }
+  });
+
+  const result = createDateTimeD3(monthBasedDataSet);
+
+  return result;
+};
+
+export const handleTimelineVideoCount = (
+  data: Timeline | undefined,
+  { startMonth, endMonth }: { startMonth: string; endMonth: string },
+) => {
+  const monthBasedDataSet = initChartMonthFormatter({ startMonth, endMonth });
+
+  data?.forEach((item) => {
+    if (item) {
+      const month = dayjs(item.publishedDate).format('YYYY-MM');
+
+      if (monthBasedDataSet.hasOwnProperty(month)) {
+        monthBasedDataSet[month] += 1;
+      }
+    }
+  });
+
+  const result = createDateTimeD3(monthBasedDataSet);
+
+  return result;
+};
+
+// Timline 경계선
 
 /**
  * DateTime에 따라 x축이 정렬되는 ApexChart의 특징에 따른 x축의 DateTime으로 변환한 데이터를 삽입
