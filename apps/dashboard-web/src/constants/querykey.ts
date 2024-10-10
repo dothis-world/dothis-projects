@@ -35,3 +35,7 @@ export const CHANNEL_AUTO_COMPLETE_KEY = createQueryKeys(
   'channel_auto_complete',
 );
 export const CHANNEL_LIST_KEY = createQueryKeys('channel_list');
+export const ANALYSIS_CHANNEL_LIST_KEY = createQueryKeys(
+  'analysis_channel_list',
+);
+export const CHANNEL_TIMELINE_KEY = createQueryKeys('channel_timeline');
