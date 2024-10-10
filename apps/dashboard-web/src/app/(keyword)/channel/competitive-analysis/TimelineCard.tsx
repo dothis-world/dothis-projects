@@ -1,27 +1,48 @@
 import * as D3 from 'd3';
+import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
 
 import {
   useDailyViewV2,
   useUploadVideoCountFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
+import {
+  useTimelineDailyViewFormatter,
+  useTimelineVideoCountFormatter,
+} from '@/hooks/contents/useTimelineChartFormatter';
+import useGetTimeline from '@/hooks/react-query/query/useGetTimeline';
 import useDimensions from '@/hooks/useDimenstions';
 
 import useD3Bar from '../../keyword/[keyword]/[related_word]/summary/useD3Bar';
+import useD3HoverDots from '../../keyword/[keyword]/[related_word]/summary/useD3HoverDots';
+import useD3HoverLine from '../../keyword/[keyword]/[related_word]/summary/useD3HoverLine';
+import useD3HoverVirtual from '../../keyword/[keyword]/[related_word]/summary/useD3HoverVirtual';
+import useD3HoverVirtualDom from '../../keyword/[keyword]/[related_word]/summary/useD3HoverVirtualDom';
 import useD3Line from '../../keyword/[keyword]/[related_word]/summary/useD3Line';
+import useD3Lines from '../../keyword/[keyword]/[related_word]/summary/useD3Lines';
 import useXAxis from '../../keyword/[keyword]/[related_word]/summary/useXAxis';
+import useYAxes from '../../keyword/[keyword]/[related_word]/summary/useYAxes';
 import useYAxis from '../../keyword/[keyword]/[related_word]/summary/useYAxis';
 
 interface Props {
-  keyword: string;
-  relword: string;
+  channelId: string;
   index: number;
 }
 
-const TimelineCard = ({ keyword, relword, index }: Props) => {
+const TimelineCard = ({ channelId, index }: Props) => {
   const selectRef = useRef<HTMLDivElement>(null);
 
+  const { data } = useGetTimeline({ channelId });
+
   const { width } = useDimensions(selectRef);
+
+  const test = useTimelineDailyViewFormatter({ channelId });
+
+  const test2 = useTimelineVideoCountFormatter({ channelId });
+
+  console.log(data);
+  console.log(test);
+  console.log(test2);
 
   const height = 290;
   const marginTop = 20;
@@ -37,16 +58,6 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
     marginBottom,
     marginLeft,
   };
-
-  const dailyViewData = useDailyViewV2({
-    keyword: keyword,
-    relword: relword,
-  });
-
-  const videoCountData = useUploadVideoCountFormatterD3({
-    keyword: keyword,
-    relword: relword,
-  });
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때 SVG 생성
@@ -64,6 +75,8 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
     };
   }, []); //
 
+  const listData = [test, test2];
+
   const chart = D3.select(`#content-timeline-chart-${index}`)
     .select('svg')
     .attr('width', width)
@@ -71,22 +84,39 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
 
   const { y, yAxisRef } = useYAxis({
     chartSelector: chart,
-    data: dailyViewData,
+    data: test,
     dimensions,
     styleMethod(selection) {
       selection.attr('stroke-dasharray', '5, 5').style('opacity', 0.2);
     },
   });
 
+  const { y: yBar, yAxisRef: yAxisBarRef } = useYAxis({
+    chartSelector: chart,
+    data: test2,
+    dimensions,
+    styleMethod(selection) {
+      selection.attr('stroke-dasharray', '5, 5').style('opacity', 0.2);
+    },
+  });
+
+  const { y: yList, yAxisRef: yListAxisRef } = useYAxes({
+    chartSelector: chart,
+    data: listData,
+    dimensions,
+    styleMethod(selection) {
+      selection.attr('stroke-dasharray', '5, 5').style('opacity', 0.2);
+    },
+  });
   const { x, xAxisRef } = useXAxis({
     chartSelector: chart,
-    data: dailyViewData,
+    data: test,
     dimensions,
   });
 
   const line = useD3Line({
     chartSelector: chart,
-    data: dailyViewData,
+    data: test,
     dimensions,
     xScale: x,
     yScale: y,
@@ -94,17 +124,53 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
       //   selection.style('stroke-linecap', 'round');
       //   selection.classed('class', '조회-수');
     },
-    curveType: D3.curveStepAfter, //curvelinear
-    title: keyword + '조회-수' + index,
+    curveType: D3.curveLinear, //curvelinear
+    title: channelId + '조회-수' + index,
   });
 
   const bar = useD3Bar({
     chartSelector: chart,
-    data: videoCountData,
-    title: keyword + '발행영상-수' + index,
+    data: test2,
+    title: channelId + '발행영상-수' + index,
     dimensions,
     xScale: x,
-    yScale: y,
+    yScale: yBar,
+  });
+
+  const tooltip = D3.select(`#content-timeline-tooltip-${index}`)
+    .style('position', 'absolute')
+    // .style('top', '-999px')
+    // .style('left', '-999px')
+    .style('display', 'none')
+    .style('min-width', '490px')
+    .style('min-height', '180px')
+    .style('background-color', '#fff')
+    .style('border', '1px solid #ccc')
+    .style('padding', '9px 6px')
+    .style('border-radius', '10px');
+
+  const { lineHoverRef, handleSelectHoverLines } = useD3HoverLine({
+    chartSelector: chart,
+    data: test,
+    dimensions,
+    xScale: x,
+  });
+
+  const { dotRef, handleSelectHoverCircle } = useD3HoverDots({
+    chartSelector: chart,
+    data: listData,
+    dimensions,
+    xScale: x,
+    yScale: yList,
+    styleMethod(selection, index, isUpdate) {},
+  });
+
+  const hoverVirtualDom = useD3HoverVirtual({
+    chartSelector: chart,
+    data: test,
+    dimensions,
+    xScale: x,
+    tooltip,
   });
 
   useEffect(() => {
@@ -116,6 +182,7 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
     // xAxisRef.current?.remove();
     yAxisRef.current?.render();
     xAxisRef.current?.render();
+    yAxisBarRef.current?.render();
     // lineHoverRef.current?.render();
   }, [width, xAxisRef, yAxisRef]);
 
@@ -128,6 +195,11 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
     bar.current?.render();
     line.current?.render();
 
+    hoverVirtualDom.hoverVirtualRef.current?.render({
+      handleSelectHoverCircle,
+      handleSelectHoverLines,
+    });
+
     const xMargin = 16;
     const yMargin = 6;
     const legendSpacing = 80 + xMargin * 2;
@@ -136,8 +208,8 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
     const legendStartX = (width - legendWidth) / 2 + 50;
 
     const dataReady = [
-      { name: '조회-수', values: dailyViewData, color: '#F0ABFC' },
-      { name: '발행영상-수', values: dailyViewData, color: '#2a61e0' },
+      { name: '조회-수', values: test, color: '#F0ABFC' },
+      { name: '발행영상-수', values: test2, color: '#2a61e0' },
     ];
     const legendBackGround = chart
 
@@ -166,7 +238,7 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
       .style('fill', '#cf2e2e')
       .style('margin', 8)
       .append('text')
-      .attr('class', (d) => `${keyword}legend${d.name}${index}`)
+      .attr('class', (d) => `${channelId}legend${d.name}${index}`)
       .attr('text-anchor', 'middle ') // 텍스트 중앙 정렬
 
       .attr('transform', function (d, i) {
@@ -219,21 +291,21 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
         // is the element currently visible ?
 
         let currentOpacity: string;
-        currentOpacity = D3.selectAll('.' + keyword + i.name + index)?.style(
+        currentOpacity = D3.selectAll('.' + channelId + i.name + index)?.style(
           'opacity',
         );
         // Change the opacity: from 0 to 1 or from 1 to 0
-        D3.selectAll('.' + keyword + i.name + index)
+        D3.selectAll('.' + channelId + i.name + index)
           .transition()
           .style('opacity', Number(currentOpacity) == 1 ? 0.2 : 1);
 
-        D3.selectAll('.' + `${keyword}legend${i.name}${index}`)
+        D3.selectAll('.' + `${channelId}legend${i.name}${index}`)
           .transition()
           .style('opacity', Number(currentOpacity) == 1 ? 0.2 : 1);
       });
 
     legendBackGround.exit().remove();
-  }, [width, JSON.stringify(dailyViewData)]);
+  }, [width, JSON.stringify(test)]);
 
   return (
     <div className="relative flex-grow">
@@ -243,7 +315,8 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
         id={`content-timeline-chart-${index}`}
         ref={selectRef}
       ></div>
-      <div id={`content-timeline-tooltip-${index}`} className="z-[500]"></div>{' '}
+      <div id="tooltip-container"></div>
+      <div id={`content--tooltip-${index}`} className="z-[500]"></div>
     </div>
   );
 };
