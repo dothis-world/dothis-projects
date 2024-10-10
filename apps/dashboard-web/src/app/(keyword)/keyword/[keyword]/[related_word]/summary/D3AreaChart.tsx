@@ -3,6 +3,7 @@
 import './styles.css';
 
 import * as D3 from 'd3';
+import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
 
 import { useExpectedViewFormatter } from '@/hooks/contents/useChartFormatter';
@@ -93,7 +94,11 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
           D3.axisBottom(x)
             .tickSizeOuter(0)
             .tickSize(0)
-            .tickFormat((d) => d),
+            .tickFormat((d, index) => {
+              const defaultIndex = 7;
+              const dayjsIndex = defaultIndex - index;
+              return dayjs().subtract(dayjsIndex, 'day').format('YYYY-MM-DD');
+            }),
         )
         .selectAll('text')
         .attr('font-size', '12px')
