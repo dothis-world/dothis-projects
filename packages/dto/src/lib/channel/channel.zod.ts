@@ -112,7 +112,9 @@ export const zGetVideoTimelineResponse = z.object({
   }),
 });
 
-export const zGetVideoTimelineList = dataObject(zGetVideoTimelineResponse);
+export const zGetVideoTimelineList = z.array(zGetVideoTimelineResponse);
+
+export const zGetVideoTimelineListResponse = dataObject(zGetVideoTimelineList);
 
 export const zRegisterChannelListResponseObject =
   zChannelListResponseObject.pick({

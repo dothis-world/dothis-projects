@@ -9,6 +9,7 @@ import {
   zChannelNameAutocompleteQuery,
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
   zGetVideoTimelineList,
+  zGetVideoTimelineListResponse,
   zGetVideoTimelineQuery,
   zRegisterChannelAnalysisList,
 } from './channel.zod';
@@ -67,7 +68,7 @@ export const channelApi = c.router({
     path: `${channelApiUrl}/video-timeline`,
     query: zGetVideoTimelineQuery,
     responses: {
-      200: zGetVideoTimelineList,
+      200: zGetVideoTimelineListResponse,
       ...zErrResBase,
     },
     summary: '채널의 영상 타임라인 가져오기',
