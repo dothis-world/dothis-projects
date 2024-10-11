@@ -9,6 +9,7 @@ import {
 import {
   useTimelineDailyViewFormatter,
   useTimelineVideoCountFormatter,
+  useTimelineVideoFormatter,
 } from '@/hooks/contents/useTimelineChartFormatter';
 import useGetTimeline from '@/hooks/react-query/query/useGetTimeline';
 import useDimensions from '@/hooks/useDimenstions';
@@ -40,9 +41,9 @@ const TimelineCard = ({ channelId, index }: Props) => {
 
   const test2 = useTimelineVideoCountFormatter({ channelId });
 
-  console.log(data);
-  console.log(test);
+  const test3 = useTimelineVideoFormatter({ channelId });
   console.log(test2);
+  console.log(test3);
 
   const height = 290;
   const marginTop = 20;
@@ -171,6 +172,8 @@ const TimelineCard = ({ channelId, index }: Props) => {
     dimensions,
     xScale: x,
     tooltip,
+    index,
+    hoverData: test3,
   });
 
   useEffect(() => {
@@ -308,14 +311,14 @@ const TimelineCard = ({ channelId, index }: Props) => {
   }, [width, JSON.stringify(test)]);
 
   return (
-    <div className="relative flex-grow">
+    <div className="relative flex-grow overflow-visible">
       {/* grid cols 넣으니깐 부모에 반응형적으로 자식이 제어가 된다. 이전 relative 박스가 있기전에    */}
       <div
-        className="grid grid-cols-1 [&_svg]:overflow-visible"
+        className="grid grid-cols-1  [&_svg]:overflow-visible"
         id={`content-timeline-chart-${index}`}
         ref={selectRef}
       ></div>
-      <div id="tooltip-container"></div>
+      <div id={`tooltip-container-${index}`} className="overflow-visible"></div>
       <div id={`content--tooltip-${index}`} className="z-[500]"></div>
     </div>
   );
