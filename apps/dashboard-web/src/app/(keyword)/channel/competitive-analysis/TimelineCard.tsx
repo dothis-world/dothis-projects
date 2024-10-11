@@ -42,8 +42,6 @@ const TimelineCard = ({ channelId, index }: Props) => {
   const test2 = useTimelineVideoCountFormatter({ channelId });
 
   const test3 = useTimelineVideoFormatter({ channelId });
-  console.log(test2);
-  console.log(test3);
 
   const height = 290;
   const marginTop = 20;
