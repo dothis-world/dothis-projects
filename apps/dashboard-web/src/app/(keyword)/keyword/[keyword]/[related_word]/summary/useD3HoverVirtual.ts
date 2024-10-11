@@ -1,10 +1,27 @@
 import * as D3 from 'd3';
+import { title } from 'process';
 import { useImperativeHandle, useRef } from 'react';
+import ReactDOM from 'react-dom';
 
 import { renderTooltip } from '@/app/(keyword)/channel/competitive-analysis/TooltipComponent';
 
 import type { DataItem } from './SummaryChart';
 
+export interface DataItemV2 {
+  date: string;
+  value: {
+    title: string | null;
+    thumnail: string | null; // 'thumnail' -> 'thumbnail'로 수정
+  };
+}
+
+type Test = {
+  date: string;
+  value: {
+    title: string | null;
+    thumnail: string | null;
+  };
+}[];
 interface LineRef<T> {
   //   line: D3.Line<DataItem>;
   render: (selectorFn: {
@@ -42,6 +59,8 @@ interface Props {
   tooltip: D3.Selection<D3.BaseType, unknown, HTMLElement, any>;
   tooltipColorCallback?: (index: number, colorList: string[]) => void;
   keywordList?: string[];
+  index: number;
+  hoverData: Test;
 }
 
 const useD3HoverVirtual = ({
@@ -52,6 +71,8 @@ const useD3HoverVirtual = ({
   tooltip,
   tooltipColorCallback,
   keywordList,
+  index,
+  hoverData,
 }: Props) => {
   const { width, height, marginTop, marginRight, marginBottom, marginLeft } =
     dimensions;
@@ -141,8 +162,23 @@ const useD3HoverVirtual = ({
           tooltip.transition().duration(0).style('display', 'block');
 
           const colorList = ['green', 'blue'];
-          console.log('cc');
-          renderTooltip(mouseX, mouseY, 'Tooltip content here');
+
+          const relatedData = hoverData.find((item) => item.date === i.date);
+
+          if (
+            relatedData &&
+            relatedData.value &&
+            relatedData.value.thumnail &&
+            relatedData.value.title
+          ) {
+            renderTooltip(
+              mouseX,
+              mouseY,
+              relatedData.value.title,
+              index,
+              relatedData.value.thumnail,
+            );
+          }
           // tooltip
           //   .html(
           //     `<div>
@@ -155,9 +191,24 @@ const useD3HoverVirtual = ({
           //   .style('top', mouseX - convertRemToPixels(2) + 'px');
         })
         .on('mousemove', function (e, i) {
+          const relatedData = hoverData.find((item) => item.date === i.date);
+
           const [mouseX, mouseY] = D3.pointer(e);
-          console.log('cc');
-          renderTooltip(mouseX, mouseY, '테스트');
+
+          if (
+            relatedData &&
+            relatedData.value &&
+            relatedData.value.thumnail &&
+            relatedData.value.title
+          ) {
+            renderTooltip(
+              mouseX,
+              mouseY,
+              relatedData.value.title,
+              index,
+              relatedData.value.thumnail,
+            );
+          }
           return tooltip
 
             .style('top', mouseY + convertRemToPixels(-1.6) + 'px')
@@ -188,16 +239,24 @@ const useD3HoverVirtual = ({
         .selectAll('rect')
         .data(timeSeriesData)
         .on('mouseover', (e, i) => {
-          //   const bisect = D3.bisector(
-          //     (d: DataItem | (typeof timeSeriesData)[number]) => d.date,
-          //   ).left;
+          const relatedData = hoverData.find((item) => item.date === i.date);
 
-          //   const bisectArray = data.map((currentData) => {
-          //     const dataLavel = bisect(currentData, i.date);
+          const [mouseX, mouseY] = D3.pointer(e);
 
-          //     return currentData[dataLavel];
-          //   });
-
+          if (
+            relatedData &&
+            relatedData.value &&
+            relatedData.value.thumnail &&
+            relatedData.value.title
+          ) {
+            renderTooltip(
+              mouseX,
+              mouseY,
+              relatedData.value.title,
+              index,
+              relatedData.value.thumnail,
+            );
+          }
           hoverLinesSelector
             .filter((d, item) => (d as DataItem).date === i.date)
             .style('opacity', 1);
@@ -208,10 +267,8 @@ const useD3HoverVirtual = ({
 
           D3.select(e.target).transition().attr('r', 4);
 
-          const [mouseX, mouseY] = D3.pointer(e);
-
           tooltip.transition().duration(0).style('display', 'block');
-          renderTooltip(mouseX, mouseY, '테스트');
+
           const colorList = ['green', 'blue'];
           tooltip
             .html(
@@ -226,8 +283,25 @@ const useD3HoverVirtual = ({
             .style('top', mouseX - convertRemToPixels(2) + 'px');
         })
         .on('mousemove', function (e, i) {
+          const relatedData = hoverData.find((item) => item.date === i.date);
+
           const [mouseX, mouseY] = D3.pointer(e);
-          renderTooltip(mouseX, mouseY, '테스트');
+
+          if (
+            relatedData &&
+            relatedData.value &&
+            relatedData.value.thumnail &&
+            relatedData.value.title
+          ) {
+            renderTooltip(
+              mouseX,
+              mouseY,
+              relatedData.value.title,
+              index,
+              relatedData.value.thumnail,
+            );
+          }
+
           return tooltip
 
             .style('top', mouseY + convertRemToPixels(-1.6) + 'px')
@@ -245,9 +319,12 @@ const useD3HoverVirtual = ({
           // }
 
           hoverDotsSelector.style('opacity', 0);
-
-          // ReactDOM.unmountComponentAtNode(document.getElementById('tooltip-container'));
-
+          const tooltipContainer = document.getElementById(
+            `tooltip-container-${index}`,
+          );
+          if (tooltipContainer) {
+            ReactDOM.unmountComponentAtNode(tooltipContainer);
+          }
           D3.select(e.target).transition().attr('r', 2);
 
           hoverLinesSelector.style('opacity', 0);
