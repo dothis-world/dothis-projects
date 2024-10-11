@@ -8,9 +8,10 @@ interface TooltipProps {
   x: number;
   y: number;
   content: string; // You can extend this for more complex structures
+  tunmnail: string;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ x, y, content }) => {
+const Tooltip: React.FC<TooltipProps> = ({ x, y, content, tunmnail }) => {
   const tooltipStyle: React.CSSProperties = {
     position: 'absolute',
     left: `${x}px`,
@@ -19,42 +20,47 @@ const Tooltip: React.FC<TooltipProps> = ({ x, y, content }) => {
     border: '1px solid #ccc',
     borderRadius: '10px',
     padding: '9px 6px',
-    width: '160px',
-    height: '100px',
+    width: '420px',
+    minHeight: '200px',
     display: 'block',
-    aspectRatio: 16 / 9,
+    zIndex: 9999,
+    overflow: 'visible',
   };
 
   return (
-    <div style={tooltipStyle}>
-      <Image
-        unoptimized
-        src={'https://img.youtube.com/vi/lzm-7YfBJBU/maxresdefault.jpg'}
-        alt="Picture of the author"
-        onError={handleImageError}
-        fill={true}
-        // layout="responsive"
+    <div style={tooltipStyle} className="overflow-visible">
+      <div className="text-center text-[18px] font-bold">이 달의 대표 영상</div>
+      <div className="overflow-visible">
+        <div className="relative aspect-video flex-1 overflow-visible">
+          <Image
+            unoptimized
+            src={`https://img.youtube.com/vi/${tunmnail}/maxresdefault.jpg`}
+            alt="Picture of the author"
+            onError={handleImageError}
+            fill={true}
+            // layout="responsive"
 
-        className="object-cover"
-      />
-
-      <div>{content}</div>
-      <Image
-        unoptimized
-        src={'https://img.youtube.com/vi/lzm-7YfBJBU/maxresdefault.jpg'}
-        alt="Picture of the author"
-        onError={handleImageError}
-        fill={true}
-        // layout="responsive"
-
-        className="object-cover"
-      />
-      <div>{content}</div>
+            className="overflow-visible object-cover"
+          />
+        </div>
+        <div className="mt-4 text-[16px] font-bold">{content}</div>
+      </div>
     </div>
   );
 };
 
-export const renderTooltip = (x: number, y: number, content: string) => {
-  const tooltipContainer = document.getElementById('tooltip-container');
-  ReactDOM.render(<Tooltip x={x} y={y} content={content} />, tooltipContainer);
+export const renderTooltip = (
+  x: number,
+  y: number,
+  content: string,
+  index: number,
+  tunmnail: string,
+) => {
+  const tooltipContainer = document.getElementById(
+    `tooltip-container-${index}`,
+  );
+  ReactDOM.render(
+    <Tooltip x={x} y={y} content={content} tunmnail={tunmnail} />,
+    tooltipContainer,
+  );
 };
