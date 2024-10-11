@@ -34,7 +34,16 @@ import { ChannelAnalysisModule } from '@Apps/modules/channel/infrastucture/entit
 import { RegisterChannelService } from '@Apps/modules/channel/application/service/register-channel.service';
 import { GetRegisteredChannelHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/get-registered-channel.http.controller';
 import { GetRegisteredChannelService } from '@Apps/modules/channel/application/service/get-registered-channel.service';
-import { OpensearchCoreModule } from '@Apps/common/opensearch/core.module';
+import { GetRegisterChannelContentListHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/get-registered-channel-content-list.http.controller';
+import { GetRegisterContentListService } from '@Apps/modules/channel/application/service/get-register-content-list.service';
+import { VideoListByChannelIdAdapter } from '@Apps/modules/video/infrastructure/adapters/video.list-by-channel-id.adapter';
+import {
+  VIDEO_DATA_ADAPTER_DI_TOKEN,
+  VIDEO_LIST_BY_CHANNEL_ID_ADAPTER_DI_TOKEN,
+} from '@Apps/modules/video/video.di-token';
+import { VideoDataAdapter } from '@Apps/modules/video/infrastructure/adapters/video_data.adapter';
+import { DeleteRegisteredChannelHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/delete-registered-channel.http.controller';
+import { DeleteRegisteredChannelService } from '@Apps/modules/channel/application/service/delete-registered-channel.service';
 
 const controllers = [
   FindInfluentialListHttpController,
@@ -43,6 +52,8 @@ const controllers = [
   VideoTimelineController,
   RegisterChannelHttpController,
   GetRegisteredChannelHttpController,
+  GetRegisterChannelContentListHttpController,
+  DeleteRegisteredChannelHttpController,
 ];
 
 const service: Provider[] = [
@@ -55,6 +66,8 @@ const service: Provider[] = [
   GetTimelineService,
   RegisterChannelService,
   GetRegisteredChannelService,
+  GetRegisterContentListService,
+  DeleteRegisteredChannelService,
 ];
 
 const adapter: Provider[] = [
@@ -85,6 +98,14 @@ const adapter: Provider[] = [
   {
     provide: CHANNEL_DATA_DI_TOKEN,
     useClass: ChannelDataAdapter,
+  },
+  {
+    provide: VIDEO_LIST_BY_CHANNEL_ID_ADAPTER_DI_TOKEN,
+    useClass: VideoListByChannelIdAdapter,
+  },
+  {
+    provide: VIDEO_DATA_ADAPTER_DI_TOKEN,
+    useClass: VideoDataAdapter,
   },
 ];
 

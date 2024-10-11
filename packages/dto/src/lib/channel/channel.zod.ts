@@ -1,6 +1,13 @@
 import { z } from 'zod';
 import { findVideoBySearchKeyword } from '../video';
-import { dataObject, zClusterNumberMulti, zSortQuery } from '../common.model';
+
+import {
+  zClusterNumberMulti,
+  zDateQuery,
+  zSearchKeyword,
+  dataObject,
+  zSortQuery,
+} from '../common.model';
 
 export const ChannelSubscriberRange = {
   RANGE_1000_TO_9999: '1000to9999',
@@ -115,6 +122,13 @@ export const zGetVideoTimelineResponse = z.object({
 export const zGetVideoTimelineList = z.array(zGetVideoTimelineResponse);
 
 export const zGetVideoTimelineListResponse = dataObject(zGetVideoTimelineList);
+export const zRegisteredChannelContentsResp = z.object({
+  videoId: z.string().nonempty('Video ID는 빈 문자열일 수 없습니다.'), // 비디오의 고유 식별자
+  videoTitle: z.string().nonempty('비디오 제목은 빈 문자열일 수 없습니다.'), // 비디오 제목
+  videoViews: z.number().nonnegative('비디오 조회수는 음수일 수 없습니다.'), // 비디오 조회수
+  videoPublished: z.date(),
+  videoUseText: z.array(z.string()),
+});
 
 export const zRegisterChannelListResponseObject =
   zChannelListResponseObject.pick({
@@ -122,6 +136,8 @@ export const zRegisterChannelListResponseObject =
     channelName: true,
     channelThumbnail: true,
     channelSubscribers: true,
+    channelAverageViews: true,
+    channelTotalViews: true,
   });
 
 export const zRegisterChannelAnalysisResponse = z.array(
@@ -131,6 +147,14 @@ export const zRegisterChannelAnalysisResponse = z.array(
 export const zRegisterChannelAnalysisList = dataObject(
   zRegisterChannelAnalysisResponse,
 );
+export const zRegisteredChannelContentsResponse = z.array(
+  zRegisteredChannelContentsResp,
+);
+export const zGetContentListQuery = zDateQuery
+  .pick({ from: true })
+  .merge(zSearchKeyword.pick({ search: true }))
+  .merge(zChannelId)
+  .merge(zSortQuery(['video_published', 'video_views']));
 
 // Define the response schema
 export const zChannelListResponse = z.array(zChannelListResponseObject);
