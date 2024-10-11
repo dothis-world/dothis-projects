@@ -1,4 +1,5 @@
 import * as D3 from 'd3';
+import dayjs from 'dayjs';
 import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
 import type { DataItem } from './SummaryChart';
@@ -45,7 +46,10 @@ const useXAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
               D3.axisBottom(x)
                 .tickSizeOuter(0)
                 .tickSize(0)
-                .tickFormat((d) => d),
+                .tickFormat((d, index) => {
+                  // dayjs('2023-09-24').format('YYYY-MM-DD');
+                  return d;
+                }),
             )
             .selectAll('text')
             .attr('font-size', '12px')

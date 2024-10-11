@@ -109,6 +109,7 @@ export const zAutocompleteChannelName = zChannelNameAutocompleteListData;
 export const zGetVideoTimelineQuery = zChannelId;
 
 export const zGetRegisterChannelIdQuery = zChannelId;
+
 export const zGetVideoTimelineResponse = z.object({
   videoId: z.string().url(),
   title: z.string().min(1, 'Title must not be empty'),
@@ -118,6 +119,9 @@ export const zGetVideoTimelineResponse = z.object({
   }),
 });
 
+export const zGetVideoTimelineList = z.array(zGetVideoTimelineResponse);
+
+export const zGetVideoTimelineListResponse = dataObject(zGetVideoTimelineList);
 export const zRegisteredChannelContentsResp = z.object({
   videoId: z.string().nonempty('Video ID는 빈 문자열일 수 없습니다.'), // 비디오의 고유 식별자
   videoTitle: z.string().nonempty('비디오 제목은 빈 문자열일 수 없습니다.'), // 비디오 제목
@@ -135,10 +139,14 @@ export const zRegisterChannelListResponseObject =
     channelAverageViews: true,
     channelTotalViews: true,
   });
+
 export const zRegisterChannelAnalysisResponse = z.array(
   zRegisterChannelListResponseObject,
 );
 
+export const zRegisterChannelAnalysisList = dataObject(
+  zRegisterChannelAnalysisResponse,
+);
 export const zRegisteredChannelContentsResponse = z.array(
   zRegisteredChannelContentsResp,
 );

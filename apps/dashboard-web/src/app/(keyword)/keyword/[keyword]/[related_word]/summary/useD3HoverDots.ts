@@ -35,8 +35,8 @@ interface Props {
   ) => void;
   xScale: D3.ScaleBand<string> | undefined;
   yScale: D3.ScaleLinear<number, number, never>[] | undefined;
-  summaryChartType: string;
-  keywordList: string[];
+  summaryChartType?: string;
+  keywordList?: string[];
 }
 const useD3HoverDots = ({
   chartSelector,
@@ -64,7 +64,7 @@ const useD3HoverDots = ({
         const dot = D3.select(this);
         const dotClass = dot.attr('class');
 
-        const shouldRemove = keywordList.every(
+        const shouldRemove = keywordList?.every(
           (keyword) =>
             !dotClass
               .split(' ')
@@ -97,7 +97,9 @@ const useD3HoverDots = ({
         const y = yScale[index];
 
         const circles = chartSelector
-          .selectAll<SVGCircleElement, DataItem>(`.node-${keywordList[index]}`)
+          .selectAll<SVGCircleElement, DataItem>(
+            `.node-${keywordList?.[index]}`,
+          )
           .data(dataSet, (d) => d.date); // Use date as the key for data binding
 
         circles.exit().remove(); // Remove old elements not in data
@@ -105,7 +107,7 @@ const useD3HoverDots = ({
         circles
           .enter()
           .append('circle')
-          .attr('class', `node node-${keywordList[index]}`)
+          .attr('class', `node node-${keywordList?.[index]}`)
           .attr('fill', 'white')
           .call((selection) => {
             styleMethod && styleMethod(selection, index, false);

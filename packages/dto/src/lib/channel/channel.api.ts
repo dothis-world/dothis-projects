@@ -9,10 +9,12 @@ import {
   zChannelListRes,
   zChannelNameAutocompleteQuery,
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
+  zGetVideoTimelineList,
+  zGetVideoTimelineListResponse,
   zGetContentListQuery,
-  zGetVideoTimelineQuery,
-  zGetVideoTimelineResponse,
   zRegisterChannelAnalysisResponse,
+  zGetVideoTimelineQuery,
+  zRegisterChannelAnalysisList,
 } from './channel.zod';
 import { zChannelAnalysisBody } from './channel-analysis.zod';
 import { zSuccessBase } from '../success.response.zod';
@@ -70,7 +72,7 @@ export const channelApi = c.router({
     path: `${channelApiUrl}/video-timeline`,
     query: zGetVideoTimelineQuery,
     responses: {
-      200: zGetVideoTimelineResponse,
+      200: zGetVideoTimelineListResponse,
       ...zErrResBase,
     },
     summary: '채널의 영상 타임라인 가져오기',
@@ -92,7 +94,7 @@ export const channelApi = c.router({
     method: 'GET',
     path: `${channelApiUrl}/register-analysis`,
     responses: {
-      200: zRegisterChannelAnalysisResponse, // 적절한 응답 스키마 사용
+      200: zRegisterChannelAnalysisList, // 적절한 응답 스키마 사용
       ...zErrResBase,
     },
     summary: '등록된 채널 리스트 가져오기',

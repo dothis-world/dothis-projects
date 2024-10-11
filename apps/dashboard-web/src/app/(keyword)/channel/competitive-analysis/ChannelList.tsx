@@ -66,7 +66,6 @@ const ChannelList = () => {
     };
   }, []);
 
-  console.log(data);
   return (
     <div
       className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]"
