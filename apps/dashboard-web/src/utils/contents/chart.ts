@@ -94,6 +94,28 @@ const initChartMonthFormatter = ({
   return viewsObject;
 };
 
+const initChartMonthFormatterV2 = ({
+  startMonth,
+  endMonth,
+}: {
+  startMonth: string;
+  endMonth: string;
+}) => {
+  const viewsObject: Record<
+    string,
+    { title: string | null; thumnail: string | null }
+  > = {};
+
+  for (
+    let date = dayjs(startMonth);
+    date.isSameOrBefore(endMonth, 'month');
+    date = date.add(1, 'month')
+  ) {
+    viewsObject[date.format('YYYY-MM')] = { title: null, thumnail: null };
+  }
+  return viewsObject;
+};
+
 export const handleTimelineDailyView = (
   data: Timeline | undefined,
   { startMonth, endMonth }: { startMonth: string; endMonth: string },
@@ -129,6 +151,34 @@ export const handleTimelineVideoCount = (
 
       if (monthBasedDataSet.hasOwnProperty(month)) {
         monthBasedDataSet[month] += 1;
+      }
+    }
+  });
+
+  const result = createDateTimeD3(monthBasedDataSet);
+
+  return result;
+};
+
+export const handleTimelineVideo = (
+  data: Timeline | undefined,
+  { startMonth, endMonth }: { startMonth: string; endMonth: string },
+) => {
+  const monthBasedDataSet = initChartMonthFormatterV2({ startMonth, endMonth });
+
+  data?.forEach((item) => {
+    if (item) {
+      const month = dayjs(item.publishedDate).format('YYYY-MM');
+
+      const title = item.title;
+
+      const thumnail = item.videoId;
+
+      if (monthBasedDataSet.hasOwnProperty(month)) {
+        monthBasedDataSet[month] = {
+          thumnail,
+          title,
+        };
       }
     }
   });
