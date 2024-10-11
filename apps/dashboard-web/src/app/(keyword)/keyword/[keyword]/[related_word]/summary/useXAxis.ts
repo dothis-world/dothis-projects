@@ -47,7 +47,6 @@ const useXAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
                 .tickSizeOuter(0)
                 .tickSize(0)
                 .tickFormat((d, index) => {
-                  console.log(d + 'index = ' + index);
                   // dayjs('2023-09-24').format('YYYY-MM-DD');
                   return d;
                 }),
