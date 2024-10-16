@@ -15,6 +15,7 @@ import {
   zRegisterChannelAnalysisResponse,
   zGetVideoTimelineQuery,
   zRegisterChannelAnalysisList,
+  zRegisteredChannelContentsResponseList,
 } from './channel.zod';
 import { zChannelAnalysisBody } from './channel-analysis.zod';
 import { zSuccessBase } from '../success.response.zod';
@@ -105,7 +106,7 @@ export const channelApi = c.router({
     path: `${channelApiUrl}/content-list`,
     query: zGetContentListQuery,
     responses: {
-      200: zRegisterChannelAnalysisResponse, // 적절한 응답 스키마 사용
+      200: zRegisteredChannelContentsResponseList, // 적절한 응답 스키마 사용
       ...zErrResBase,
     },
     summary: '콘텐츠 리스트 조회',
