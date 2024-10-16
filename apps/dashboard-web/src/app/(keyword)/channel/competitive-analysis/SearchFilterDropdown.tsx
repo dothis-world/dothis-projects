@@ -18,7 +18,7 @@ const SearchFilterDropdown = () => {
   } = useVideoFilterContext('SearchFilterDropdown');
 
   return (
-    <div className=" flex">
+    <div className=" flex shrink-0">
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <div className="border-grey400 rounded-s-10 group flex cursor-pointer items-center gap-[10px] border px-[20px] py-[16px]">
