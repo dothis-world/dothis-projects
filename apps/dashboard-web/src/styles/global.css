@@ -63,5 +63,24 @@ em {
       background: #fff; /*스크롤바 뒷 배경 색상*/
       /* border-radius: 10px; */
     }
+
+    .custom-scroll-x-box::-webkit-scrollbar {
+      width: 3px; /* 스크롤바의 너비 */
+      height: 3px;
+
+      /* display: block; */
+    }
+
+    .custom-scroll-x-box::-webkit-scrollbar-thumb {
+      height: 3px; /* 스크롤바의 길이 (스크롤 Box height 대비 요소 수로 결정댐) */
+      background: #f0516d; /* 스크롤바의 색상 */
+
+      /* border-radius: 10px; */
+    }
+
+    .custom-scroll-x-box::-webkit-scrollbar-track {
+      background: #fff; /*스크롤바 뒷 배경 색상*/
+      /* border-radius: 10px; */
+    }
   }
 }
