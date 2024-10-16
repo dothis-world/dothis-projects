@@ -26,7 +26,7 @@ const useGetChannelContentsList = (
 
   return {
     ...queryResult,
-    data: queryResult.data?.body,
+    data: queryResult.data?.body.data,
   };
 };
 
