@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useEffect, useRef } from 'react';
 
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
 import useGetChannelContentsList from '@/hooks/react-query/query/useGetChannelContentsList';
@@ -11,9 +12,38 @@ interface Props {
 const ContentCard = ({ channelId, index }: Props) => {
   const { data } = useGetChannelContentsList({ channelId });
 
-  console.log(data);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleWheel = (e: WheelEvent) => {
+    if (scrollRef.current) {
+      e.preventDefault();
+      // deltaY 값을 기준으로 가로로 스크롤
+      e.stopPropagation();
+      scrollRef.current.scrollLeft += e.deltaY;
+    }
+  };
+
+  // useEffect로 passive:false 설정
+  useEffect(() => {
+    const currentRef = scrollRef.current;
+    if (currentRef) {
+      currentRef.addEventListener('wheel', handleWheel, { passive: false });
+    }
+
+    // cleanup function
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, []);
+
   return (
-    <div className="gap-30 custom-scroll-x-box flex overflow-scroll">
+    <div
+      className="gap-30 custom-scroll-x-box flex  overflow-x-scroll"
+      ref={scrollRef}
+      // onWheel={(event) => handleWheel(event)}
+    >
       {data?.map((item, index) => {
         const compactNumber = new Intl.NumberFormat('ko', {
           notation: 'compact',
