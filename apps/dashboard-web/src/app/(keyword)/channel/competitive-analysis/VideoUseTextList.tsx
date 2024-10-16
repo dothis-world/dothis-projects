@@ -1,8 +1,29 @@
+import { cn } from '@/utils/cn';
+
 import { useVideoUseTextContext } from './VideoUseTextContext';
+import { useVideoUseTextFilterContext } from './VideoUseTextFilterContext';
 
 const VideoUseTextList = () => {
   const { keywordsCounts, topKeywords } =
     useVideoUseTextContext('VideoUseTextList');
+
+  const { filterKeywords, setFilterKeywords } =
+    useVideoUseTextFilterContext('VideoUseTextList');
+
+  const handleFilterKeyword = (keyword: string) => {
+    if (filterKeywords?.includes(keyword)) {
+      setFilterKeywords((prev) => {
+        const updatedKeywords = prev ?? []; // prev가 null이면 빈 배열로 설정
+        return updatedKeywords.filter((item) => item !== keyword);
+      });
+    } else {
+      setFilterKeywords((prev) => {
+        const updatedKeywords = prev ?? []; // prev가 null이면 빈 배열로 설정
+
+        return [...updatedKeywords, keyword];
+      });
+    }
+  };
 
   return (
     <div className="border-grey400 rounded-10 ml-auto flex items-center  gap-[20px] border px-[20px] py-[8px]">
@@ -12,8 +33,15 @@ const VideoUseTextList = () => {
 
       {topKeywords?.map((item) => (
         <div
-          className="border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400]"
+          className={cn(
+            'border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400] cursor-pointer',
+            {
+              'bg-primary50 text-primary500 border-primary500':
+                filterKeywords?.includes(item),
+            },
+          )}
           key={item}
+          onClick={() => handleFilterKeyword(item)}
         >
           {`${item} (${keywordsCounts?.[item]})`}
         </div>
