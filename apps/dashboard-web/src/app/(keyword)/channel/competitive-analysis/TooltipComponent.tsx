@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { handleImageError } from '@/utils/imagesUtil';
 
