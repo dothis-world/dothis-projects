@@ -23,7 +23,7 @@ const useGetChannelContentsList = (
   const queryResult = apiClient(
     1,
   ).channel.getRegisterChannelContentList.useQuery(
-    CHANNEL_CONTENTS_KEY.list([{ channelId }]),
+    CHANNEL_CONTENTS_KEY.list([{ channelId, startDate, order, sort }]),
     {
       query: {
         channelId,
