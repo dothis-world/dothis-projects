@@ -27,6 +27,7 @@ import ContentComparison from './ContentComparison';
 import ContentView from './ContentView';
 import RecommendedChanelList from './RecommendedChannelList';
 import SearchFilterDropdown from './SearchFilterDropdown';
+import VideoFilterContextProvider from './VideoFilterContext';
 import VideoUseTextContextProvider from './VideoUseTextContext';
 import VideoUseTextList from './VideoUseTextList';
 
@@ -112,9 +113,11 @@ const Page = () => {
         />
       </div>
 
-      <VideoUseTextContextProvider>
-        <ContentView />
-      </VideoUseTextContextProvider>
+      <VideoFilterContextProvider>
+        <VideoUseTextContextProvider>
+          <ContentView />
+        </VideoUseTextContextProvider>
+      </VideoFilterContextProvider>
     </>
   );
 };
