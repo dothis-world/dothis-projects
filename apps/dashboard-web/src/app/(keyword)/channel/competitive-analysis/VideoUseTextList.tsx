@@ -34,7 +34,7 @@ const VideoUseTextList = () => {
       {topKeywords?.map((item) => (
         <div
           className={cn(
-            'border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400] cursor-pointer',
+            'border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400] cursor-pointer transition-all duration-300',
             {
               'bg-primary50 text-primary500 border-primary500':
                 filterKeywords?.includes(item),
