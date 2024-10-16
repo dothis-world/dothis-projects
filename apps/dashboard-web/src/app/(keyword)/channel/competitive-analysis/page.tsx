@@ -29,6 +29,7 @@ import RecommendedChanelList from './RecommendedChannelList';
 import SearchFilterDropdown from './SearchFilterDropdown';
 import VideoFilterContextProvider from './VideoFilterContext';
 import VideoUseTextContextProvider from './VideoUseTextContext';
+import VideoUseTextFilterContextProvider from './VideoUseTextFilterContext';
 import VideoUseTextList from './VideoUseTextList';
 
 const Page = () => {
@@ -113,11 +114,13 @@ const Page = () => {
         />
       </div>
 
-      <VideoFilterContextProvider>
-        <VideoUseTextContextProvider>
-          <ContentView />
-        </VideoUseTextContextProvider>
-      </VideoFilterContextProvider>
+      <VideoUseTextFilterContextProvider>
+        <VideoFilterContextProvider>
+          <VideoUseTextContextProvider>
+            <ContentView />
+          </VideoUseTextContextProvider>
+        </VideoFilterContextProvider>
+      </VideoUseTextFilterContextProvider>
     </>
   );
 };
