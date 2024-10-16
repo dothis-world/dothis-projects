@@ -43,7 +43,7 @@ const VideoUseTextList = () => {
           key={item}
           onClick={() => handleFilterKeyword(item)}
         >
-          {`${item} (${keywordsCounts?.[item]})`}
+          {`${item} (${keywordsCounts?.[item] ?? 0})`}
         </div>
       ))}
     </div>
