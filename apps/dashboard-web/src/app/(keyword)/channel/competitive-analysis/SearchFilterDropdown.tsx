@@ -1,6 +1,7 @@
 'use client';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import dayjs from 'dayjs';
 
 import SvgComp from '@/components/common/SvgComp';
 
@@ -8,42 +9,56 @@ import { useVideoFilterContext } from './VideoFilterContext';
 
 const SORT_FILTER = [
   {
-    title: '최신순',
-    value: 'sort_newest',
+    label: '최신순',
+    value: {
+      order: 'desc',
+      sort: 'video_published',
+    },
   },
   {
-    title: '오래된 순',
-    value: 'sort_oldest',
+    label: '오래된 순',
+    value: {
+      order: 'asc',
+      sort: 'video_published',
+    },
   },
   {
-    title: '조회수 순',
-    value: 'sort_views',
+    label: '조회수 순',
+    value: {
+      order: 'desc',
+      sort: 'video_views',
+    },
   },
 ];
 
+const dayjsFormat = 'YYYY-MM-DD';
 const DATE_PERIOD_FILTER = [
   {
-    title: '최근7일',
-    value: 'last_7days',
+    label: '최근7일',
+    value: dayjs().subtract(1, 'week').format(dayjsFormat),
   },
   {
-    title: '최근30일',
-    value: 'last_30days',
+    label: '최근30일',
+    value: dayjs().subtract(1, 'month').format(dayjsFormat),
   },
   {
-    title: '최근90일',
-    value: 'last_90days',
+    label: '최근90일',
+    value: dayjs().subtract(3, 'month').format(dayjsFormat),
   },
   {
-    title: '최근1년',
-    value: 'last_year',
+    label: '최근1년',
+    value: dayjs().subtract(1, 'year').format(dayjsFormat),
   },
 ];
 
 const SearchFilterDropdown = () => {
-  const { videoSortOption, datePeriodFilter } = useVideoFilterContext(
-    'SearchFilterDropdown',
-  );
+  const {
+    videoSortOption,
+    setVideoSortOption,
+
+    datePeriodFilter,
+    setDatePeriodFilter,
+  } = useVideoFilterContext('SearchFilterDropdown');
 
   return (
     <div className=" flex">
@@ -65,16 +80,20 @@ const SearchFilterDropdown = () => {
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
-            {SORT_FILTER.map(({ title, value }) => (
+            {SORT_FILTER.map(({ label, value }) => (
               <DropdownMenu.CheckboxItem
                 className="DropdownMenuCheckboxItem"
-                checked={value === 'channel_category'}
-                key={title + value}
+                checked={
+                  value.sort === videoSortOption.value.sort &&
+                  value.order === videoSortOption.value.order
+                }
+                key={label + value}
+                onClick={() => setDatePeriodFilter({ label, value })}
               >
                 <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
                   <SvgComp icon="CheckIcon" size={12} />
                 </DropdownMenu.ItemIndicator>
-                {title}
+                {label}
               </DropdownMenu.CheckboxItem>
             ))}
           </DropdownMenu.Content>
@@ -97,16 +116,17 @@ const SearchFilterDropdown = () => {
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
-            {DATE_PERIOD_FILTER.map(({ title, value }) => (
+            {DATE_PERIOD_FILTER.map(({ label, value }) => (
               <DropdownMenu.CheckboxItem
                 className="DropdownMenuCheckboxItem"
-                checked={value === 'channel_category'}
-                key={title}
+                checked={value === datePeriodFilter.value}
+                key={label}
+                onClick={() => setDatePeriodFilter({ label, value })}
               >
                 <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
                   <SvgComp icon="CheckIcon" size={12} />
                 </DropdownMenu.ItemIndicator>
-                {title}
+                {label}
               </DropdownMenu.CheckboxItem>
             ))}
           </DropdownMenu.Content>
