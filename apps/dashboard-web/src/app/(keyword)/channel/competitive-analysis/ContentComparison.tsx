@@ -13,7 +13,7 @@ const ContentComparison = () => {
     <>
       {data?.map((item, index) => (
         <div
-          className="rounded-10 border-grey400 mb-5 flex gap-[10px] overflow-visible border p-5"
+          className="rounded-10 border-grey400 mb-5 flex gap-[10px] border p-5"
           key={item.channelId + index}
         >
           <div className="flex flex-col justify-evenly">
