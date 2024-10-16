@@ -9,6 +9,7 @@ import GNBSearchbar from '../../GNBSearchbar';
 import ContentCard from './ContentCard';
 import SearchFilterDropdown from './SearchFilterDropdown';
 import { useVideoUseTextContext } from './VideoUseTextContext';
+import { useVideoUseTextFilterContext } from './VideoUseTextFilterContext';
 import VideoUseTextList from './VideoUseTextList';
 
 const ContentComparison = () => {
@@ -30,6 +31,15 @@ const ContentComparison = () => {
 
     setTopKeywords(sortedKeywords);
   }, [JSON.stringify(keywordsCounts)]);
+
+  const { setFilterKeywords } =
+    useVideoUseTextFilterContext('ContentComparison');
+
+  useEffect(() => {
+    if (!topKeywords) return;
+
+    setFilterKeywords(topKeywords);
+  }, [JSON.stringify(topKeywords)]);
 
   return (
     <>
