@@ -117,7 +117,9 @@ const ContentComparison = () => {
                 <p className="text-grey400 mb-[10px] text-[14px] font-[400]">
                   영상 수
                 </p>
-                <p className="text-grey900 font-bold">{'3,456'}</p>
+                <p className="text-grey900 font-bold">
+                  {item.channelTotalVideos.toLocaleString('ko-kr')}
+                </p>
               </div>
             </div>
           </div>
