@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
 import useGetAnalysisChannel from '@/hooks/react-query/query/useGetAnalysisChannel';
@@ -8,6 +8,7 @@ import useGetChannelContentsList from '@/hooks/react-query/query/useGetChannelCo
 import GNBSearchbar from '../../GNBSearchbar';
 import ContentCard from './ContentCard';
 import SearchFilterDropdown from './SearchFilterDropdown';
+import { useVideoFilterContext } from './VideoFilterContext';
 import { useVideoUseTextContext } from './VideoUseTextContext';
 import { useVideoUseTextFilterContext } from './VideoUseTextFilterContext';
 import VideoUseTextList from './VideoUseTextList';
@@ -15,11 +16,24 @@ import VideoUseTextList from './VideoUseTextList';
 const ContentComparison = () => {
   const { data } = useGetAnalysisChannel();
 
-  const compactNumber = new Intl.NumberFormat('ko', {
-    notation: 'compact',
-  });
+  const { datePeriodFilter, videoSortOption } =
+    useVideoFilterContext('ContentComparison');
 
-  const { keywordsCounts, topKeywords, setTopKeywords } =
+  const [initKeywordCountTrigger, setInitKeywordCountTrigger] = useState(false);
+  useEffect(
+    // Filter 방식이 바뀌어서 Channel Content api 재호출할때 Channel Content data로 누적한 VideoUseTextCount의 값이 누적이 되는 현상이 발생하여 -> 초기화 코드 추가
+    // 분석채널이 추가될 때도 초기화를 할 필요가 있음
+    () => {
+      setKeywordsCounts(null);
+      setInitKeywordCountTrigger((prev) => !prev);
+      // console.log('초기화');
+      //초기화 시 실행 useEffect의 실행순서에 따른 문제가 발생하므로, trigger State 분리해서 임의로 부여해야한다
+      // useEffect 자식 -> 부모로 진행되므로
+    },
+    [JSON.stringify(datePeriodFilter), JSON.stringify(videoSortOption)],
+  );
+
+  const { keywordsCounts, topKeywords, setKeywordsCounts, setTopKeywords } =
     useVideoUseTextContext('ContentComparison');
 
   useEffect(() => {
@@ -40,6 +54,10 @@ const ContentComparison = () => {
 
     setFilterKeywords(topKeywords);
   }, [JSON.stringify(topKeywords)]);
+
+  const compactNumber = new Intl.NumberFormat('ko', {
+    notation: 'compact',
+  });
 
   return (
     <>
@@ -98,7 +116,11 @@ const ContentComparison = () => {
               </div>
             </div>
           </div>
-          <ContentCard channelId={item.channelId} index={index} />
+          <ContentCard
+            channelId={item.channelId}
+            index={index}
+            initKeywordCountTrigger={initKeywordCountTrigger}
+          />
         </div>
       ))}
     </>
