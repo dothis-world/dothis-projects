@@ -82,5 +82,53 @@ em {
       background: #fff; /*스크롤바 뒷 배경 색상*/
       /* border-radius: 10px; */
     }
+
+    .shadow-left,
+    .shadow-right {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50px; /* 필요한 크기로 조정 */
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.8),
+        transparent
+      ); /* 예시로 흰색 그라데이션 */
+      z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
+      pointer-events: none; /* 클릭 이벤트 차단 */
+    }
+
+    .shadow-left {
+      left: 0;
+      display: none; /* 기본적으로 숨김 */
+    }
+
+    .shadow-right {
+      right: 0;
+      display: none; /* 기본적으로 숨김 */
+    }
+
+    .boxboxbox {
+      background-image: 
+        /* Shadows */ linear-gradient(
+          to right,
+          white,
+          white
+        ),
+        /* 왼쪽 그림자 */ linear-gradient(to right, white, white),
+        /* 오른쪽 그림자 */ /* Shadow covers */
+          linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.125),
+            rgba(255, 255, 255, 0)
+          ),
+        /* 오른쪽 그림자 */
+          linear-gradient(to left, rgba(0, 0, 0, 0.125), rgba(255, 255, 255, 0)); /* 왼쪽 그림자 */
+
+      background-position: left center, right center, left center, right center; /* 배경 위치 설정 */
+      background-repeat: no-repeat; /* 반복하지 않음 */
+      background-size: 30px 100%, 30px 100%, 15px 100%, 15px 100%; /* 배경 크기 설정 */
+      background-attachment: local, local, scroll, scroll; /* 배경 고정 */
+    }
   }
 }
