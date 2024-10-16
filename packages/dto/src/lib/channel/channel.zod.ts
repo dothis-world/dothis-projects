@@ -150,6 +150,11 @@ export const zRegisterChannelAnalysisList = dataObject(
 export const zRegisteredChannelContentsResponse = z.array(
   zRegisteredChannelContentsResp,
 );
+
+export const zRegisteredChannelContentsResponseList = dataObject(
+  zRegisteredChannelContentsResponse,
+);
+
 export const zGetContentListQuery = zDateQuery
   .pick({ from: true })
   .merge(zSearchKeyword.pick({ search: true }))
