@@ -7,13 +7,15 @@ import { cn } from '@/utils/cn';
 
 import { useVideoFilterContext } from './VideoFilterContext';
 import { useVideoUseTextContext } from './VideoUseTextContext';
+import { useVideoUseTextFilterContext } from './VideoUseTextFilterContext';
 
 interface Props {
   channelId: string;
   index: number;
+  initKeywordCountTrigger: boolean;
 }
 
-const ContentCard = ({ channelId, index }: Props) => {
+const ContentCard = ({ channelId, index, initKeywordCountTrigger }: Props) => {
   const { datePeriodFilter, videoSortOption } =
     useVideoFilterContext('ContentCard');
 
@@ -24,12 +26,14 @@ const ContentCard = ({ channelId, index }: Props) => {
     startDate: datePeriodFilter.value,
   });
 
+  const { filterKeywords } = useVideoUseTextFilterContext('ContentCard');
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [hasLeftScroll, setHasLeftScroll] = useState(false);
   const [hasRightScroll, setHasRightScroll] = useState(false);
 
-  const { setKeywordsCounts, setTopKeywords } =
+  const { keywordsCounts, setKeywordsCounts, setTopKeywords } =
     useVideoUseTextContext('ContentCard');
 
   const handleWheel = (e: WheelEvent) => {
@@ -66,7 +70,7 @@ const ContentCard = ({ channelId, index }: Props) => {
     });
 
     // 상위 6개 키워드 추출
-  }, [videos]);
+  }, [JSON.stringify(videos), initKeywordCountTrigger]);
 
   // 스크롤 상태 확인
   const checkScroll = () => {
@@ -98,7 +102,7 @@ const ContentCard = ({ channelId, index }: Props) => {
   return (
     <div
       className={cn(
-        'gap-30 custom-scroll-x-box flex overflow-x-scroll overflow-y-hidden boxboxbox',
+        'gap-30 custom-scroll-x-box flex overflow-x-scroll overflow-y-hidden boxboxbox min-h-[300px]',
       )}
       style={{
         position: 'relative', // 그림자 효과를 위해 position 설정
@@ -106,26 +110,34 @@ const ContentCard = ({ channelId, index }: Props) => {
       ref={scrollRef}
       // onWheel={(event) => handleWheel(event)}
     >
-      {videos?.map((item, index) => {
-        const compactNumber = new Intl.NumberFormat('ko', {
-          notation: 'compact',
-        });
-        const videoViews = compactNumber.format(item.videoViews);
+      {videos
+        ?.filter(
+          (item) =>
+            filterKeywords?.length === 0 || // 필터 키워드가 없으면 모든 비디오를 표시
+            filterKeywords?.some((keyword) =>
+              item.videoUseText.includes(keyword),
+            ), // 필터 키워드 중 하나라도 videoUseText에 포함된 경우
+        )
+        .map((item, index) => {
+          const compactNumber = new Intl.NumberFormat('ko', {
+            notation: 'compact',
+          });
+          const videoViews = compactNumber.format(item.videoViews);
 
-        const uploadDate = dayjs(item.videoPublished).format('YYYY-MM-DD');
-        return (
-          <SelectedMediaCard
-            key={item.videoId}
-            image={`https://img.youtube.com/vi/${item.videoId}/0.jpg`}
-            link={item.videoId}
-            provider={'채널이름'}
-            title={item.videoTitle}
-            element={`조회수 ${videoViews}`}
-            uploadDate={uploadDate}
-            isShrink={true}
-          />
-        );
-      })}
+          const uploadDate = dayjs(item.videoPublished).format('YYYY-MM-DD');
+          return (
+            <SelectedMediaCard
+              key={item.videoId}
+              image={`https://img.youtube.com/vi/${item.videoId}/0.jpg`}
+              link={item.videoId}
+              provider={'채널이름'}
+              title={item.videoTitle}
+              element={`조회수 ${videoViews}`}
+              uploadDate={uploadDate}
+              isShrink={true}
+            />
+          );
+        })}
 
       {/* 그림자 요소를 위한 div 추가 */}
       {hasLeftScroll && <div className="shadow-left" />}
