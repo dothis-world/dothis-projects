@@ -9,6 +9,7 @@ import GNBSearchbar from '../../GNBSearchbar';
 import ContentCard from './ContentCard';
 import SearchFilterDropdown from './SearchFilterDropdown';
 import { useVideoFilterContext } from './VideoFilterContext';
+import VideoSearchbar from './VideoSearchbar';
 import { useVideoUseTextContext } from './VideoUseTextContext';
 import { useVideoUseTextFilterContext } from './VideoUseTextFilterContext';
 import VideoUseTextList from './VideoUseTextList';
@@ -46,7 +47,7 @@ const ContentComparison = () => {
     setTopKeywords(sortedKeywords);
   }, [JSON.stringify(keywordsCounts)]);
 
-  const { setFilterKeywords } =
+  const { searchKeyword, setFilterKeywords, setSearchKeyword } =
     useVideoUseTextFilterContext('ContentComparison');
 
   useEffect(() => {
@@ -62,7 +63,11 @@ const ContentComparison = () => {
   return (
     <>
       <div className="mb-5 flex items-center gap-[20px]">
-        <GNBSearchbar callback={() => {}} />
+        <VideoSearchbar
+          callback={(word) => {
+            setSearchKeyword(word.selectedWord);
+          }}
+        />
         <SearchFilterDropdown />
 
         <VideoUseTextList />
