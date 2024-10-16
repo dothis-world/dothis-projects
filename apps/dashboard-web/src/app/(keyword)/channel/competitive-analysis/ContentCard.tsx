@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
 import useGetChannelContentsList from '@/hooks/react-query/query/useGetChannelContentsList';
 
@@ -11,28 +13,27 @@ const ContentCard = ({ channelId, index }: Props) => {
 
   console.log(data);
   return (
-    <div>
-      {[
-        {
-          element: '조회수 1185만',
-          image: 'https://img.youtube.com/vi/lzm-7YfBJBU/0.jpg',
-          link: 'lzm-7YfBJBU',
-          provider: 'FIFTY FIFTY Official',
-          title: 'FIFTY FIFTY (피프티피프티) ‘Starry Night’ Official MV',
-          uploadDate: '2024-08-28T15:00:00.000Z',
-        },
-      ].map((mediaData, index) => (
-        <SelectedMediaCard
-          key={mediaData.title + index}
-          mediaType={'youtube'}
-          title={mediaData.title}
-          provider={mediaData.provider}
-          element={mediaData.element}
-          uploadDate={mediaData.uploadDate}
-          image={mediaData.image}
-          link={mediaData.link}
-        />
-      ))}
+    <div className="gap-30 custom-scroll-x-box flex overflow-scroll">
+      {data?.map((item, index) => {
+        const compactNumber = new Intl.NumberFormat('ko', {
+          notation: 'compact',
+        });
+        const videoViews = compactNumber.format(item.videoViews);
+
+        const uploadDate = dayjs(item.videoPublished).format('YYYY-MM-DD');
+        return (
+          <SelectedMediaCard
+            key={item.videoId}
+            image={`https://img.youtube.com/vi/${item.videoId}/0.jpg`}
+            link={item.videoId}
+            provider={'채널이름'}
+            title={item.videoTitle}
+            element={`조회수 ${videoViews}`}
+            uploadDate={uploadDate}
+            isShrink={true}
+          />
+        );
+      })}
     </div>
   );
 };
