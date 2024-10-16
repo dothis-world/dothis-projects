@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import SvgComp from '@/components/common/SvgComp';
+import { cn } from '@/utils/cn';
 import { handleImageError } from '@/utils/imagesUtil';
 
 import type { MediaDigestData } from '.';
@@ -11,6 +12,7 @@ import MediaDigestSummary from './MediaDigestSummary';
 
 interface Props extends MediaDigestData {
   mediaType?: string;
+  isShrink?: boolean;
 }
 
 const SelectedMediaCard = ({
@@ -21,10 +23,19 @@ const SelectedMediaCard = ({
   image,
   link,
   mediaType,
+  isShrink,
 }: Props) => {
   const formattedUploadDate = dayjs(uploadDate).format('YYYY-MM-DD');
+
   return (
-    <div className="rounded-10 border-grey300 w-[320px] cursor-pointer overflow-hidden border border-solid">
+    <div
+      className={cn(
+        'rounded-10 border-grey300 w-[320px] cursor-pointer overflow-hidden border border-solid',
+        {
+          'shrink-0': isShrink,
+        },
+      )}
+    >
       <Link
         href={
           mediaType === 'youtube'
