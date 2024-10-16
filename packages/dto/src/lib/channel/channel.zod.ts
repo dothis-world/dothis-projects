@@ -138,6 +138,7 @@ export const zRegisterChannelListResponseObject =
     channelSubscribers: true,
     channelAverageViews: true,
     channelTotalViews: true,
+    channelTotalVideos: true,
   });
 
 export const zRegisterChannelAnalysisResponse = z.array(
