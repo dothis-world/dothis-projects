@@ -7,57 +7,14 @@ import SvgComp from '@/components/common/SvgComp';
 
 import { useVideoFilterContext } from './VideoFilterContext';
 
-const SORT_FILTER = [
-  {
-    label: '최신순',
-    value: {
-      order: 'desc',
-      sort: 'video_published',
-    },
-  },
-  {
-    label: '오래된 순',
-    value: {
-      order: 'asc',
-      sort: 'video_published',
-    },
-  },
-  {
-    label: '조회수 순',
-    value: {
-      order: 'desc',
-      sort: 'video_views',
-    },
-  },
-];
-
-const dayjsFormat = 'YYYY-MM-DD';
-const DATE_PERIOD_FILTER = [
-  {
-    label: '최근7일',
-    value: dayjs().subtract(1, 'week').format(dayjsFormat),
-  },
-  {
-    label: '최근30일',
-    value: dayjs().subtract(1, 'month').format(dayjsFormat),
-  },
-  {
-    label: '최근90일',
-    value: dayjs().subtract(3, 'month').format(dayjsFormat),
-  },
-  {
-    label: '최근1년',
-    value: dayjs().subtract(1, 'year').format(dayjsFormat),
-  },
-];
-
 const SearchFilterDropdown = () => {
   const {
     videoSortOption,
     setVideoSortOption,
-
+    SORT_FILTER,
     datePeriodFilter,
     setDatePeriodFilter,
+    DATE_PERIOD_FILTER,
   } = useVideoFilterContext('SearchFilterDropdown');
 
   return (
@@ -88,7 +45,7 @@ const SearchFilterDropdown = () => {
                   value.order === videoSortOption.value.order
                 }
                 key={label + value}
-                onClick={() => setDatePeriodFilter({ label, value })}
+                onClick={() => setVideoSortOption({ label, value })}
               >
                 <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
                   <SvgComp icon="CheckIcon" size={12} />
