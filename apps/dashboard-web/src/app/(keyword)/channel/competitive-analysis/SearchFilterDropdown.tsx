@@ -4,6 +4,8 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import SvgComp from '@/components/common/SvgComp';
 
+import { useVideoFilterContext } from './VideoFilterContext';
+
 const SORT_FILTER = [
   {
     title: '최신순',
@@ -39,13 +41,19 @@ const DATE_PERIOD_FILTER = [
 ];
 
 const SearchFilterDropdown = () => {
+  const { videoSortOption, datePeriodFilter } = useVideoFilterContext(
+    'SearchFilterDropdown',
+  );
+
   return (
     <div className=" flex">
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <div className="border-grey400 rounded-s-10 group flex cursor-pointer items-center gap-[10px] border px-[20px] py-[16px]">
             {/* Step 2: Add peer class to the <p> tag */}
-            <p className="text-grey500 text-[14px] font-[500]">최신순</p>
+            <p className="text-grey500 text-[14px] font-[500]">
+              {videoSortOption?.label}
+            </p>
             <SvgComp
               icon="DropdownArrow"
               width={10}
@@ -75,7 +83,9 @@ const SearchFilterDropdown = () => {
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <div className="border-grey400 rounded-e-10 group  flex items-center gap-[10px] border px-[20px] py-[16px]">
-            <p className="text-grey500 text-[14px] font-[500]">최근 7일</p>
+            <p className="text-grey500 text-[14px] font-[500]">
+              {datePeriodFilter?.label}
+            </p>
             <SvgComp
               icon="DropdownArrow"
               width={10}
