@@ -18,6 +18,9 @@ import TimelineCard from './TimelineCard';
 const ContentTimeline = () => {
   const { data } = useGetAnalysisChannel();
 
+  const compactNumber = new Intl.NumberFormat('ko', {
+    notation: 'compact',
+  });
   return (
     <>
       {data?.map((item, index) => (
@@ -49,7 +52,7 @@ const ContentTimeline = () => {
                   구독자 수
                 </p>
                 <p className="text-grey900 font-bold">
-                  {item.channelSubscribers}
+                  {compactNumber.format(item.channelSubscribers)}
                 </p>
               </div>
 
@@ -57,7 +60,9 @@ const ContentTimeline = () => {
                 <p className="text-grey400 mb-[10px] text-[14px] font-[400]">
                   평균 조회수
                 </p>
-                <p className="text-grey900 font-bold">987,321</p>
+                <p className="text-grey900 font-bold">
+                  {item.channelAverageViews.toLocaleString('ko-kr')}
+                </p>
               </div>
               <div className="w-[100px]">
                 <p className="text-grey400 mb-[10px] text-[14px] font-[400]">
