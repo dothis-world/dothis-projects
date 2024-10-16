@@ -5,6 +5,7 @@ import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedM
 import useGetChannelContentsList from '@/hooks/react-query/query/useGetChannelContentsList';
 import { cn } from '@/utils/cn';
 
+import { useVideoFilterContext } from './VideoFilterContext';
 import { useVideoUseTextContext } from './VideoUseTextContext';
 
 interface Props {
@@ -13,7 +14,15 @@ interface Props {
 }
 
 const ContentCard = ({ channelId, index }: Props) => {
-  const { data: videos } = useGetChannelContentsList({ channelId });
+  const { datePeriodFilter, videoSortOption } =
+    useVideoFilterContext('ContentCard');
+
+  const { data: videos } = useGetChannelContentsList({
+    channelId,
+    order: videoSortOption.value.order,
+    sort: videoSortOption.value.sort,
+    startDate: datePeriodFilter.value,
+  });
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
