@@ -26,7 +26,8 @@ const ContentCard = ({ channelId, index, initKeywordCountTrigger }: Props) => {
     startDate: datePeriodFilter.value,
   });
 
-  const { filterKeywords } = useVideoUseTextFilterContext('ContentCard');
+  const { searchKeyword, filterKeywords } =
+    useVideoUseTextFilterContext('ContentCard');
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -111,13 +112,20 @@ const ContentCard = ({ channelId, index, initKeywordCountTrigger }: Props) => {
       // onWheel={(event) => handleWheel(event)}
     >
       {videos
-        ?.filter(
-          (item) =>
+        ?.filter((item) => {
+          // searchKeyword가 존재하는 경우
+          if (searchKeyword) {
+            return item.videoUseText.includes(searchKeyword);
+          }
+
+          // searchKeyword가 없으면 filterKeywords로 필터링
+          return (
             filterKeywords?.length === 0 || // 필터 키워드가 없으면 모든 비디오를 표시
             filterKeywords?.some((keyword) =>
               item.videoUseText.includes(keyword),
-            ), // 필터 키워드 중 하나라도 videoUseText에 포함된 경우
-        )
+            ) // 필터 키워드 중 하나라도 videoUseText에 포함된 경우
+          );
+        })
         .map((item, index) => {
           const compactNumber = new Intl.NumberFormat('ko', {
             notation: 'compact',
