@@ -27,6 +27,7 @@ import ContentComparison from './ContentComparison';
 import ContentView from './ContentView';
 import RecommendedChanelList from './RecommendedChannelList';
 import SearchFilterDropdown from './SearchFilterDropdown';
+import VideoUseTextContextProvider from './VideoUseTextContext';
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -109,26 +110,29 @@ const Page = () => {
           paramsKey="content-view"
         />
       </div>
-      <div className="mb-5 flex items-center gap-[20px]">
-        <GNBSearchbar callback={() => {}} />
-        <SearchFilterDropdown />
 
-        <div className="border-grey400 rounded-10 ml-auto flex items-center  gap-[20px] border px-[20px] py-[8px]">
-          <p className="text-grey600 mr-[10px] text-[14px] font-[500]">
-            주요 키워드
-          </p>
+      <VideoUseTextContextProvider>
+        <div className="mb-5 flex items-center gap-[20px]">
+          <GNBSearchbar callback={() => {}} />
+          <SearchFilterDropdown />
 
-          {[].map((item) => (
-            <div
-              className="border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400]"
-              key={item}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>{' '}
-      <ContentView />
+          <div className="border-grey400 rounded-10 ml-auto flex items-center  gap-[20px] border px-[20px] py-[8px]">
+            <p className="text-grey600 mr-[10px] text-[14px] font-[500]">
+              주요 키워드
+            </p>
+
+            {[].map((item) => (
+              <div
+                className="border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400]"
+                key={item}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>{' '}
+        <ContentView />
+      </VideoUseTextContextProvider>
     </>
   );
 };
