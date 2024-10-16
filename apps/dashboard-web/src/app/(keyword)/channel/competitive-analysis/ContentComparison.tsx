@@ -1,10 +1,12 @@
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
 import useGetAnalysisChannel from '@/hooks/react-query/query/useGetAnalysisChannel';
 import useGetChannelContentsList from '@/hooks/react-query/query/useGetChannelContentsList';
 
 import ContentCard from './ContentCard';
+import { useVideoUseTextContext } from './VideoUseTextContext';
 
 const ContentComparison = () => {
   const { data } = useGetAnalysisChannel();
@@ -12,6 +14,20 @@ const ContentComparison = () => {
   const compactNumber = new Intl.NumberFormat('ko', {
     notation: 'compact',
   });
+
+  const { keywordsCounts, topKeywords, setTopKeywords } =
+    useVideoUseTextContext('ContentComparison');
+
+  useEffect(() => {
+    if (!keywordsCounts) return;
+    const sortedKeywords = Object.entries(keywordsCounts)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 6)
+      .map(([keyword]) => keyword);
+
+    setTopKeywords(sortedKeywords);
+  }, [JSON.stringify(keywordsCounts)]);
+
   return (
     <>
       {data?.map((item, index) => (
