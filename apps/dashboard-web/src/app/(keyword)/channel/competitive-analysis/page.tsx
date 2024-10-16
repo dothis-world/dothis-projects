@@ -113,12 +113,6 @@ const Page = () => {
       </div>
 
       <VideoUseTextContextProvider>
-        <div className="mb-5 flex items-center gap-[20px]">
-          <GNBSearchbar callback={() => {}} />
-          <SearchFilterDropdown />
-
-          <VideoUseTextList />
-        </div>{' '}
         <ContentView />
       </VideoUseTextContextProvider>
     </>

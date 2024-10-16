@@ -5,8 +5,11 @@ import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedM
 import useGetAnalysisChannel from '@/hooks/react-query/query/useGetAnalysisChannel';
 import useGetChannelContentsList from '@/hooks/react-query/query/useGetChannelContentsList';
 
+import GNBSearchbar from '../../GNBSearchbar';
 import ContentCard from './ContentCard';
+import SearchFilterDropdown from './SearchFilterDropdown';
 import { useVideoUseTextContext } from './VideoUseTextContext';
+import VideoUseTextList from './VideoUseTextList';
 
 const ContentComparison = () => {
   const { data } = useGetAnalysisChannel();
@@ -30,6 +33,12 @@ const ContentComparison = () => {
 
   return (
     <>
+      <div className="mb-5 flex items-center gap-[20px]">
+        <GNBSearchbar callback={() => {}} />
+        <SearchFilterDropdown />
+
+        <VideoUseTextList />
+      </div>
       {data?.map((item, index) => (
         <div
           className="rounded-10 border-grey400 mb-5 flex gap-[10px] border p-5"
