@@ -1,6 +1,8 @@
 import Image from 'next/image';
 
+import { clustersCategories } from '@/constants/clusterCategories';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
+import useGetSimilarChannel from '@/hooks/react-query/query/useGetSimilarChannel';
 
 import { useChannelFilterContext } from './ChannelFilterContext';
 
@@ -15,6 +17,10 @@ const RecommendedChanelList = () => {
     subscriberRange: subscriberRange?.value,
   });
 
+  const { data: similarChannel } = useGetSimilarChannel();
+
+  console.log(similarChannel);
+
   return (
     <div className="custom-scroll-box relative h-[320px] overflow-hidden px-[20px]">
       <div className="pointer-events-none blur-sm">
@@ -28,6 +34,7 @@ const RecommendedChanelList = () => {
               channelCluster,
               channelAverageViews,
               mainUsedKeywords,
+              channelTotalVideos,
             },
             index,
           ) => {
@@ -58,8 +65,10 @@ const RecommendedChanelList = () => {
                       ? compactNumber.format(channelSubscribers)
                       : channelSubscribers}
                   </div>
-                  <div className="text-center"></div>
-                  <div className="truncate text-center"></div>
+                  <div className="text-center">{channelTotalVideos}</div>
+                  <div className="truncate text-center">
+                    {clustersCategories[channelCluster]}
+                  </div>
                   <div className="truncate">{mainUsedKeywords.join(',')}</div>
                   <div className="text-center">
                     {channelAverageViews
