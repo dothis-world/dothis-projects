@@ -6,6 +6,8 @@ import { Item, Menu, useContextMenu } from 'react-contexify';
 
 import { clustersCategories } from '@/constants/clusterCategories';
 import useAddAnalysisChannel from '@/hooks/react-query/mutation/useAddAnalysisChannel';
+import useDeleteAnalysisChannel from '@/hooks/react-query/mutation/useDeleteAnalysisChannel';
+import useGetAnalysisChannel from '@/hooks/react-query/query/useGetAnalysisChannel';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 
 import { useChannelFilterContext } from './ChannelFilterContext';
@@ -22,6 +24,8 @@ const ChannelList = () => {
     subscriberRange: subscriberRange?.value,
   });
 
+  const { data: analysisChannelList } = useGetAnalysisChannel();
+
   const { show, hideAll } = useContextMenu();
 
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -35,12 +39,18 @@ const ChannelList = () => {
 
   const { mutate } = useAddAnalysisChannel();
 
+  const { mutate: deleteMutate } = useDeleteAnalysisChannel();
+
   const handleContextMenuClick = (
-    type: 'add_channel' | 'move_channel',
+    type: 'add_channel' | 'move_channel' | 'delete_channel',
     channelId: string,
   ) => {
     if (type === 'add_channel') {
       mutate(channelId);
+      return;
+    }
+    if (type === 'delete_channel') {
+      deleteMutate(channelId);
       return;
     }
 
@@ -66,6 +76,13 @@ const ChannelList = () => {
     };
   }, []);
 
+  const hasChannelId = (channelId: string) => {
+    return (
+      analysisChannelList?.some((channel) => channel.channelId === channelId) ??
+      false
+    );
+  };
+
   return (
     <div
       className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]"
@@ -81,6 +98,7 @@ const ChannelList = () => {
             channelCluster,
             channelAverageViews,
             mainUsedKeywords,
+            channelTotalVideos,
           },
           index,
         ) => {
@@ -91,7 +109,7 @@ const ChannelList = () => {
           return (
             <div key={channelId + index}>
               <div
-                className="text-grey600 grid cursor-pointer  grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500] "
+                className="text-grey600 grid cursor-pointer  grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500] "
                 onClick={(e) =>
                   onContextMenu({ event: e, id: channelId + index })
                 }
@@ -113,7 +131,7 @@ const ChannelList = () => {
                     ? compactNumber.format(channelSubscribers)
                     : channelSubscribers}
                 </div>
-                <div className="text-center"></div>
+                <div className="text-center">{channelTotalVideos}</div>
                 <div className="truncate text-center">
                   {clustersCategories[channelCluster]}
                 </div>
@@ -123,31 +141,52 @@ const ChannelList = () => {
                     ? channelAverageViews?.toLocaleString('ko-kr')
                     : channelAverageViews}
                 </div>
-                <div className="text-center">90%</div>
               </div>
 
               <Menu id={channelId + index}>
-                {[
-                  {
-                    title: '유튜브 채널로 이동',
-                    value: 'move_channel' as const,
-                  },
-                  {
-                    title: '모니터링 추가',
-                    value: 'add_channel' as const,
-                  },
-                ].map(({ title, value }) => (
-                  <Item
-                    key={value}
-                    className="[&_*]:hover:!bg-primary200"
-                    // react-contexify 스타일 우선순위로 인한 important 추가 (css 파일을 별도로 만들기 대신 사용)
-                    onClick={() => handleContextMenuClick(value, channelId)}
-                  >
-                    {/* <SvgComp icon="CheckIcon" size={12} /> */}
+                {hasChannelId(channelId)
+                  ? [
+                      {
+                        title: '유튜브 채널로 이동',
+                        value: 'move_channel' as const,
+                      },
+                      {
+                        title: '모니터링 제거',
+                        value: 'delete_channel' as const,
+                      },
+                    ].map(({ title, value }) => (
+                      <Item
+                        key={value}
+                        className="[&_*]:hover:!bg-primary200"
+                        // react-contexify 스타일 우선순위로 인한 important 추가 (css 파일을 별도로 만들기 대신 사용)
+                        onClick={() => handleContextMenuClick(value, channelId)}
+                      >
+                        {/* <SvgComp icon="CheckIcon" size={12} /> */}
 
-                    {title}
-                  </Item>
-                ))}
+                        {title}
+                      </Item>
+                    ))
+                  : [
+                      {
+                        title: '유튜브 채널로 이동',
+                        value: 'move_channel' as const,
+                      },
+                      {
+                        title: '모니터링 추가',
+                        value: 'add_channel' as const,
+                      },
+                    ].map(({ title, value }) => (
+                      <Item
+                        key={value}
+                        className="[&_*]:hover:!bg-primary200"
+                        // react-contexify 스타일 우선순위로 인한 important 추가 (css 파일을 별도로 만들기 대신 사용)
+                        onClick={() => handleContextMenuClick(value, channelId)}
+                      >
+                        {/* <SvgComp icon="CheckIcon" size={12} /> */}
+
+                        {title}
+                      </Item>
+                    ))}
               </Menu>
             </div>
           );
