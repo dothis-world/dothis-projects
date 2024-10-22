@@ -77,3 +77,33 @@ export const Button = styled.button<{ $active: boolean }>`
           }
         `}
 `;
+
+// Keyword
+export const LandingButton = styled.button<{ $active: boolean }>`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid ${({ theme }) => theme.colors.grey00};
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.grey500};
+  background-color: ${({ theme }) => theme.colors.grey00};
+  box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.colors.grey500} inset;
+
+  ${({ $active, theme }) =>
+    $active
+      ? css`
+          background-color: ${theme.colors.grey200};
+        `
+      : css`
+          & path {
+            fill: ${theme.colors.grey200};
+            stroke: ${theme.colors.grey500};
+          }
+        `}
+`;
