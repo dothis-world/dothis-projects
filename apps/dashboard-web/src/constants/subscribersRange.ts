@@ -10,6 +10,7 @@ export const subscribersRangeOptions: {
   value: SubscriberRangeValue;
   label: string;
 }[] = [
+  
   { label: '1만 명 이하', value: '1000to9999' },
   { label: '1만 ~ 5만', value: '10000to49999' },
   { label: '5만 ~ 10만', value: '50000to99999' },
