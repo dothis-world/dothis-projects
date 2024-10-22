@@ -56,7 +56,7 @@ const Page = () => {
             <TrendKeywordList />
           </div>
 
-          <div className="">
+          <div className=" mb-[77px]">
             <h2 className="text-grey700 mb-[23px] text-center text-[14px] font-bold">
               트렌드 분석을 위한 도구
             </h2>
@@ -116,12 +116,15 @@ const Page = () => {
           {VIDEO_CATEGORYNUMBER.map((item) => {
             return (
               <div className="mb-10">
-                <h2 className="mb-5">새로운 {item.label} 영상</h2>
+                <h2 className="text-grey700 mb-5 text-[14px] font-bold">
+                  새로운 <span className="text-primary500">{item.label}</span>{' '}
+                  영상
+                </h2>
                 <BestVideoList categoryNumbers={item.value} />
               </div>
             );
           })}
-
+          {/* 
           <div className="mb-[52px] flex">
             <div className="expandSideBar:mr-[100px] mr-[50px] flex-grow">
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
@@ -141,39 +144,8 @@ const Page = () => {
               <ErrorBoundary fallback={<SystemError />}>
                 <WeeklyKeyword />
               </ErrorBoundary>
-              {/* 
-            <ul className="flex flex-col gap-[15px]">
-              {mock_weeklyKeywordRank.map((item, i) => (
-                <li key={i} className="gap-30 flex items-center p-[10px]">
-                  <p className="text-grey500">{i + 1}</p>
-                  <p className="flex-grow">{item.label}</p>
-                  <div className="h-[20px] w-[20px]">
-                    {i + 1 === item.lastWeek ? (
-                      <div className="text-center">
-                        <span className="">-</span>
-                      </div>
-                    ) : i + 1 < item.lastWeek ? (
-                      <div className="flex items-center  justify-center">
-                        <span className="text-[12px] text-[#F00]">
-                          {item.lastWeek - (i + 1)}
-                        </span>
-                        <span className="h-0 w-0 border-x-[4px] border-b-[8px]  border-x-transparent border-b-[#F00]"></span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center">
-                        <span className="text-[12px] text-[#3183FF]">
-                          {' '}
-                          {i + 1 - item.lastWeek}
-                        </span>
-                        <span className="h-0 w-0 border-x-[4px] border-t-[8px]  border-x-transparent border-t-[#3183FF]"></span>
-                      </div>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul> */}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />
@@ -182,3 +154,36 @@ const Page = () => {
 };
 
 export default Page;
+
+{
+  /* <ul className="flex flex-col gap-[15px]">
+{mock_weeklyKeywordRank.map((item, i) => (
+  <li key={i} className="gap-30 flex items-center p-[10px]">
+    <p className="text-grey500">{i + 1}</p>
+    <p className="flex-grow">{item.label}</p>
+    <div className="h-[20px] w-[20px]">
+      {i + 1 === item.lastWeek ? (
+        <div className="text-center">
+          <span className="">-</span>
+        </div>
+      ) : i + 1 < item.lastWeek ? (
+        <div className="flex items-center  justify-center">
+          <span className="text-[12px] text-[#F00]">
+            {item.lastWeek - (i + 1)}
+          </span>
+          <span className="h-0 w-0 border-x-[4px] border-b-[8px]  border-x-transparent border-b-[#F00]"></span>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center">
+          <span className="text-[12px] text-[#3183FF]">
+            {' '}
+            {i + 1 - item.lastWeek}
+          </span>
+          <span className="h-0 w-0 border-x-[4px] border-t-[8px]  border-x-transparent border-t-[#3183FF]"></span>
+        </div>
+      )}
+    </div>
+  </li>
+))}
+</ul> */
+}
