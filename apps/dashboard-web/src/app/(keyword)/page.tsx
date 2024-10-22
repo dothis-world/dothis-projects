@@ -8,10 +8,18 @@ import Footer from '@/components/common/Layout/Footer';
 import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 
 import AdsBanner from './AdsBanner';
+import BestVideoList from './BestVideoList';
 import MainSearchbar from './MainSearchbar';
 import MediaBanner from './MediaBanner';
+import TrendKeywordList from './TrendKeywordList';
 import WeeklyKeyword from './WeeklyKeyword';
 
+const VIDEO_CATEGORYNUMBER = [
+  { label: '뉴스', value: [9, 10, 11, 93] },
+  { label: '예능', value: [52, 54, 55] },
+  { label: '여행', value: [57, 59] },
+  { label: '음악', value: [15, 16, 17, 18, 19] },
+];
 const Page = () => {
   return (
     <>
@@ -35,6 +43,85 @@ const Page = () => {
               <AdsBanner />
             </Link>
           </div> */}
+
+          <div className="mx-auto">
+            <Image src={'/youtube.png'} width={240} height={50} alt="youtube" />
+          </div>
+
+          <div className="mx-auto mb-[70px] w-[400px]">
+            <h2 className="text-grey700 mb-[23px] text-center text-[14px] font-bold">
+              뜨고 있는 키워드 {'['}더보기{']'}
+            </h2>
+
+            <TrendKeywordList />
+          </div>
+
+          <div className="">
+            <h2 className="text-grey700 mb-[23px] text-center text-[14px] font-bold">
+              트렌드 분석을 위한 도구
+            </h2>
+
+            <div className="bg-grey200 rounded-10 flex w-full justify-between px-[60px] py-[30px]">
+              <div>
+                <h2 className="text-grey700 mb-[17px] text-center text-[14px] font-bold">
+                  조회수와 검색량 추이 변동으로 알아본
+                  <br /> 소재들의{' '}
+                  <span className="text-primary500">미래 전망</span>
+                </h2>
+
+                <div className="relative h-[230px] w-[280px]">
+                  <Image
+                    src={'/LandingExmaple1.png'}
+                    fill={true}
+                    alt="youtube"
+                  />
+                </div>
+              </div>
+              <div>
+                <h2 className="text-grey700 mb-[17px] text-center text-[14px] font-bold">
+                  시청자가 좋아하는 소재를 모아
+                  <br />
+                  <span className="text-primary500"> 키워드 조회수 비교</span>
+                </h2>
+
+                <div className="relative h-[230px] w-[280px]">
+                  <Image
+                    src={'/LandingExmaple2.png'}
+                    fill={true}
+                    alt="youtube"
+                  />
+                </div>
+              </div>
+              <div>
+                <h2 className="text-grey700 mb-[17px] text-center text-[14px] font-bold">
+                  경쟁 채널이 업로드한
+                  <br />
+                  <span className="text-primary500">
+                    {' '}
+                    콘텐츠 타임라인 모니터링
+                  </span>
+                </h2>
+
+                <div className="relative h-[230px] w-[280px]">
+                  <Image
+                    src={'/LandingExmaple3.png'}
+                    fill={true}
+                    alt="youtube"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {VIDEO_CATEGORYNUMBER.map((item) => {
+            return (
+              <div className="mb-10">
+                <h2 className="mb-5">새로운 {item.label} 영상</h2>
+                <BestVideoList categoryNumbers={item.value} />
+              </div>
+            );
+          })}
+
           <div className="mb-[52px] flex">
             <div className="expandSideBar:mr-[100px] mr-[50px] flex-grow">
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
