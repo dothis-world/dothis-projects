@@ -12,18 +12,23 @@ interface SubscriberRange {
 }
 
 interface ChannelFilterState {
-  channelCategory: ClusterCategory | null;
+  channelCategory: ClusterCategory | typeof initialOption;
   setChannelCategory: React.Dispatch<
-    React.SetStateAction<ClusterCategory | null>
+    React.SetStateAction<ClusterCategory | typeof initialOption>
   >;
-  clustersCategoriesOptions: typeof clustersCategoriesOptions;
+  clustersCategoriesOptions: (ClusterCategory | typeof initialOption)[];
 
-  subscriberRange: SubscriberRange | null;
+  subscriberRange: SubscriberRange | typeof initialOption;
   setSubscriberRange: React.Dispatch<
-    React.SetStateAction<SubscriberRange | null>
+    React.SetStateAction<SubscriberRange | typeof initialOption>
   >;
-  subscribersRangeOptions: typeof subscribersRangeOptions;
+  subscribersRangeOptions: (
+    | (typeof subscribersRangeOptions)[number]
+    | typeof initialOption
+  )[];
 }
+
+const initialOption = { label: '전체', value: undefined };
 
 const ChannelFilterContext = createContext<ChannelFilterState | null>(null);
 
@@ -43,21 +48,31 @@ const ChannelFilterContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [channelCategory, setChannelCategory] =
-    useState<ClusterCategory | null>(null); //
+  const [channelCategory, setChannelCategory] = useState<
+    ClusterCategory | typeof initialOption
+  >(initialOption); //
 
-  const [subscriberRange, setSubscriberRange] =
-    useState<SubscriberRange | null>(null); //
+  const [subscriberRange, setSubscriberRange] = useState<
+    SubscriberRange | typeof initialOption
+  >(initialOption); //
+
+  const sortedChannelCategory = clustersCategoriesOptions.sort((a, b) => {
+    return a.label.localeCompare(b.label);
+  });
+
+  const combinedChannelCategory = [initialOption, ...sortedChannelCategory];
+
+  const combinedSubscriberRange = [initialOption, ...subscribersRangeOptions];
 
   return (
     <ChannelFilterContext.Provider
       value={{
         channelCategory,
         setChannelCategory,
-        clustersCategoriesOptions,
+        clustersCategoriesOptions: combinedChannelCategory,
         subscriberRange,
         setSubscriberRange,
-        subscribersRangeOptions,
+        subscribersRangeOptions: combinedSubscriberRange,
       }}
     >
       {children}
