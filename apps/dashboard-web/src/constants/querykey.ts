@@ -40,3 +40,5 @@ export const ANALYSIS_CHANNEL_LIST_KEY = createQueryKeys(
 );
 export const CHANNEL_TIMELINE_KEY = createQueryKeys('channel_timeline');
 export const CHANNEL_CONTENTS_KEY = createQueryKeys('channel_contents');
+
+export const CATEGORY_VIDEO_LIST_KEY = createQueryKeys('category_video');
