@@ -25,7 +25,7 @@ const Page = () => {
           </h2>
           <MainSearchbar />
 
-          <div className=" mb-[57px]">
+          {/* <div className=" mb-[57px]">
             <Link
               href={
                 'https://docs.google.com/forms/d/e/1FAIpQLSc4WwQb9SbmZMMhghQWQQ3Oh-q1slxewT4kpic3C-kf-YnXmw/viewform' as Route
@@ -34,7 +34,7 @@ const Page = () => {
             >
               <AdsBanner />
             </Link>
-          </div>
+          </div> */}
           <div className="mb-[52px] flex">
             <div className="expandSideBar:mr-[100px] mr-[50px] flex-grow">
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
