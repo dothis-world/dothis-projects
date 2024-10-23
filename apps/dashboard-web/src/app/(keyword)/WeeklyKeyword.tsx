@@ -7,7 +7,7 @@ import useGetWeeklyTrendKeyword from '@/hooks/react-query/query/useGetWeeklyTren
 import { convertCompetitionScoreFormatToHTML } from '@/utils/contents/competitionScore';
 
 const WeeklyKeyword = () => {
-  const { data } = useGetWeeklyTrendKeyword();
+  const { data } = useGetWeeklyTrendKeyword({ limit: 5 });
 
   return (
     <ul className="flex flex-col gap-[15px] font-[500]">

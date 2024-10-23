@@ -35,5 +35,5 @@ export const CHANNEL_VIEW_TYPE_TAB_LIST = [
 export const CHANNEL_COMPARISON_TAB_LIST = [
   { title: '콘텐츠 비교', link: 'video' },
   { title: '영상 타임라인', link: 'timeline' },
-  { title: '활동 성과 비교', link: 'performance' },
+  // { title: '활동 성과 비교', link: 'performance' },
 ];

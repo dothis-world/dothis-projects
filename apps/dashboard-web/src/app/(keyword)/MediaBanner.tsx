@@ -31,7 +31,7 @@ const MediaBanner = () => {
 
   const [fechTimeMediaList, setFetchTimeMediaList] = useState<MediaList[]>([]);
 
-  const { data: weeklyKeywordsData } = useGetWeeklyTrendKeyword();
+  const { data: weeklyKeywordsData } = useGetWeeklyTrendKeyword({ limit: 5 });
 
   const weeklyKeywordList = useMemo(
     () =>

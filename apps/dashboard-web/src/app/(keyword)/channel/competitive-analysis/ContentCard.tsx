@@ -100,6 +100,7 @@ const ContentCard = ({ channelId, index, initKeywordCountTrigger }: Props) => {
       }
     };
   }, []);
+
   return (
     <div
       className={cn(
@@ -120,6 +121,7 @@ const ContentCard = ({ channelId, index, initKeywordCountTrigger }: Props) => {
 
           // searchKeyword가 없으면 filterKeywords로 필터링
           return (
+            filterKeywords === null ||
             filterKeywords?.length === 0 || // 필터 키워드가 없으면 모든 비디오를 표시
             filterKeywords?.some((keyword) =>
               item.videoUseText.includes(keyword),

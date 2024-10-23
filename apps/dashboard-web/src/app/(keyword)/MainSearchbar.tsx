@@ -122,7 +122,7 @@ const MainSearchbar = () => {
   };
 
   return (
-    <div className="relative mx-auto mb-[108px] w-[630px]">
+    <div className="relative mx-auto mb-[15px] w-[630px]">
       <div className="border-primary200 flex w-full items-center rounded-[40px] border px-[30px] py-[14px]">
         {isFocused ? (
           <div className="relative mr-[24px] h-[24px] w-[27px]">

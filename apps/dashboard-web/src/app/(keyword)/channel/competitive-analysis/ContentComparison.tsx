@@ -53,7 +53,7 @@ const ContentComparison = () => {
   useEffect(() => {
     if (!topKeywords) return;
 
-    setFilterKeywords(topKeywords);
+    // setFilterKeywords(topKeywords);
   }, [JSON.stringify(topKeywords)]);
 
   const compactNumber = new Intl.NumberFormat('ko', {

@@ -27,6 +27,7 @@ import ContentComparison from './ContentComparison';
 import ContentView from './ContentView';
 import RecommendedChanelList from './RecommendedChannelList';
 import SearchFilterDropdown from './SearchFilterDropdown';
+import SubscriberInterestChannelList from './SubscriberInterestChannelList';
 import VideoFilterContextProvider from './VideoFilterContext';
 import VideoUseTextContextProvider from './VideoUseTextContext';
 import VideoUseTextFilterContextProvider from './VideoUseTextFilterContext';
@@ -66,22 +67,36 @@ const Page = () => {
                   </div>
                   <ChannelFilterDropdown />
                 </div>
-
-                <div className="border-b-1 border-grey400 font[500] text-grey600  grid select-none grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-[20px] p-[10px] text-[14px]">
-                  <div></div>
-                  <div>채널명</div>
-                  <div className="text-center ">구독자</div>
-                  <div className="text-center">영상 수</div>
-                  <div className="text-center">카테고리</div>
-                  <div>주 사용 카테고리</div>
-                  <div className="text-center">평균 조회수</div>
-                  <div className="text-center">유사도</div>
-                </div>
+                {channelViewType === 'recommended-channels' ||
+                !channelViewType ? (
+                  <div className="border-b-1 border-grey400 font[500] text-grey600  grid select-none grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-[20px] p-[10px] text-[14px]">
+                    <div></div>
+                    <div>채널명</div>
+                    <div className="text-center ">구독자</div>
+                    <div className="text-center">영상 수</div>
+                    <div className="text-center">카테고리</div>
+                    <div>주 사용 카테고리</div>
+                    <div className="text-center">평균 조회수</div>
+                    <div className="text-center">유사도</div>
+                  </div>
+                ) : (
+                  <div className="border-b-1 border-grey400 font[500] text-grey600  grid select-none grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr] items-center gap-[20px] p-[10px] text-[14px]">
+                    <div></div>
+                    <div>채널명</div>
+                    <div className="text-center ">구독자</div>
+                    <div className="text-center">영상 수</div>
+                    <div className="text-center">카테고리</div>
+                    <div>주 사용 카테고리</div>
+                    <div className="text-center">평균 조회수</div>
+                  </div>
+                )}
               </div>
 
               {channelViewType === 'recommended-channels' ||
               !channelViewType ? (
                 <RecommendedChanelList />
+              ) : channelViewType === 'subscribers-channels' ? (
+                <SubscriberInterestChannelList />
               ) : (
                 <ChannelList />
               )}
