@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { clustersCategories } from '@/constants/clusterCategories';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 import useGetSimilarChannel from '@/hooks/react-query/query/useGetSimilarChannel';
+import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
+import { cn } from '@/utils/cn';
 
 import { useChannelFilterContext } from './ChannelFilterContext';
 
@@ -17,13 +19,17 @@ const RecommendedChanelList = () => {
     subscriberRange: subscriberRange?.value,
   });
 
-  const { data: similarChannel } = useGetSimilarChannel();
+  const { data: userData } = useGetUserInfo();
 
-  console.log(similarChannel);
+  const { data: similarChannel } = useGetSimilarChannel();
 
   return (
     <div className="custom-scroll-box relative h-[320px] overflow-hidden px-[20px]">
-      <div className="pointer-events-none blur-sm">
+      <div
+        className={cn('pointer-events-none', {
+          'blur-sm': !userData?.channelId,
+        })}
+      >
         {data?.data.map(
           (
             {
@@ -83,14 +89,15 @@ const RecommendedChanelList = () => {
         )}
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-center  bg-opacity-50">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">
-            채널을 등록하면 AI가 채널을 추천해드립니다.{' '}
-          </h1>
-          <p className="mt-2 text-lg">서비스 준비 중입니다.</p>
+      {!userData?.channelId && (
+        <div className="absolute inset-0 flex items-center justify-center  bg-opacity-50">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">
+              채널을 등록하면 AI가 채널을 추천해드립니다.{' '}
+            </h1>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
