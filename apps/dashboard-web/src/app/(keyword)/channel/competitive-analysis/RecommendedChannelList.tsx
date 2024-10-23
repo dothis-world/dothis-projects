@@ -21,7 +21,9 @@ const RecommendedChanelList = () => {
 
   const { data: userData } = useGetUserInfo();
 
-  const { data: similarChannel } = useGetSimilarChannel();
+  const { data: similarChannel } = useGetSimilarChannel({
+    channelId: userData?.channelId,
+  });
 
   return (
     <div className="custom-scroll-box relative h-[320px] overflow-hidden px-[20px]">
