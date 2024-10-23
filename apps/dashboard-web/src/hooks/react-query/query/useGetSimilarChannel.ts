@@ -6,7 +6,7 @@ const reqUrl = 'http://dothis2.iptime.org:8003/nlp/channelsimiler';
 const fetchTodos = async ({ channelId }: { channelId: string | undefined }) => {
   return await axios.post(reqUrl, {
     ntop: 10,
-    channel_id: 'UC72V934gDqmHztP9xJZhpDg',
+    channel_id: channelId,
     cluster: 9,
     subscribers: 119230,
     keywords: '개그',
