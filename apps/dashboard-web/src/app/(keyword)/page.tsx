@@ -26,10 +26,9 @@ const Page = () => {
       <div className="px-[66px]">
         <div className="mx-auto  flex  max-w-[1548px] flex-col">
           <h2 className="text-grey900 mb-[40px] mt-[80px] text-center text-[28px]">
-            콘텐츠에서 가장 중요한 주제 선정,
+            지금, 조회수가 높은 콘텐츠를 찾기 위한
             <br />
-            <span className="text-primary500 font-bold">두디스</span>에서{' '}
-            <span className="text-primary500 font-bold">검색</span>해보세요!
+            영상 트렌드 <span className="text-primary500 font-bold"> 분석</span>
           </h2>
           <MainSearchbar />
 
