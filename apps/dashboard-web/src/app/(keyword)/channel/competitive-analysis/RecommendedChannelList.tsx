@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { clustersCategories } from '@/constants/clusterCategories';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 import useGetSimilarChannel from '@/hooks/react-query/query/useGetSimilarChannel';
+import useGetSimilarChannelRouteHandler from '@/hooks/react-query/query/useGetSimilarChannelRouteHandler';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { cn } from '@/utils/cn';
 
@@ -21,10 +22,39 @@ const RecommendedChanelList = () => {
 
   const { data: userData } = useGetUserInfo();
 
-  // const { data: similarChannel } = useGetSimilarChannel({
-  //   channelId: userData?.channelId,
-  // });
+  const { data: similarChannel } = useGetSimilarChannel({
+    channelId: userData?.channelId,
+  });
 
+  const { data: test } = useGetSimilarChannelRouteHandler({
+    channelId: 'UC72V934gDqmHztP9xJZhpDg',
+    cluster: 0,
+    subscribers: 146000,
+    keyword: ['따복', '수급자', '의료급여', '생계급여', '혜택'],
+    tags: [
+      '기초수급자',
+      '기초생활수급자',
+      '기초생활보장제도',
+      '차상위계층',
+      '저소득층',
+    ],
+  });
+
+  // {
+  //   channelId: 'UC82g8Uzff-bcM_SwKcos8sg',
+  //   cluster: 14,
+  //   subscribers: 68900,
+  //   keyword: ['짱민호', '세로직캠', 'MC', '직캠', '세로'],
+  //   tags: [
+  //     '민호랜드',
+  //     '호시절',
+  //     '장민호콘서트',
+  //     '트롯챔피언',
+  //     '화요일은밤이좋아',
+  //   ],
+  // }
+
+  console.log(test);
   return (
     <div className="custom-scroll-box relative h-[320px] overflow-hidden px-[20px]">
       <div
