@@ -7,7 +7,7 @@ import { LandingButton } from '@/components/MainContents/KeywordSearch/style';
 import useGetWeeklyTrendKeyword from '@/hooks/react-query/query/useGetWeeklyTrendKeyword';
 
 const TrendKeywordList = () => {
-  const { data } = useGetWeeklyTrendKeyword({ limit: 16 });
+  const { data } = useGetWeeklyTrendKeyword({ limit: 12 });
 
   return (
     <div className="flex flex-wrap justify-between gap-x-[30px] gap-y-[20px]">
