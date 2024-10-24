@@ -138,7 +138,7 @@ const MainSearchbar = () => {
 
         <input
           className="text-grey600  placeholder:text-primary500 w-full   text-[16px] outline-none placeholder:pr-[26px]  placeholder:text-center focus:placeholder:text-left"
-          placeholder="키워드를 넣어주세요"
+          placeholder="검색어를 입력해주세요"
           ref={inputRef}
           value={input}
           onChange={(e) => {
