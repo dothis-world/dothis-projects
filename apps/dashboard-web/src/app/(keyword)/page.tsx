@@ -23,9 +23,9 @@ const VIDEO_CATEGORYNUMBER = [
 const Page = () => {
   return (
     <>
-      <div className="px-[66px]">
+      <div className="mb-[80px] px-[66px]">
         <div className="mx-auto  flex  max-w-[1548px] flex-col">
-          <h2 className="text-grey900 mb-[40px] mt-[80px] text-center text-[28px]">
+          <h2 className="text-grey900 mb-[40px] mt-[80px]  text-center text-[28px]">
             지금, 조회수가 높은 콘텐츠를 찾기 위한
             <br />
             영상 트렌드 <span className="text-primary500 font-bold"> 분석</span>
@@ -69,11 +69,7 @@ const Page = () => {
                 </h2>
 
                 <div className="relative h-[230px] w-[280px]">
-                  <Image
-                    src={'/LandingExmaple1.png'}
-                    fill={true}
-                    alt="youtube"
-                  />
+                  <Image src={'/LandingImg2.png'} fill={true} alt="youtube" />
                 </div>
               </div>
               <div>
@@ -84,11 +80,7 @@ const Page = () => {
                 </h2>
 
                 <div className="relative h-[230px] w-[280px]">
-                  <Image
-                    src={'/LandingExmaple2.png'}
-                    fill={true}
-                    alt="youtube"
-                  />
+                  <Image src={'/LandingImg1.png'} fill={true} alt="youtube" />
                 </div>
               </div>
               <div>
@@ -102,11 +94,7 @@ const Page = () => {
                 </h2>
 
                 <div className="relative h-[230px] w-[280px]">
-                  <Image
-                    src={'/LandingExmaple3.png'}
-                    fill={true}
-                    alt="youtube"
-                  />
+                  <Image src={'/LandingImg3.png'} fill={true} alt="youtube" />
                 </div>
               </div>
             </div>
