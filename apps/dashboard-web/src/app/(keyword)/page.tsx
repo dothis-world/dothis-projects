@@ -24,7 +24,7 @@ const Page = () => {
   return (
     <>
       <div className="mb-[80px] px-[66px]">
-        <div className="mx-auto  flex  max-w-[1548px] flex-col">
+        <div className="mx-auto  flex  max-w-[1548px] flex-col gap-[20px]">
           <h2 className="text-grey900 mb-[40px] mt-[80px]  text-center text-[28px]">
             지금, 조회수가 높은 콘텐츠를 찾기 위한
             <br />
