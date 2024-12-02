@@ -181,7 +181,7 @@ const Page = () => {
               </span>
 
               {route && (
-                <Link href={route} className="ml-auto">
+                <Link href={route} className="ml-auto" target="_blank">
                   <p className="text-grey500 text-[12px] underline underline-offset-4">
                     보기
                   </p>
