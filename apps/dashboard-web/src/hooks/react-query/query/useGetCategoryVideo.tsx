@@ -11,6 +11,7 @@ interface Video {
   videoTitle: string;
   videoPublished: string;
   avgViews: string;
+  channelName: string;
 }
 
 interface ApiResponse {

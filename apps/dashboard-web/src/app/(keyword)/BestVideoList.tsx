@@ -14,6 +14,7 @@ interface Video {
   videoTitle: string;
   videoPublished: string;
   avgViews: string;
+  channelName: string;
 }
 export const formatYoutubeForMediaProps = (data: Video): MediaProps => {
   const compactNumber = new Intl.NumberFormat('ko', {
@@ -25,7 +26,7 @@ export const formatYoutubeForMediaProps = (data: Video): MediaProps => {
     : data.videoPublished;
   return {
     title: data.videoTitle,
-    provider: '채널명',
+    provider: data.channelName,
     element: `조회수 ${compactNumber.format(data.videoViews)}`,
     uploadDate: uploadDate,
     image: externalYouTubeImageLoader(data.videoId),
@@ -43,6 +44,8 @@ const BestVideoList = ({ categoryNumbers }: { categoryNumbers: number[] }) => {
     startDate,
     endDate,
   });
+
+  console.log(data);
 
   return (
     <div className="flex justify-between gap-[20px] ">
