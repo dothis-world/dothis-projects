@@ -34,13 +34,25 @@ const StoryBoardEditor = ({ storyBoardId }: StoryBoardEditorProps) => {
       setSummaryValues({
         title: data.title,
         author: 'chae', // data.author
-        createdDate: new Date().toDateString(), // data.overview.createdDate
-        uploadDate: new Date().toDateString(), // data.overview.uploadDate
+        createdDate: '2024-05-05', // data.overview.createdDate
+        uploadDate: '2024-05-06', // data.overview.uploadDate
       });
       setOverviewValues({
         actors: data.overview.actors,
         location: data.overview.location,
         description: data.overview.description,
+      });
+    } else {
+      setSummaryValues({
+        title: '없는 제목',
+        author: 'chae', // data.author
+        createdDate: '2024-05-05', // data.overview.createdDate
+        uploadDate: '2024-05-06', // data.overview.uploadDate
+      });
+      setOverviewValues({
+        actors: '없는 actors',
+        location: '',
+        description: '',
       });
     }
   }, [isInitialLoading]);
